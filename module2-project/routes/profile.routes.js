@@ -52,26 +52,7 @@ router.get("/create-user-api", (req, res, next) => {
 
 });
 
-/* GET home page */
-//router.get("/", (req, res, next) => {
-//    let config = {
-//        method: 'get',
-//        url: 'https://v1.formula-1.api-sports.io/drivers',
-//        headers: {
-//          'x-rapidapi-key': 'eadc164ca7c36b540c39625b8e3f2384',
-//          'x-rapidapi-host': 'v1.formula-1.api-sports.io'
-//        }
-//      };
-//      axios(config)
-//      .then((response) => {
-//        console.log(response.data);
-//        res.render('drivers')
-//      })
-//      .catch(function (error) {
-//        console.log(error);
-//      });
-//    
-//});
+
 
 // DEVELOP !!!!!!! TEST!!!!!!
 
