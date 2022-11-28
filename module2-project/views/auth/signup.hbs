@@ -1,24 +1,60 @@
-<div id="form">
-  <h2>Sign Up</h2>
-  <form action="/auth/signup" method="POST">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>signup/login form</title>
+  <style>
+    section{
+        padding: 60px 0px;
+    }
+</style>
+</head>
+<body>
+  <div class="text-center">
 
-    <label> Username
-      <input type="text" name="username" placeholder="Your username" />
-    </label>
+    <form action="/signup" method="POST" style="max-width: 300px; margin:auto">
+      <img class="mt-4 mb-3" src="/images/logo.png" alt="App logo">
+      <h1 class="h3 mb-3
+       font-weight-normal">Sing Up and Earn</h1>
 
-    <label> Email
-      <input type="email" name="email" placeholder="Your email" />
-    </label>
+       <!-- username label -->
+      <label for="username" class="sr-only"></label>
+      <input type="text" name="username" id="username"
+       class="form-control mb-3" placeholder="Username" 
+       required autofocus>
 
-    <label> Password
-      <input type="password" name="password" placeholder="Your password" />
-    </label>
+      <!-- email label -->
+       <label for="emailAddress" class="sr-only"></label>
+      <input type="email" name="email" id="emailAddress"
+       class="form-control mb-3" placeholder="Email Address" 
+       required autofocus>
 
-    <button type="submit">Sign Up</button>
+       <!-- password label -->
+       <label for="password"
+        class="sr-only"></label>
+        <input type="password" name="password" id="password"
+        placeholder="Password" class="form-control">
 
+        <!-- remember me -->
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
 
-    {{#if errorMessage}}
-      <p class="error">{{errorMessage}}</p>
-    {{/if}}
-  </form>
-</div>
+        <!-- button -->
+        <div class="mt-3">
+          <button class="btn btn-lg btn-warning btn-block">Sign Up</button>
+        </div>
+
+        {{#if errorMessage}}
+          <p class="error">{{errorMessage}}</p>
+        {{/if}}
+        
+    </form>
+  </div>
+
+</body>
+</html>
