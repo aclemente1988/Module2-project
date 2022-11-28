@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios')
 
+let API_KEY = ""
 
 //Axios Call to create a User to be able to use the API services
 let createUserConfig = {
@@ -11,10 +12,10 @@ let createUserConfig = {
         "Content-Type: application/json"
         ,
     data: { //replace Date here by your personal information
-        "name" : "Paul",
-        "email": "paul.fresnel@hotmail.fr",
-        "password": "module2-project",
-        "passwordConfirm" : "module2-project"
+        "name" : `${process.env.API_NAME}`,
+        "email": `${process.env.API_EMAIL}`,
+        "password": `${process.env.API_PASS}`,
+        "passwordConfirm" : `${process.env.API_PASS}`
     }
 };
 
@@ -24,32 +25,37 @@ let loginUserConfig = {
     url: 'http://api.cup2022.ir/api/v1/user/login',
     headers: "Content-Type: application/json",
     data: { //replace Date here by your personal information
-        "email": "paul.fresnel@hotmail.fr",
-        "password": "module2-project",
+        "email": `${process.env.API_EMAIL}`,
+        "password": `${process.env.API_PASS}`
     }
 };
 
 //To send a GET request to API using the token from login
 let tokenAcessGETConfig = {
     method:'get',
-    headers: `Authorization : Bearer ${process.env.API_KEY}`
+    headers: {
+
+        "Authorization" : `Bearer ${API_KEY}`
+    }
 }
 
-//To send a POST request to API using the token from login
-let tokenAcessPOSTConfig = {
-    method:'post',
-    headers: `Authorization : Bearer ${process.env.API_KEY}`
-}
+
 
 //Display all the Information on the incoming Matches on the "MATCHES.HBS" file
-router.get("/create-user-api", (req, res, next) => {
-    axios("http://api.cup2022.ir/api/v1/match" , tokenAcessGETConfig)
+router.get("/create-user-api", async (req, res, next) => {
+    await axios(loginUserConfig)
         .then (data=>{
-            let matchesInfo = data.data.data
-            console.log(matchesInfo)
-            res.render('matches', {matchesInfo})
+            console.log(API_KEY)
+            API_KEY = data.data.data.token
+            //console.log(API_KEY)
         })
-
+    await axios("http://api.cup2022.ir/api/v1/match", tokenAcessGETConfig)
+        .then( matchesData =>{
+            let matchesInfo = matchesData.data.data
+            res.render('matches', {matchesInfo})
+        
+        })
+        console.log(API_KEY)
 });
 
 
