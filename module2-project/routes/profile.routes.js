@@ -61,6 +61,7 @@ router.get("/matches", async (req, res, next) => {
     })
         .then( matchesData =>{
             let matchesInfo = matchesData.data.data
+            //STILL TO CONSTRUCT: FOR LOOP that checks for outdated matches and remove them from being listed
             res.render('matches/matches', {matchesInfo})    
         
         })
