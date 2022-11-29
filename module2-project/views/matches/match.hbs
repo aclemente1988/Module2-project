@@ -1,0 +1,41 @@
+<h1>Match information</h1>
+
+
+<div id="matches-container">
+{{#each matchInfo}}
+
+    <div id="individual-match-card">
+        <div id="match-team-info">
+            <div id="home-team">
+                <img class="flag" src="{{this.home_flag}}">
+                <h2>{{this.home_team_en}} </h2>
+            </div>
+            <p style="font-weight: bold;font-size:25px;">VS</p>
+            <div id="away-team">
+                <img class="flag" src="{{this.away_flag}}">
+                <h2>{{this.away_team_en}} </h2>
+            </div>
+        </div>
+        <div id="match-details-info">
+            <div id="date-container">
+                <p>{{this.local_date}}</p>
+                <button src="/matches/{{this.id}}">More Information</button>
+            </div>
+        </div>
+        
+
+    </div>
+{{/each}}
+</div>
+<form id="prediction" method="post" action="/match/{{this.id}}/predict/winner">
+    <div class="flex-column">
+        <label>Home Score predicted:</label>
+        <input class="prediction-input" type="text" placeholder="Home Score" required>
+    </div>
+    
+    <button id="save-prediction">Save Prediction</button>
+    <div class="flex-column">
+        <label>Away Score predicted:</label>
+        <input  class="prediction-input"  type="text" placeholder="Away Score" required>
+    </div>
+</form>
