@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios')
+const Prediction = require('../models/Prediction.model')
+
 let API_KEY =""
+
+const isLoggedIn = require("../middleware/isLoggedIn")
+const isLoggedOut = require("../middleware/isLoggedOut");
+const User = require('../models/User.model');
 
 
 //Axios Call to create a User to be able to use the API services
@@ -40,6 +46,7 @@ let tokenAcessGETConfig = {
 
 //Display all the Information on the incoming Matches on the "MATCHES.HBS" file
 router.get("/matches", async (req, res, next) => {
+    if (API_KEY === ""){
     await axios(loginUserConfig)
         .then (data=>{
             console.log(API_KEY)
@@ -47,24 +54,23 @@ router.get("/matches", async (req, res, next) => {
             return API_KEY 
             //console.log(API_KEY)
   })
+}
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
     })
         .then( matchesData =>{
             let matchesInfo = matchesData.data.data
-            console.log(matchesInfo[2])
             res.render('matches/matches', {matchesInfo})    
         
         })
         console.log(API_KEY)
 });
 
-router.post('/matches/:id/predict', async (req,res)=>{
+router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
     let id = req.params.id
     await axios(loginUserConfig)
     .then (data=>{
-        console.log(API_KEY)
         API_KEY = data.data.data.token
         return API_KEY 
         //console.log(API_KEY)
@@ -75,11 +81,26 @@ router.post('/matches/:id/predict', async (req,res)=>{
     })
     .then( matchData =>{
         let matchInfo = matchData.data.data
-        console.log(matchInfo)
         res.render('matches/match', {matchInfo})    
     
     })
 
+})
+
+router.post('/match/:id/predict/winner',isLoggedIn , (req,res)=>{
+    const matchId = req.params.id
+    const { homeScore, awayScore } = req.body
+    const userId = req.session.currentUser._id
+
+    Prediction.create({homeScore, awayScore, matchId:matchId})
+        .then (predictionData=>{
+            User.findById(userId)
+                .then (userInfo=>{
+                    userInfo.predictions.push(predictionData)
+                    userInfo.save()
+                })
+        })
+    res.redirect('/matches')
 })
 
 

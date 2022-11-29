@@ -1,6 +1,6 @@
 <div id="login-form">
   <h2>Log In</h2>
-  <form action="/auth/login" method="POST">
+  <form action="/login" method="POST">
 
     <label> Username
       <input type="text" name="username" placeholder="Your username" />
@@ -21,4 +21,6 @@
       <p class="error">{{errorMessage}}</p>
     {{/if}}
   </form>
+  
 </div>
+<a href="/signup"><button>SignUp</button></a>
