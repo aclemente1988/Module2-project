@@ -1,0 +1,31 @@
+<h2>{{userData.username}}'s Predictions List:</h2>
+
+
+
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th scope="col">Home Score predicted</td>
+            <th scope="col">Away Score predicted</td>
+            <th scope="col">Match link</td>
+        </tr>
+    </thead>
+    <tbody>
+{{#each userData.predictions}}
+    <tr scope="row">
+        <td ><img class="minified" src="#">{{this.homeScore}}</td>
+        <td>{{this.awayScore}}</td>
+        <td>
+            <form action="/matches/{{this.matchId}}" method="post">
+                <button>Match link</button>
+            </form>
+        </td>
+    </tr>
+
+
+
+{{/each}}
+</tbody>
+
+</table>
