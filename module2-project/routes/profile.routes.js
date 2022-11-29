@@ -3,6 +3,25 @@ const router = express.Router();
 const axios = require('axios')
 let API_KEY =""
 
+const isLoggedOut = require("../middleware/isLoggedOut");
+const isLoggedIn = require("../middleware/isLoggedIn");
+
+// GET /user-profile
+router.get("/profile", isLoggedIn, (req, res) => {
+    res.render("profile");
+});
+
+router.get('/profile/:username',isLoggedIn, (req,res)=>{
+    const {username} = req.params; 
+    console.log('username', username)
+    User.findOne({username})
+        .then(x =>{
+            console.log('user', x)
+            res.render('profile',{x})
+        })
+    
+})
+
 
 //Axios Call to create a User to be able to use the API services
 let createUserConfig = {
