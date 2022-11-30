@@ -12,7 +12,7 @@ const User = require('../models/User.model');
 
 // GET /user-profile
 router.get("/profile", isLoggedIn, (req, res) => {
-    res.render("profile");
+    res.render("profile/profile");
 });
 
 router.get('/profile/:username',isLoggedIn, (req,res)=>{
@@ -21,7 +21,7 @@ router.get('/profile/:username',isLoggedIn, (req,res)=>{
     User.findOne({username})
         .then(x =>{
             console.log('user', x)
-            res.render('profile',{x})
+            res.render('profile/profile',{x})
         })
     
 })
@@ -115,6 +115,7 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
             User.findById(userId)
                 .then (userInfo=>{
                     userInfo.predictions.push(predictionData)
+                    userInfo.predictionsCount += 1;
                     userInfo.save()
                 })
             res.redirect(`/profile/${userId}/predictions`)
@@ -126,11 +127,8 @@ router.get('/profile/:id/predictions', isLoggedIn, (req, res)=>{
     const userId = req.session.currentUser._id
     User.findById(userId)
         .populate('predictions')
-        .then(userData=>{
-            console.log(userData)
-            
+        .then(userData=>{            
             res.render("profile/predictions", {userData}) 
-        
         })
 })
     

@@ -1,4 +1,9 @@
+<a href="/matches">Go back to Matches' List</a>
+<a href="/profile/{{userData.username}}">Go back to Profile Page</a>
+
 <h2>{{userData.username}}'s Predictions List:</h2>
+
+<h4>Total Predictions Made: {{userData.predictionsCount}} </h4>
 
 
 
@@ -9,6 +14,9 @@
             <th scope="col">Home Score predicted</td>
             <th scope="col">Away Score predicted</td>
             <th scope="col">Match link</td>
+            <th scope="col">Edit Prediction</th>
+            <th scope="col">Delete Prediction</th>
+
         </tr>
     </thead>
     <tbody>
@@ -19,6 +27,18 @@
         <td>
             <form action="/matches/{{this.matchId}}" method="post">
                 <button>Match link</button>
+            </form>
+        </td>
+        <td>
+            <form action="/predictions/{{this._id}}" method="post">
+                <input name="homeScore" value="{{this.homeScore}}">
+                <button>Edit</button>
+                <input name="awayScore" value="{{this.awayScore}}">
+            </form>
+        </td>
+        <td>
+            <form action="/predictions/{{this._id}}/delete" method="post">
+                <button>Delete</button>
             </form>
         </td>
     </tr>
