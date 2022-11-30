@@ -1,6 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios')
+const Prediction = require('../models/Prediction.model')
+
+let API_KEY =""
+
+const isLoggedIn = require("../middleware/isLoggedIn")
+const isLoggedOut = require("../middleware/isLoggedOut");
+const User = require('../models/User.model');
+
+
+// GET /user-profile
+router.get("/profile", isLoggedIn, (req, res) => {
+    res.render("profile");
+});
+
+router.get('/profile/:username',isLoggedIn, (req,res)=>{
+    const {username} = req.params; 
+    console.log('username', username)
+    User.findOne({username})
+        .then(x =>{
+            console.log('user', x)
+            res.render('profile',{x})
+        })
+    
+})
 
 
 //Axios Call to create a User to be able to use the API services
@@ -11,10 +35,10 @@ let createUserConfig = {
         "Content-Type: application/json"
         ,
     data: { //replace Date here by your personal information
-        "name" : "Paul",
-        "email": "paul.fresnel@hotmail.fr",
-        "password": "module2-project",
-        "passwordConfirm" : "module2-project"
+        "name" : `${process.env.API_NAME}`,
+        "email": `${process.env.API_EMAIL}`,
+        "password": `${process.env.API_PASS}`,
+        "passwordConfirm" : `${process.env.API_PASS}`
     }
 };
 
@@ -24,33 +48,114 @@ let loginUserConfig = {
     url: 'http://api.cup2022.ir/api/v1/user/login',
     headers: "Content-Type: application/json",
     data: { //replace Date here by your personal information
-        "email": "paul.fresnel@hotmail.fr",
-        "password": "module2-project",
+        "email": `${process.env.API_EMAIL}`,
+        "password": `${process.env.API_PASS}`
     }
 };
 
 //To send a GET request to API using the token from login
 let tokenAcessGETConfig = {
     method:'get',
-    headers: `Authorization : Bearer ${process.env.API_KEY}`
+    headers: `Authorization : Bearer ${API_KEY}`
 }
 
-//To send a POST request to API using the token from login
-let tokenAcessPOSTConfig = {
-    method:'post',
-    headers: `Authorization : Bearer ${process.env.API_KEY}`
-}
+
 
 //Display all the Information on the incoming Matches on the "MATCHES.HBS" file
-router.get("/create-user-api", (req, res, next) => {
-    axios("http://api.cup2022.ir/api/v1/match" , tokenAcessGETConfig)
+router.get("/matches", async (req, res, next) => {
+    if (API_KEY === ""){
+    await axios(loginUserConfig)
         .then (data=>{
-            let matchesInfo = data.data.data
-            console.log(matchesInfo)
-            res.render('matches', {matchesInfo})
+            console.log(API_KEY)
+            API_KEY = data.data.data.token
+            return API_KEY 
+            //console.log(API_KEY)
+  })
+}
+    await axios("http://api.cup2022.ir/api/v1/match",  {
+        method:'get',
+        headers: `Authorization : Bearer ${API_KEY}`
+    })
+        .then( matchesData =>{
+            let matchesInfo = matchesData.data.data
+            //STILL TO CONSTRUCT: FOR LOOP that checks for outdated matches and remove them from being listed
+            res.render('matches/matches', {matchesInfo})    
+        
         })
-
+        console.log(API_KEY)
 });
+
+router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
+    let id = req.params.id
+    await axios(loginUserConfig)
+    .then (data=>{
+        API_KEY = data.data.data.token
+        return API_KEY 
+        //console.log(API_KEY)
+})
+    await axios(`http://api.cup2022.ir/api/v1/match/${id}`,  {
+        method:'get',
+        headers: `Authorization : Bearer ${API_KEY}`
+    })
+    .then( matchData =>{
+        let matchInfo = matchData.data.data
+        res.render('matches/match', {matchInfo})    
+    
+    })
+
+})
+
+router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
+    const matchId = req.params.id
+    const { homeScore, awayScore } = req.body
+    const userId = req.session.currentUser._id
+
+    Prediction.create({homeScore, awayScore, matchId:matchId})
+        .then (predictionData=>{
+            User.findById(userId)
+                .then (userInfo=>{
+                    userInfo.predictions.push(predictionData)
+                    userInfo.save()
+                })
+            res.redirect(`/profile/${userId}/predictions`)
+        })
+    
+})
+
+router.get('/profile/:id/predictions', isLoggedIn, (req, res)=>{
+    const userId = req.session.currentUser._id
+    User.findById(userId)
+        .populate('predictions')
+        .then(userData=>{
+            console.log(userData)
+            
+            res.render("profile/predictions", {userData}) 
+        
+        })
+})
+    
+router.post('/matches/:id', async (req,res)=>{
+    console.log(req.params)
+    let matchId = req.params.id
+    if (API_KEY === ""){
+        await axios(loginUserConfig)
+            .then (data=>{
+                console.log(API_KEY)
+                API_KEY = data.data.data.token
+                return API_KEY 
+      })
+    }
+        await axios(`http://api.cup2022.ir/api/v1/match/${matchId}`,  {
+            method:'get',
+            headers: `Authorization : Bearer ${API_KEY}`
+        })
+            .then( matchData =>{
+                console.log(matchData.data.data)
+                let matchInfo = matchData.data.data
+                res.render('matches/match-no-predict', {matchInfo})    
+            
+            })
+    });
 
 
 

@@ -1,42 +1,3 @@
-<!--<h1>{{appTitle}} 🚀</h1>
-<p>World Cup Bets!</p>-->
-
-<!-- Utility clases -->
-
-<!-- text colours -->
-<!--<p class="text-primary">the primary color</p>
-<p class="text-secondary">the primary color</p>
-<p class="text-info">the primary color</p>
-<p class="text-warning">the primary color</p>
-<p class="text-success">the primary color</p>
-<p class="text-danger">the primary color</p>
-<p class="text-muted">the primary color</p>-->
-
-<!-- bg colours -->
-<!--<p class="text-white bg-primary">white text on primary bg</p>
-<p class="text-white bg-secondary">black text on primary bg</p>
-<p class="text-white bg-danger">white text on primary bg</p>-->
-
-<!-- buttons -->
-<!--<button class="btn btn-secondary">primary button</button>
-<button class="btn btn-lg btn-info">primary button</button>
-<button class="btn btn-sm btn-success">primary button</button>
-<button class="btn btn-outline-success">primary button</button>-->
-
-<!-- margin and padding -->
-
-<!--<div class="bg-primary m-5 p-5">small margin and padding</div>-->
-
-<!-- 🚀borders -->
-<!--<d class="m-3 p-3 border-top border-end">individual borders</d>
-<d class="m-3 p-3 border-start border-success">individual borders</d>
-<d class="border">individual borders</d>
-<d class="border border-5">individual borders</d>-->
-
-<!-- box-shadow -->
-<!--<d class="m-3 p-3 shadow-sm">element with shadow</d>
-<d class="m-3 p-3 shadow">element with shadow</d>-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,17 +21,15 @@
                     Qatar ODDS APP🚀
                 </span>
             </a>
-            <!-- toggle button for mobile nav -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-            data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false"
-            aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+
 
             <!-- nav bar links -->
             <div class="collapse navbar-collapse justify-content-end align-center"
             id="main-nav">
                 <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/login"  >Log In</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#app-info" >About the App</a>
                     </li>
@@ -94,7 +53,8 @@
                         <div class="display-5 text-muted">Your Prediction Skills</div>      
                     </h1>
                     <p class="lead my-4 text-muted">Can you guess who will win?</p>
-                    <a href="/signup" class="btn btn-warning btn-large">Singup and Earn €</a>
+                    <a href="/signup" class="btn btn-warning btn-large">Singup</a>
+                    <a href="/profile/:username" class="btn btn-secondary btn-Info">My Team</a>
                 </div> 
                 <div class="col md-5 text-center d-none d-md-block">
                     <img class="img-fluid " src="/images/World-cup-odds-picks-and-predictions-for-Qatar-2022.jpg" alt="worldCup cover">
@@ -229,6 +189,13 @@
         <h1>Test Developers</h1>
         
       </section>
+
+      <h2>Users list page</h2>
+<ul>
+    {{#each users}}
+        <li><a href="/profile/{{this.username}}">User {{this.username}}</a></li>
+    {{/each}}
+</ul>
 
 </body>
 
