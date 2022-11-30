@@ -1,7 +1,7 @@
 <h1>Match information</h1>
 
 
-<div id="matches-container">
+<div id="matches-container" class="match-container-test">
 {{#each matchInfo}}
 
     <div id="individual-match-card">
@@ -29,14 +29,19 @@
 <form id="prediction" method="post" action="/matches/{{this.id}}/predict/winner">
     <div class="flex-column">
         <label>Home Score predicted:</label>
-        <input name="homeScore" class="prediction-input" type="text" placeholder="Home Score" required>
+        <input name="homeScore" class="prediction-input" type="number" placeholder="Home Score" required>
     </div>
     
     <button id="save-prediction">Save Prediction</button>
     <div class="flex-column">
         <label>Away Score predicted:</label>
-        <input name="awayScore" class="prediction-input"  type="text" placeholder="Away Score" required>
+        <input name="awayScore" class="prediction-input"  type="number" placeholder="Away Score" required>
     </div>
 </form>
 {{/each}}
+</div>
+
+{{#if errorMessage}}
+<p>Message To Go here: {{errorMessage}}</p>
+{{/if}}
 
