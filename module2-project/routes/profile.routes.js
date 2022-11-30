@@ -21,7 +21,7 @@ router.get('/profile/:username',isLoggedIn, (req,res)=>{
     User.findOne({username})
         .then(x =>{
             console.log('user', x)
-            res.render('profile',{x})
+            res.render('profile/profile',{x})
         })
     
 })
