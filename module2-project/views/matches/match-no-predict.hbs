@@ -1,16 +1,17 @@
-<h1>Matches to come</h1>
+
+<h1 style="text-align:center;margin-bottom:35px;">Match information</h1>
 
 
 <div id="matches-container">
-{{#each matchesInfo}}
+{{#each matchInfo}}
 
-    <div id="match-card">
+    <div id="individual-match-card">
         <div id="match-team-info">
             <div id="home-team">
                 <img class="flag" src="{{this.home_flag}}">
                 <h2>{{this.home_team_en}} </h2>
             </div>
-            <p style="font-weight: bold;font-size:17px;">VS</p>
+            <p style="font-weight: bold;font-size:25px;">VS</p>
             <div id="away-team">
                 <img class="flag" src="{{this.away_flag}}">
                 <h2>{{this.away_team_en}} </h2>
@@ -19,14 +20,13 @@
         <div id="match-details-info">
             <div id="date-container">
                 <p>{{this.local_date}}</p>
-                <!--  <button src="/matches/{{this.id}}">More Information</button> -->
+              <!--  <button src="/matches/{{this.id}}">More Information</button> -->
             </div>
-            <form method="post" action='/matches/{{this.id}}/predict'>
-            <button>Predict the Winner</button>
-            </form>
         </div>
         
 
     </div>
+    </div>
+
 {{/each}}
-</div>
+

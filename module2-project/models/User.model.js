@@ -20,6 +20,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    predictions: [{ type: Schema.Types.ObjectId, ref: "Prediction"}]
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
