@@ -11,18 +11,18 @@
 
 
   <body>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mb-3">
         <div class="container-fluid">
             <a href="/" class="navbar-brand">
                 <span class="fw-bold text-warning">
-                     Welcome {{username}} 🚀
+                    Welcome {{username}}! 🚀
                 </span>
             </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
             <li class="nav nav-pills">
-                <a class="nav-link active" aria-current="page" href="/profile/:id/players">Create Team</a>
+                <a class="nav-link active" aria-current="page" href="/profile/:id">Dashboard</a>
             </li>
           <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
@@ -48,6 +48,9 @@
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
               </li>
             </ul>
+
+            
+
             <form class="d-flex">
               <input class="form-control me-2" type="search" placeholder="Live results" aria-label="Search">
               <button class="btn btn-outline-warning" type="submit">Search</button>
@@ -55,25 +58,22 @@
           </div>
         </div>
       </nav>
+        
 
-
-      <!-- SideBar -->
-
-      <div class="container-fluid ">
+      <!-- <div class="container-fluid ">
         <div class="row ">
             <div class="col-md-2 mt-5 bg-light d-none d-md-block sidebar ">
                 <div class="left-sidebar">
                     <div class="d-flex ">
                         <div class="nav flex-column ml-5 nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                          <button class="nav-link  text-center active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Predictions</button>
-                            <li class="nav-item">
-                                <a class="nav-link text-primary" href="/matches">All Matches</a>
-                            </li>
-                          <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Results</button>
-                          <button class="nav-link " id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">FAQS</button>
-                            <li class="nav-item">
-                                <a class="nav-link text-danger" href="/logout"  >Log out</a>
-                            </li>
+                         
+                        <li class="nav-item">
+                                <a class="nav-link text-dark" href="/profile/:id"  >Back</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="/logout"  >Log out</a>
+                        </li>
                         </div>
 
                       </div>
@@ -81,13 +81,31 @@
             </div>
 
         </div>
-      </div>
+      </div> -->
 
-      
+      <!--All Players-->
+    <div class=" mt-4">
+        {{#each allPlayersFromDb}}
+        <div class="card mb-2 d-inline-flex p-2" style="width: 11rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{this.playername}}</h5>
+                <p class="card-text">Position:{{this.position}}<br>
+                    <h6>{{this.team}}</h6>
+                </p>
+              
+              <form method="post" action="/profile/{{this.id}}/players/add">
+                <a href="/profile/:id" class="btn btn-warning btn-sm">Add Player</a>
+              </form>
+            </div>
+          </div>
+
+        {{/each}}
+    </div>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     
   </body>
 </html>
-
