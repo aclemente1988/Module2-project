@@ -119,17 +119,30 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
     const matchId = req.params.id
     const { homeScore, awayScore } = req.body
     const userId = req.session.currentUser._id
+    Prediction.findOne({matchId: matchId})
+    .then(data=>{
+        if (!data){
+            console.log("match never predicted before")
 
-    Prediction.create({homeScore, awayScore, matchId:matchId})
-        .then (predictionData=>{
-            User.findById(userId)
-                .then (userInfo=>{
-                    userInfo.predictions.push(predictionData)
-                    userInfo.predictionsCount += 1;
-                    userInfo.save()
-                })
+            Prediction.create({homeScore, awayScore, matchId:matchId})
+                .then (predictionData=>{
+                    User.findById(userId)
+                        .then (userInfo=>{
+                            userInfo.predictions.push(predictionData)
+                            userInfo.predictionsCount += 1;
+                            userInfo.save()
+                        })      
             res.redirect(`/profile/${userId}/predictions`)
+            
         })
+        return
+        } else if (data){
+            console.log("prediction  already predicted" + data)            
+            res.redirect('/matches')
+        }
+        
+    })
+    
     
 })
 
