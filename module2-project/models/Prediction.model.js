@@ -12,7 +12,8 @@ const predictionSchema = new Schema(
         required: true
     },
     matchId: {
-      type: String
+      type: String,
+      unique: true
     },
   },
   {
