@@ -32,7 +32,8 @@ const userSchema = new Schema(
     wrongPredictions : {
       type: Number,
       default: 0
-    }
+    },
+    players: [{ type: Schema.Types.ObjectId, ref: "Player"}],
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
