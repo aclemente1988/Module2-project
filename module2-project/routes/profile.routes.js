@@ -26,7 +26,7 @@ router.get('/profile/:id/players',isLoggedIn ,  async (req,res)=>{
     let userInfo = req.session.currentUser
     Player.find()
     .then( allPlayersFromDb =>{
-        res.render('players', {allPlayersFromDb} )    
+        res.render('players', {allPlayersFromDb, userInfo} )    
     
     })
 })
@@ -72,6 +72,7 @@ let tokenAcessGETConfig = {
 
 //Display all the Information on the incoming Matches on the "MATCHES.HBS" file
 router.get("/matches", async (req, res, next) => {
+    let userInfo = req.session.currentUser
     if (API_KEY === ""){
     await axios(loginUserConfig)
         .then (data=>{
@@ -88,7 +89,7 @@ router.get("/matches", async (req, res, next) => {
         .then( matchesData =>{
             let matchesInfo = matchesData.data.data
             //STILL TO CONSTRUCT: FOR LOOP that checks for outdated matches and remove them from being listed
-            res.render('matches/matches', {matchesInfo})    
+            res.render('matches/matches', {matchesInfo, userInfo})    
         
         })
         console.log(API_KEY)
@@ -96,6 +97,8 @@ router.get("/matches", async (req, res, next) => {
 
 router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
     let id = req.params.id
+    const userInfo = req.session.currentUser
+
     await axios(loginUserConfig)
     .then (data=>{
         API_KEY = data.data.data.token
@@ -108,7 +111,7 @@ router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
     })
     .then( matchData =>{
         let matchInfo = matchData.data.data
-        res.render('matches/match', {matchInfo})    
+        res.render('matches/match', {matchInfo, userInfo})    
     
     })
 
@@ -147,6 +150,7 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
 
 router.get('/profile/:id/predictions', isLoggedIn, (req, res)=>{
     const userId = req.session.currentUser._id
+
     User.findById(userId)
         .populate('predictions')
         .then(userData=>{            

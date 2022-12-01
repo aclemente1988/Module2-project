@@ -13,6 +13,7 @@ h1 {
 
 .flag{
   width: 25px;
+  border:1px black solid;
 }
 
 #matches-container{
