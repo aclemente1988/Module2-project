@@ -12,33 +12,32 @@ const User = require('../models/User.model');
 
 
 // GET /user-dashboard
-router.get('/profile/:id', isLoggedIn, (req, res)=>{
+router.get('/profile/:username', isLoggedIn, (req, res)=>{
     const userId = req.session.currentUser._id
     User.findById(userId)
         .then(userData=>{
             console.log(userData)            
-            res.render("profile/profile", (userData)) 
+            res.render("profile/profile", {userData}) 
         })
 })
 
 // GET /user-dashboard-All-Players
 router.get('/profile/:id/players',isLoggedIn ,  async (req,res)=>{
-    let id = req.params;
-    Player.find(id)
+    let userInfo = req.session.currentUser
+    Player.find()
     .then( allPlayersFromDb =>{
-        console.log(allPlayersFromDb)
-        res.render('players', {allPlayersFromDb})    
+        res.render('players', {allPlayersFromDb} )    
     
     })
 })
 
 // POST/Players to user dashboard
 router.post('/profile/:id/players/add',isLoggedIn , (req,res)=>{
-    const usersId = req.params.id
-    const { playername, position, team,  } = req.body
+    const playerId = req.params.id
+    console.log(playerId)
     const userId = req.session.currentUser._id
 
-    Player.create({playername, position, team, userIds:usersId})
+    Player.findById(playerId)
         .then (playerData=>{
             User.findById(userId)
                 .then (userInfo=>{
