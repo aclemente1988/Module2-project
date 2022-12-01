@@ -20,7 +20,20 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    predictions: [{ type: Schema.Types.ObjectId, ref: "Prediction"}]
+    predictions: [{ type: Schema.Types.ObjectId, ref: "Prediction"}],
+    predictionsCount : {
+      type: Number,
+      default: 0
+    },
+    correctPredictions : {
+      type: Number,
+      default: 0
+    },
+    wrongPredictions : {
+      type: Number,
+      default: 0
+    },
+    players: [{ type: Schema.Types.ObjectId, ref: "Player"}],
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
