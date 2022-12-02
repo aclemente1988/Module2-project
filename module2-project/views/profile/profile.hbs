@@ -84,9 +84,7 @@
         </div>
       </div> 
 
-        <div class="mt-3">
-          {{userData.players}}
-        </div>
+
           
 
       <!-- <div class=" mt-4">
@@ -106,6 +104,33 @@
               </form>
             </div>
           </div> -->
+ 
+        <div class=" d-flex  flex-column align-items-center mt-4  ">
+          {{#each userData.players}}
+          <div class="card mb-2 d-inline-flex p-2" style="width: 11rem;">
+              <div class="card-body">
+                <h5 class="card-title">{{this.playername}}</h5>
+                  <p class="card-text">Position:{{this.position}}<br>
+                      <h6>{{this.team}}</h6>
+                  </p>
+  
+            
+
+                <form method="post" action="/profile/{{this._id}}/players/update">
+                    <button class="btn btn-warning btn-sm mb-1">Update</button>
+
+                <form method="post" action="/profile/{{this._id}}/players/delete">
+                      <button class="btn btn-danger btn-sm">Delete</button>
+                  
+  
+                </form>
+              </div>
+            </div>
+            
+  
+          {{/each}}
+      </div>
+
           
 
         
