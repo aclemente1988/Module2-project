@@ -14,8 +14,8 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mb-3">
         <div class="container-fluid">
             <a href="/" class="navbar-brand">
-                <span class="fw-bold text-warning">
-                    Welcome {{username}}! 🚀
+                <span class="fw-bold text-white">
+                     {{{userInfo}}} - Team builder 🚀
                 </span>
             </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,12 +92,16 @@
                 <p class="card-text">Position:{{this.position}}<br>
                     <h6>{{this.team}}</h6>
                 </p>
+
               
               <form method="post" action="/profile/{{this._id}}/players/add">
                 <button class="btn btn-warning btn-sm">Add Player</button>
+                
+
               </form>
             </div>
           </div>
+          
 
         {{/each}}
     </div>

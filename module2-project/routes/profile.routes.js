@@ -15,6 +15,7 @@ const User = require('../models/User.model');
 router.get('/profile/:username', isLoggedIn, (req, res)=>{
     const userId = req.session.currentUser._id
     User.findById(userId)
+        .populate('players')
         .then(userData=>{
             console.log(userData)            
             res.render("profile/profile", {userData}) 
@@ -23,18 +24,19 @@ router.get('/profile/:username', isLoggedIn, (req, res)=>{
 
 // GET /user-dashboard-All-Players
 router.get('/profile/:id/players',isLoggedIn ,  async (req,res)=>{
-    let userInfo = req.session.currentUser
+    let userInfo = req.session.currentUser.username
     Player.find()
     .then( allPlayersFromDb =>{
-        res.render('players', {allPlayersFromDb} )    
+        res.render('players', {allPlayersFromDb, userInfo})    
     
     })
+ 
 })
 
 // POST/Players to user dashboard
 router.post('/profile/:id/players/add',isLoggedIn , (req,res)=>{
     const playerId = req.params.id
-    console.log(playerId)
+    console.log("quiero saber esta informacion", (playerId))
     const userId = req.session.currentUser._id
 
     Player.findById(playerId)
@@ -43,8 +45,10 @@ router.post('/profile/:id/players/add',isLoggedIn , (req,res)=>{
                 .then (userInfo=>{
                     userInfo.players.push(playerData)
                     userInfo.save()
+                    
                 })
-            res.redirect(`/profile`)
+                
+            res.redirect(`/profile/${userId}`)
         })
     
 })
@@ -84,11 +88,13 @@ router.get("/matches", async (req, res, next) => {
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
+        
     })
         .then( matchesData =>{
             let matchesInfo = matchesData.data.data
+            let userInfo = req.session.currentUser.username
             //STILL TO CONSTRUCT: FOR LOOP that checks for outdated matches and remove them from being listed
-            res.render('matches/matches', {matchesInfo})    
+            res.render('matches/matches', {matchesInfo, userInfo})    
         
         })
         console.log(API_KEY)
