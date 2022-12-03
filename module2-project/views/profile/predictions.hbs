@@ -1,15 +1,15 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mb-3">
     <div class="container-fluid">
-        <a href="/" class="navbar-brand">
-            <span class="fw-bold text-white">
+        <a style="color:orange;" href="/profile/{{userData.username}}" class="navbar-brand">
+            <span class="fw-bold">
                 {{userData.username}} - Prediction List: 🚀
-            </span>
+            </span> 
         </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
         <li class="nav nav-pills">
-            <a class="nav-link active" aria-current="page" href="/profile/:id">Dashboard</a>
+            <a class="nav-link active" aria-current="page" href="/profile/{{userData.username}}">Dashboard</a>
         </li>
       <div class="collapse navbar-collapse" id="navbarScroll">
         <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
@@ -45,9 +45,9 @@
     </div>
   </nav>
 
-
-
-
+<div style="margin-top:55px;margin-bottom:20px;">
+<a href="/profile/{{userData.username}}/dashboard/predictions">Go back to My Predictions' Dashboard</a>
+</div>
     <div class="mt-5">
         <h4>Total Predictions Made: {{userData.predictionsCount}} </h4>
     </div>

@@ -43,7 +43,7 @@ let tokenAcessGETConfig = {
 }
 
 
-router.post('/predictions/:id', (req,res)=>{
+router.post('/predictions/:id',isLoggedIn, (req,res)=>{
    let predictionId = req.params.id;
    let userId = req.session.currentUser._id
    const { awayScore, homeScore } = req.body
@@ -53,7 +53,7 @@ router.post('/predictions/:id', (req,res)=>{
     })
 })
 
-router.post('/predictions/:id/delete', (req,res)=>{
+router.post('/predictions/:id/delete',isLoggedIn, (req,res)=>{
     let predictionId = req.params.id;
     let userId = req.session.currentUser._id
     Prediction.findByIdAndDelete(predictionId)
@@ -69,9 +69,75 @@ router.post('/predictions/:id/delete', (req,res)=>{
 })
 
 
-router.post('/predictions/:id/veirfy', (req,res)=>{
+router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
+    let predictionId = req.params.id
+    let userInfo = req.session.currentUser
+
+    await axios(loginUserConfig)
+    .then (data=>{
+        API_KEY = data.data.data.token
+        return API_KEY 
+})
+    await axios(`http://api.cup2022.ir/api/v1/match/${predictionId}`,  {
+        method:'get',
+        headers: `Authorization : Bearer ${API_KEY}`
+    })
+    .then( matchData =>{
+        let matchInfo = matchData.data
+        console.log(matchInfo)
+        console.log("success")
+        res.redirect(`/profile/${userInfo.username}`)    
+    })
     console.log("verified")
     console.log(matchesArray)
+})
+
+let matchesArray = []
+router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
+    if (API_KEY === ""){
+        await axios(loginUserConfig)
+        .then (data=>{
+            API_KEY = data.data.data.token
+            return API_KEY 
+            //console.log(API_KEY)
+    })
+    }
+        if(matchesArray.length<=0){
+        await axios("http://api.cup2022.ir/api/v1/match",  {
+            method:'get',
+            headers: `Authorization : Bearer ${API_KEY}`
+        })
+            .then(matchesData=> {
+                matchesArray = matchesData.data.data
+                return matchesArray
+            })
+        }
+    let userData = req.session.currentUser
+    User.findById(userData._id)
+    .populate('predictions')
+    .then(userInfo=>{
+        let latestPredictions = userInfo.predictions.reverse()
+        for (i=0;i<5;i++){
+            let date = latestPredictions[i].updatedAt
+            let splicedDate = date.toDateString()
+            let splicedTime = date.toTimeString()
+            let splicedTimeReadable = splicedTime.slice(0,8)
+
+            let data = latestPredictions[i].matchId
+            let mappedMatch = matchesArray.filter(matchToFilter=>matchToFilter.id === `${data}`)
+                latestPredictions[i].homeFlag = mappedMatch[0].home_flag
+                latestPredictions[i].awayFlag= mappedMatch[0].away_flag
+                latestPredictions[i].awayTeam= mappedMatch[0].away_team_en
+                latestPredictions[i].homeTeam= mappedMatch[0].home_team_en
+                latestPredictions[i].date= splicedDate
+                latestPredictions[i].time= splicedTimeReadable
+
+                
+        }
+        userData = userInfo
+        res.render('profile/prediction-dashboard', {userData, latestPredictions})
+    })
+    
 })
 
 

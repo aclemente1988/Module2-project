@@ -157,7 +157,6 @@ let matchesArray = []
 router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
     const userId = req.session.currentUser._id
     
-    let predictionsMatches = []
     if (API_KEY === ""){
     await axios(loginUserConfig)
     .then (data=>{

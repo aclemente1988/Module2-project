@@ -78,6 +78,20 @@ h1 {
   border:1px black solid;
 }
 
+.prediction-stats{
+  padding: 20px 25px 20px 25px;
+  display:flex;
+  flex-direction:column; 
+  justify-content:center;
+}
+
+.dashboard-btn{
+  padding: 20px 15px 20px 15px;
+  border-radius: 55px;
+  background-color: orange;
+  font-weight: bold;
+}
+
 #individual-match-card{
   margin: 0 auto;
   width:80%;
