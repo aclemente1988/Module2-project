@@ -39,8 +39,12 @@
                         <div class="display-5 text-muted">Your Prediction Skills</div>      
                     </h1>
                     <p class="lead my-4 text-muted">Can you guess who will win?</p>
-                    <a href="/signup" class="btn btn-warning btn-large">Singup</a>
+                    <a href="/signup" class="btn btn-warning btn-large">Sign-Up</a>
+                    {{#if userInfo}}
                     <a href="/profile/{{userInfo.username}}" class="btn btn-secondary btn-Info">Dashboard</a>
+                    {{else}}
+                    <a href="/login" class="btn btn-secondary btn-Info blue">Log-In</a>
+                    {{/if}}
                 </div> 
                 <div class="col md-5 text-center d-none d-md-block">
                     <img class="img-fluid " src="/images/World-cup-odds-picks-and-predictions-for-Qatar-2022.jpg" alt="worldCup cover">
