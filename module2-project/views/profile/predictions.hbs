@@ -67,17 +67,19 @@
             <th scope="col">Away Score predicted</td>
             <th scope="col">Match link</td>
             <th scope="col">Edit Prediction</th>
+            <th scope="col">Verify Prediction</th>
             <th scope="col">Delete Prediction</th>
+
 
         </tr>
     </thead>
     <tbody>
 {{#each userData.predictions}}
     <tr scope="row">
-        <td >{{this.homeTeam}}</td>
-        <td ><img class="minified" src="{{this.homeFlag}}">{{this.homeScore}}</td>
-        <td >{{this.awayTeam}}</td>
-        <td><img class="minified" src="{{this.awayFlag}}">{{this.awayScore}}</td>
+        <td ><img class="minified" src="{{this.homeFlag}}">{{this.homeTeam}}</td>
+        <td >{{this.homeScore}}</td>
+        <td ><img class="minified" src="{{this.awayFlag}}">{{this.awayTeam}}</td>
+        <td>{{this.awayScore}}</td>
         <td>
             <form action="/matches/{{this.matchId}}" method="post">
                 <button>Match link</button>
@@ -88,6 +90,11 @@
                 <input name="homeScore" value="{{this.homeScore}}">
                 <button>Edit</button>
                 <input name="awayScore" value="{{this.awayScore}}">
+            </form>
+        </td>
+        <td>
+          <form action="/predictions/{{this._id}}/verify" method="post">
+                <button>Verify</button>
             </form>
         </td>
         <td>

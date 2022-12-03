@@ -69,6 +69,11 @@ router.post('/predictions/:id/delete', (req,res)=>{
 })
 
 
+router.post('/predictions/:id/veirfy', (req,res)=>{
+    console.log("verified")
+    console.log(matchesArray)
+})
+
 
 module.exports = router;
 

@@ -153,18 +153,20 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
     
     
 })
-
+let matchesArray = []
 router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
     const userId = req.session.currentUser._id
-    let matchesArray = []
+    
     let predictionsMatches = []
-
+    if (API_KEY === ""){
     await axios(loginUserConfig)
     .then (data=>{
         API_KEY = data.data.data.token
         return API_KEY 
         //console.log(API_KEY)
 })
+}
+    if(matchesArray.length<=0){
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
@@ -173,6 +175,7 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
             matchesArray = matchesData.data.data
             return matchesArray
         })
+    }
 
 
     User.findById(userId)
@@ -185,7 +188,6 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
                     userData.predictions[i].awayFlag= mappedMatch[0].away_flag
                     userData.predictions[i].awayTeam= mappedMatch[0].away_team_en
                     userData.predictions[i].homeTeam= mappedMatch[0].home_team_en
-                console.log(userData.predictions)
             }
             res.render("profile/predictions", {userData}) 
         })
