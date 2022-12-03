@@ -1,0 +1,200 @@
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="/profile/{{userData.username}}" class="navbar-brand">
+                <span class="fw-bold text-warning">
+
+                    {{userData.username}}'s Prediction Dashboard 🚀
+                </span>
+            </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <li class="nav nav-pills">
+                <a class="nav-link active" aria-current="page" href="/profile/{{userData.username}}/players">Create Team</a>
+            </li>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <!-- <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Predictions</a>
+              </li> -->
+              <li class="nav-item dropdown">
+ 
+                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Fantasy Team
+                </a>
+                
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                  <li><a class="dropdown-item" href="#">Update</a></li>
+                  <li><a class="dropdown-item" href="#">Delete</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">How it works?</li>
+                </ul>
+                
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Live results" aria-label="Search">
+              <button class="btn btn-outline-warning" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+
+      <!-- SideBar -->
+
+     <div class="container-fluid ">
+        <div class="row ">
+            <div class="col-md-2 mt-5 bg-light d-none d-md-block sidebar ">
+                <div class="left-sidebar">
+                    <div class="d-flex ">
+                        <div class="nav flex-column ml-5 nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                          <li class="nav nav-pills">
+                            <a class="nav-link active" aria-current="page" href="/matches">New Prediction</a>
+                          </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData._id}}/predictions">My predictions</a>
+                            </li>
+                          <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Results</button>
+                          <button class="nav-link " id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">FAQS</button>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" href="/logout"  >Log out</a>
+                            </li>
+                        </div>
+
+                      </div>
+                </div>
+            </div>
+
+        </div>
+      </div> 
+
+
+<div style="margin-left:275px;margin-top:80px;display:flex;flex-direction:column;">
+
+<div style="padding-bottom:25px;border-bottom:0.5px lightgray solid;display:flex;flex-direction:row;justify-content:space-around">
+    <div class="prediction-stats" >
+        <h2 style="text-decoration:underline;margin-bottom:45px;">{{userData.username}}, here's your Stats:</h2>
+        <h3 style="margin-bottom:15px;">Prediction Points: {{userData.predictionsPoints}}</h3>
+        <h3 style="margin-bottom:15px;">Number of predictions made: {{userData.predictionsCount}} </h3>
+        <h3 style="margin-bottom:15px;">Prediction Won: {{userData.correctPredictions:}}</h3>
+        <h3 style="margin-bottom:15px;">Prediction Lost: {{userData.wrongPredictions:}}</h3>
+    </div>
+    <div style="padding:20px 25px 20px 25px;border:1px black solid;">
+        <h2>Latest Predictions:</h2>
+
+        <table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th scope="col">Date</td>
+            <th scope="col">Last Updated</td>
+            <th scope="col">Home Team</td>
+            <th scope="col">Home Score</td>
+            <th scope="col">Away Team</td>
+            <th scope="col">Away Score</td>
+        </tr>
+    </thead>
+    <tbody>
+    <tr scope="row">
+        <td >{{latestPredictions.[0].date}}</td>
+        <td >{{latestPredictions.[0].time}}</td>
+        <td ><img class="minified" src="{{latestPredictions.[0].homeFlag}}">{{latestPredictions.[0].homeTeam}}</td>
+        <td >{{latestPredictions.[0].homeScore}}</td>
+        <td ><img class="minified" src="{{latestPredictions.[0].awayFlag}}">{{latestPredictions.[0].awayTeam}}</td>
+        <td>{{latestPredictions.[0].awayScore}}</td>
+    </tr>
+    <tr scope="row">
+        <td >{{latestPredictions.[1].date}}</td>
+        <td >{{latestPredictions.[1].time}}</td>
+        <td ><img class="minified" src="{{latestPredictions.[1].homeFlag}}">{{latestPredictions.[1].homeTeam}}</td>
+        <td >{{latestPredictions.[1].homeScore}}</td>
+        <td ><img class="minified" src="{{latestPredictions.[1].awayFlag}}">{{latestPredictions.[1].awayTeam}}</td>
+        <td>{{latestPredictions.[1].awayScore}}</td>
+    </tr>
+    <tr scope="row">
+        <td >{{latestPredictions.[2].date}}</td>
+        <td >{{latestPredictions.[2].time}}</td>
+        <td ><img class="minified" src="{{latestPredictions.[2].homeFlag}}">{{latestPredictions.[2].homeTeam}}</td>
+        <td >{{latestPredictions.[2].homeScore}}</td>
+        <td ><img class="minified" src="{{latestPredictions.[2].awayFlag}}">{{latestPredictions.[2].awayTeam}}</td>
+        <td>{{latestPredictions.[2].awayScore}}</td>
+    </tr>
+    <tr scope="row">
+        <td >{{latestPredictions.[3].date}}</td>
+        <td >{{latestPredictions.[3].time}}</td>
+        <td ><img class="minified" src="{{latestPredictions.[3].homeFlag}}">{{latestPredictions.[3].homeTeam}}</td>
+        <td >{{latestPredictions.[3].homeScore}}</td>
+        <td ><img class="minified" src="{{latestPredictions.[3].awayFlag}}">{{latestPredictions.[3].awayTeam}}</td>
+        <td>{{latestPredictions.[3].awayScore}}</td>
+    </tr>
+    <tr scope="row">
+        <td >{{latestPredictions.[4].date}}</td>
+        <td >{{latestPredictions.[4].time}}</td>
+        <td ><img class="minified" src="{{latestPredictions.[4].homeFlag}}">{{latestPredictions.[4].homeTeam}}</td>
+        <td >{{latestPredictions.[4].homeScore}}</td>
+        <td ><img class="minified" src="{{latestPredictions.[4].awayFlag}}">{{latestPredictions.[4].awayTeam}}</td>
+        <td>{{latestPredictions.[4].awayScore}}</td>
+    </tr>
+    <tr>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+            <a href="/profile/{{userData._id}}/predictions">Edit My Predictions</a>
+        </td>
+            
+    </tr>
+    
+</tbody>
+
+</table>
+    </div>
+</div>
+
+<div>
+    <div>
+  <canvas id="myChart"></canvas>
+</div>
+
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [`Match 1` , 'Match 2', 'Match 3', 'Match 4 ', 'Match 5', 'Match 6'],
+      datasets: [{
+        label: '# of points',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
