@@ -77,7 +77,6 @@ let tokenAcessGETConfig = {
 
 //Display all the Information on the incoming Matches on the "MATCHES.HBS" file
 router.get("/matches", async (req, res, next) => {
-    let userInfo = req.session.currentUser
     if (API_KEY === ""){
     await axios(loginUserConfig)
         .then (data=>{
@@ -94,7 +93,7 @@ router.get("/matches", async (req, res, next) => {
     })
         .then( matchesData =>{
             let matchesInfo = matchesData.data.data
-            let userInfo = req.session.currentUser.username
+            let userInfo = req.session.currentUser
             //STILL TO CONSTRUCT: FOR LOOP that checks for outdated matches and remove them from being listed
             res.render('matches/matches', {matchesInfo, userInfo})    
         

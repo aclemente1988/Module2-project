@@ -9,11 +9,7 @@ const playerSchema = new Schema (
     },
     {
         timestamps: true,
-    },
-    {
-        users: [{ type: Schema.Types.ObjectId, ref: "User"}],
-    }
-    
+    }    
 );
 
 const Player = model("Player", playerSchema);
