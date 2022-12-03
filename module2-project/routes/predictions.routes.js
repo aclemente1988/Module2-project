@@ -55,18 +55,21 @@ router.post('/predictions/:id',isLoggedIn, (req,res)=>{
 
 router.post('/predictions/:id/delete',isLoggedIn, (req,res)=>{
     let predictionId = req.params.id;
+    console.log(predictionId)
     let userId = req.session.currentUser._id
+    
     Prediction.findByIdAndDelete(predictionId)
-    .then(data=>{
+            .then(data=>{
         console.log("prediciton deleted")
         User.findById(userId)
         .then(userInfo=>{
-            userInfo.predictionsCount -= 1;
-            userInfo.save()
-            res.redirect(`/profile/${userId}/predictions`)
+                    userInfo.predictionsCount -= 1;
+                    userInfo.save()
+                    res.redirect(`/profile/${userId}/predictions`)
+                })
+            })
+            
         })
-    })
-})
 
 
 router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
@@ -117,7 +120,18 @@ router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
     .populate('predictions')
     .then(userInfo=>{
         let latestPredictions = userInfo.predictions.reverse()
-        for (i=0;i<5;i++){
+        if (userInfo.predictions.length === 0){
+            userData = userInfo
+            res.render('profile/prediction-dashboard', {userData})  
+        }
+        else if (userInfo.predictions.length !== 0){
+
+            console.log("array is not empty")
+
+        for (let i=0;i<5 || i<=userInfo.predictions.length;i++){
+            if (i<userInfo.predictions.length){
+                console.log(i)
+            console.log(latestPredictions[i])
             let date = latestPredictions[i].updatedAt
             let splicedDate = date.toDateString()
             let splicedTime = date.toTimeString()
@@ -125,17 +139,22 @@ router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
 
             let data = latestPredictions[i].matchId
             let mappedMatch = matchesArray.filter(matchToFilter=>matchToFilter.id === `${data}`)
+            console.log(mappedMatch)
                 latestPredictions[i].homeFlag = mappedMatch[0].home_flag
                 latestPredictions[i].awayFlag= mappedMatch[0].away_flag
                 latestPredictions[i].awayTeam= mappedMatch[0].away_team_en
                 latestPredictions[i].homeTeam= mappedMatch[0].home_team_en
                 latestPredictions[i].date= splicedDate
                 latestPredictions[i].time= splicedTimeReadable
-
-                
+            }
+                if (i===latestPredictions.length){
+                    userData = userInfo
+                    res.render('profile/prediction-dashboard', {userData, latestPredictions})
+                    break
+                }
         }
-        userData = userInfo
-        res.render('profile/prediction-dashboard', {userData, latestPredictions})
+        
+    }
     })
     
 })
