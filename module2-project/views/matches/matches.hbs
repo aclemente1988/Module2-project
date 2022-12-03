@@ -15,14 +15,15 @@
         <div class="container-fluid">
             <a href="/" class="navbar-brand">
                 <span class="fw-bold text-warning">
-                  {{userInfo}} predictions 🚀
+
+                    Welcome {{userInfo.username}}! 🚀
                 </span>
             </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
             <li class="nav nav-pills">
-                <a class="nav-link active" aria-current="page" href="/profile/:id">Dashboard</a>
+                <a class="nav-link active" aria-current="page" href="/profile/{{userInfo.username}}">Dashboard</a>
             </li>
           <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
@@ -37,7 +38,8 @@
                 
                 <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                   <!-- <li><a class="dropdown-item" href="#">Create</a></li> -->
-                  <li><a class="dropdown-item" href="https://github.com/raminmr/free-api-worldcup2022">World Cup API</li>
+
+                  <li><a class="dropdown-item" href="/profile/{{userInfo._id}}/predictions">My Predictions' List</li>
                 </ul>
                 
               </li>
