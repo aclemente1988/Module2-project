@@ -15,6 +15,7 @@ const User = require('../models/User.model');
 router.get('/profile/:username', isLoggedIn, (req, res)=>{
     const userId = req.session.currentUser._id
     User.findById(userId)
+        .populate('players')
         .then(userData=>{
             console.log(userData)            
             res.render("profile/profile", {userData}) 
@@ -23,18 +24,20 @@ router.get('/profile/:username', isLoggedIn, (req, res)=>{
 
 // GET /user-dashboard-All-Players
 router.get('/profile/:id/players',isLoggedIn ,  async (req,res)=>{
-    let userInfo = req.session.currentUser
+    let userInfo = req.session.currentUser.username
     Player.find()
     .then( allPlayersFromDb =>{
-        res.render('players', {allPlayersFromDb} )    
+
+        res.render('players', {allPlayersFromDb, userInfo} )    
     
     })
+ 
 })
 
 // POST/Players to user dashboard
 router.post('/profile/:id/players/add',isLoggedIn , (req,res)=>{
     const playerId = req.params.id
-    console.log(playerId)
+    console.log("quiero saber esta informacion", (playerId))
     const userId = req.session.currentUser._id
 
     Player.findById(playerId)
@@ -43,8 +46,10 @@ router.post('/profile/:id/players/add',isLoggedIn , (req,res)=>{
                 .then (userInfo=>{
                     userInfo.players.push(playerData)
                     userInfo.save()
+                    
                 })
-            res.redirect(`/profile`)
+                
+            res.redirect(`/profile/${userId}`)
         })
     
 })
@@ -84,11 +89,13 @@ router.get("/matches", async (req, res, next) => {
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
+        
     })
         .then( matchesData =>{
             let matchesInfo = matchesData.data.data
+            let userInfo = req.session.currentUser
             //STILL TO CONSTRUCT: FOR LOOP that checks for outdated matches and remove them from being listed
-            res.render('matches/matches', {matchesInfo})    
+            res.render('matches/matches', {matchesInfo, userInfo})    
         
         })
         console.log(API_KEY)
@@ -96,6 +103,8 @@ router.get("/matches", async (req, res, next) => {
 
 router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
     let id = req.params.id
+    const userInfo = req.session.currentUser
+
     await axios(loginUserConfig)
     .then (data=>{
         API_KEY = data.data.data.token
@@ -108,7 +117,7 @@ router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
     })
     .then( matchData =>{
         let matchInfo = matchData.data.data
-        res.render('matches/match', {matchInfo})    
+        res.render('matches/match', {matchInfo, userInfo})    
     
     })
 
@@ -144,12 +153,41 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
     
     
 })
-
-router.get('/profile/:id/predictions', isLoggedIn, (req, res)=>{
+let matchesArray = []
+router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
     const userId = req.session.currentUser._id
+    
+    if (API_KEY === ""){
+    await axios(loginUserConfig)
+    .then (data=>{
+        API_KEY = data.data.data.token
+        return API_KEY 
+        //console.log(API_KEY)
+})
+}
+    if(matchesArray.length<=0){
+    await axios("http://api.cup2022.ir/api/v1/match",  {
+        method:'get',
+        headers: `Authorization : Bearer ${API_KEY}`
+    })
+        .then(matchesData=> {
+            matchesArray = matchesData.data.data
+            return matchesArray
+        })
+    }
+
+
     User.findById(userId)
         .populate('predictions')
-        .then(userData=>{            
+        .then(userData=>{        
+            for (i=0;i<userData.predictions.length;i++){
+                let data = userData.predictions[i].matchId
+                let mappedMatch = matchesArray.filter(matchToFilter=>matchToFilter.id === `${data}`)
+                    userData.predictions[i].homeFlag = mappedMatch[0].home_flag
+                    userData.predictions[i].awayFlag= mappedMatch[0].away_flag
+                    userData.predictions[i].awayTeam= mappedMatch[0].away_team_en
+                    userData.predictions[i].homeTeam= mappedMatch[0].home_team_en
+            }
             res.render("profile/predictions", {userData}) 
         })
 })

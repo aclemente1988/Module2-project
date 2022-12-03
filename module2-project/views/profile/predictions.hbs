@@ -1,9 +1,59 @@
-<a href="/matches">Go back to Matches' List</a>
-<a href="/profile/{{userData.username}}">Go back to Profile Page</a>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mb-3">
+    <div class="container-fluid">
+        <a style="color:orange;" href="/profile/{{userData.username}}" class="navbar-brand">
+            <span class="fw-bold">
+                {{userData.username}} - Prediction List: 🚀
+            </span> 
+        </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <li class="nav nav-pills">
+            <a class="nav-link active" aria-current="page" href="/profile/{{userData.username}}">Dashboard</a>
+        </li>
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+          <!-- <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Predictions</a>
+          </li> -->
+          <li class="nav-item dropdown">
 
-<h2>{{userData.username}}'s Predictions List:</h2>
+            <a class="nav-link dropdown-toggle text-white" href="/matches" id="navbarScrollingDropdown" role="button"  aria-expanded="false">
+                Go back to Matches' List
+            </a>
+            
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                <li><a class="dropdown-item" href="#">Update</a></li>
+                <li><a class="dropdown-item" href="#">Delete</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">How it works?</li>
+            </ul>
+            
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
+          </li>
+        </ul>
 
-<h4>Total Predictions Made: {{userData.predictionsCount}} </h4>
+        
+
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Live results" aria-label="Search">
+          <button class="btn btn-outline-warning" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+<div style="margin-top:55px;margin-bottom:20px;">
+<a href="/profile/{{userData.username}}/dashboard/predictions">Go back to My Predictions' Dashboard</a>
+</div>
+    <div class="mt-5">
+        <h4>Total Predictions Made: {{userData.predictionsCount}} </h4>
+    </div>
+
+
+
 
 
 
@@ -11,29 +61,40 @@
 
     <thead>
         <tr>
+            <th scope="col">Home Team</td>
             <th scope="col">Home Score predicted</td>
+            <th scope="col">Away Team</td>
             <th scope="col">Away Score predicted</td>
             <th scope="col">Match link</td>
             <th scope="col">Edit Prediction</th>
+            <th scope="col">Verify Prediction</th>
             <th scope="col">Delete Prediction</th>
+
 
         </tr>
     </thead>
     <tbody>
 {{#each userData.predictions}}
     <tr scope="row">
-        <td ><img class="minified" src="#">{{this.homeScore}}</td>
+        <td ><img class="minified" src="{{this.homeFlag}}">{{this.homeTeam}}</td>
+        <td >{{this.homeScore}}</td>
+        <td ><img class="minified" src="{{this.awayFlag}}">{{this.awayTeam}}</td>
         <td>{{this.awayScore}}</td>
         <td>
             <form action="/matches/{{this.matchId}}" method="post">
                 <button>Match link</button>
             </form>
-        </td>
+        </td> 
         <td>
             <form action="/predictions/{{this._id}}" method="post">
                 <input name="homeScore" value="{{this.homeScore}}">
                 <button>Edit</button>
                 <input name="awayScore" value="{{this.awayScore}}">
+            </form>
+        </td>
+        <td>
+          <form action="/predictions/{{this._id}}/verify" method="post">
+                <button>Verify</button>
             </form>
         </td>
         <td>

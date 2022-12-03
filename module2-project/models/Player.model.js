@@ -9,7 +9,7 @@ const playerSchema = new Schema (
     },
     {
         timestamps: true,
-    }
+    }    
 );
 
 const Player = model("Player", playerSchema);

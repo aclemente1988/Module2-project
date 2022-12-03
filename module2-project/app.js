@@ -21,6 +21,7 @@ require("./config")(app);
 const capitalize = require("./utils/capitalize");
 const projectName = "module2-project";
 
+
 app.locals.appTitle = `${capitalize(projectName)} created with IronLauncher`;
 
 // 👇 Start handling routes here
@@ -40,3 +41,6 @@ app.use('/', predictionRoutes)
 require("./error-handling")(app);
 
 module.exports = app;
+
+
+//test push develop branch after merge skip from "develop" to "Develop" and merging "Develop" to "develop"

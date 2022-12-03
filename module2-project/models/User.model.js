@@ -33,6 +33,10 @@ const userSchema = new Schema(
       type: Number,
       default: 0
     },
+    predictionsPoints: {
+      type: Number,
+      default: 0
+    },
     players: [{ type: Schema.Types.ObjectId, ref: "Player"}],
   },
   {
