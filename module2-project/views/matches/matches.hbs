@@ -15,6 +15,7 @@
         <div class="container-fluid">
             <a href="/" class="navbar-brand">
                 <span class="fw-bold text-warning">
+
                     Welcome {{userInfo.username}}! 🚀
                 </span>
             </a>
@@ -32,11 +33,12 @@
               <li class="nav-item dropdown">
  
                 <a class="nav-link dropdown-toggle text-white" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Predictions
+                  Real Time Data
                 </a>
                 
                 <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                   <!-- <li><a class="dropdown-item" href="#">Create</a></li> -->
+
                   <li><a class="dropdown-item" href="/profile/{{userInfo._id}}/predictions">My Predictions' List</li>
                 </ul>
                 
