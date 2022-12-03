@@ -73,7 +73,9 @@ h1 {
 }
 
 .minified{
-  width: 10px;
+  width: 25px;
+  margin-right: 10px;
+  border:1px black solid;
 }
 
 #individual-match-card{

@@ -61,7 +61,9 @@
 
     <thead>
         <tr>
+            <th scope="col">Home Team</td>
             <th scope="col">Home Score predicted</td>
+            <th scope="col">Away Team</td>
             <th scope="col">Away Score predicted</td>
             <th scope="col">Match link</td>
             <th scope="col">Edit Prediction</th>
@@ -72,13 +74,15 @@
     <tbody>
 {{#each userData.predictions}}
     <tr scope="row">
-        <td ><img class="minified" src="#">{{this.homeScore}}</td>
-        <td>{{this.awayScore}}</td>
+        <td >{{this.homeTeam}}</td>
+        <td ><img class="minified" src="{{this.homeFlag}}">{{this.homeScore}}</td>
+        <td >{{this.awayTeam}}</td>
+        <td><img class="minified" src="{{this.awayFlag}}">{{this.awayScore}}</td>
         <td>
             <form action="/matches/{{this.matchId}}" method="post">
                 <button>Match link</button>
             </form>
-        </td>
+        </td> 
         <td>
             <form action="/predictions/{{this._id}}" method="post">
                 <input name="homeScore" value="{{this.homeScore}}">
