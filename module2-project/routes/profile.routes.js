@@ -63,7 +63,7 @@ router.post('/profile/:id/players/delete', (req,res)=>{
         User.findById(userId)
         .then(userInfo=>{
             userInfo.save()
-            res.redirect(`/profile/${userId}`)
+            res.redirect('/profile/:id/')
         })
     })
 })

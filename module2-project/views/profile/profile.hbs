@@ -62,7 +62,9 @@
                           <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Results</button>
                           <button class="nav-link " id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">FAQS</button>
                             <li class="nav-item">
+                               
                                 <a class="nav-link text-danger" href="/logout"  >Log out</a>
+                                
                             </li>
                         </div>
 
@@ -121,35 +123,36 @@
             </div>
           </div> -->
  
+
+          <!-- Players Added to Team-->
         <div>
-          {{#each userData.players}}
-          <div class="card mb-2 d-inline-flex p-2 shadow p-3 mb-5 ms-3 bg-body rounded" style="width: 11rem;">
-              <div class="card-body">
-                <h5 class="card-title">{{this.playername}}</h5>
-                  <p class="card-text">Position:{{this.position}}<br>
-                      <h6>{{this.team}}</h6>
-                  </p>
-  
-            
+            {{#each userData.players}}
+              <div class="card mb-2 d-inline-flex p-2 shadow p-3 mb-5 ms-3 bg-body rounded" style="width: 11rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">{{this.playername}}</h5>
+                      <p class="card-text">Position:{{this.position}}<br>
+                        <h6>{{this.team}}</h6>
+                      </p>
+      
+                    <form method="post" action="/profile/{{this._id}}/players/update">
+                      <button class="btn btn-warning btn-sm mb-1">Update</button>
 
-                <form method="post" action="/profile/{{this._id}}/players/update">
-                    <button class="btn btn-warning btn-sm mb-1">Update</button>
-
-                <form method="post" action="/profile/{{this._id}}/players/delete">
+                      <form method="post" action="/profile/{{this._id}}/players/delete">
                       <button class="btn btn-danger btn-sm">Delete</button>
-                  
-  
-                </form>
+                      
+                    </form>
+
+                  </div>
               </div>
-            </div>
-            
+                
   
           {{/each}}
+
         </div>
 
-        <!-- Test-->
 
 
+        <!-- Your Team-->
 
         <div style="padding-bottom:25px;border-bottom:0.5px lightgray solid;display:flex;flex-direction:row;justify-content:space-around">
 
@@ -157,9 +160,17 @@
               <h6 class="text-start">Your Team</h6>
               
               <table class="table table-striped ">
-          <caption>List of players</caption>
+                {{#each userData.players}}
+                  {{#if @last}}
+                      <caption>
+                        <h6 class="text-black text-start">Total players <span class="text-danger">{{@index}}</span></h6> 
+                      </caption>
+                  {{/if}}    
+                {{/each}}
+          
           <thead>
               <tr>
+                <th scope="col">#</td>
                   <th scope="col">Player</td>
                   <th scope="col">Position</td>
                   <th scope="col">Country</td>
@@ -170,11 +181,14 @@
       <tbody>
             {{#each userData.players}}
               <tr scope="row">
+                  <td><p>{{@index}}</p></td>  
                   <td >{{this.playername}}</td>
                   <td >{{this.position}}</td>
                   <td>{{this.team}}</td>
                   <td><form method="post" action="#">
                     <button class="btn btn-warning btn-sm mb-1">Verify</button></td>
+                    
+                  
               </tr>
           
             {{/each}}
