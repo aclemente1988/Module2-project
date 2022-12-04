@@ -77,7 +77,7 @@
       <div style="display:flex;flex-direction:column;justify-content:space-between;margin-left:300px;margin-top:50px;border:1px black solid;">
 
         <div style="display:flex;flex-direction:row;justify-content:space-around;align-items:center;">
-          <div  style="margin:25px 15px 25px 15px;padding:25px 15px 25px 15px;border:1px darkblue solid;display:flex;justify-content:center;align-items:center;flex-direction:column;">
+          <div class="shadow p-3 mb-5 bg-body rounded" style="margin:25px 15px 25px 15px;padding:25px 15px 25px 15px;border:1px rgb(0, 0, 10) solid;display:flex;justify-content:center;align-items:center;flex-direction:column;">
             <h3>{{userData.username}}</h3>
             <h4>Total Predictions: {{userData.predictionsCount}}</h4>
             <h5>Total Prediction Points Earned: {{userData.predictionsPoints}}</h5>
@@ -123,7 +123,7 @@
  
         <div>
           {{#each userData.players}}
-          <div class="card mb-2 d-inline-flex p-2" style="width: 11rem;">
+          <div class="card mb-2 d-inline-flex p-2 shadow p-3 mb-5 ms-3 bg-body rounded" style="width: 11rem;">
               <div class="card-body">
                 <h5 class="card-title">{{this.playername}}</h5>
                   <p class="card-text">Position:{{this.position}}<br>
@@ -147,8 +147,42 @@
           {{/each}}
         </div>
 
-          
+        <!-- Test-->
 
+
+
+        <div style="padding-bottom:25px;border-bottom:0.5px lightgray solid;display:flex;flex-direction:row;justify-content:space-around">
+
+          <div class="shadow p-3 mb-5 bg-body rounded" style="border-radius: 20px; padding:20px 25px 20px 25px;border:1px rgb(158, 156, 156) solid;">
+              <h6 class="text-start">Your Team</h6>
+              
+              <table class="table table-striped ">
+          <caption>List of players</caption>
+          <thead>
+              <tr>
+                  <th scope="col">Player</td>
+                  <th scope="col">Position</td>
+                  <th scope="col">Country</td>
+                  
+
+              </tr>
+          </thead>
+      <tbody>
+            {{#each userData.players}}
+              <tr scope="row">
+                  <td >{{this.playername}}</td>
+                  <td >{{this.position}}</td>
+                  <td>{{this.team}}</td>
+                  <td><form method="post" action="#">
+                    <button class="btn btn-warning btn-sm mb-1">Verify</button></td>
+              </tr>
+          
+            {{/each}}
+
+
+         
+          
+      </tbody>  
         
     </div>  
 
