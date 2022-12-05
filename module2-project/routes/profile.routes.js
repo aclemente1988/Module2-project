@@ -221,6 +221,7 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
                     userData.predictions[i].awayFlag= mappedMatch[0].away_flag
                     userData.predictions[i].awayTeam= mappedMatch[0].away_team_en
                     userData.predictions[i].homeTeam= mappedMatch[0].home_team_en
+                    userData.save()
             }
             res.render("profile/predictions", {userData}) 
         })
