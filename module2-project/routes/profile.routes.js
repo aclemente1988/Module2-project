@@ -254,6 +254,14 @@ router.post('/matches/:id', async (req,res)=>{
 
 // DEVELOP !!!!!!! TEST!!!!!!
 
+router.get('/profile/:username/frequently-asked-questions', isLoggedIn, (req,res)=>{
+    let userData = req.session.currentUser
+    res.render('profile/frequently-asked-questions', {userData})
+})
+    
+
+
+
 module.exports = router;
 
 //test
