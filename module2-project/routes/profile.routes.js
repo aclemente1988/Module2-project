@@ -63,7 +63,7 @@ router.post('/profile/:id/players/delete', (req,res)=>{
         User.findById(userId)
         .then(userInfo=>{
             userInfo.save()
-            res.redirect(`/profile/${userId}`)
+            res.redirect('/profile/:id/')
         })
     })
 })
@@ -81,6 +81,9 @@ router.post('/profile/:id/players/update', (req,res)=>{
         })
     })
 })
+
+
+
 
 
 
@@ -251,3 +254,5 @@ router.post('/matches/:id', async (req,res)=>{
 // DEVELOP !!!!!!! TEST!!!!!!
 
 module.exports = router;
+
+//test
