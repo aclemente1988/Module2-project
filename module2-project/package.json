@@ -8,6 +8,7 @@
     "seed": "node bin/seeds.js"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
     "axios": "^1.2.0",
     "bcrypt": "^5.1.0",
     "bootstrap": "^5.2.3",

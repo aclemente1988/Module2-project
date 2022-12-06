@@ -20,11 +20,11 @@ router.get('/profile/:username', isLoggedIn, (req, res)=>{
             console.log(userData)            
             res.render("profile/profile", {userData}) 
         })
-})
+})  
 
 // GET /user-dashboard-All-Players
-router.get('/profile/:id/players',isLoggedIn ,  async (req,res)=>{
-    let userInfo = req.session.currentUser.username
+router.get('/profile/:username/players',isLoggedIn ,  async (req,res)=>{
+    let userInfo = req.session.currentUser
     Player.find()
     .then( allPlayersFromDb =>{
 
@@ -53,6 +53,37 @@ router.post('/profile/:id/players/add',isLoggedIn , (req,res)=>{
         })
     
 })
+
+// DELETE/Player in the dashboard
+router.post('/profile/:id/players/delete', (req,res)=>{
+    let playersId = req.params.id;
+    let userId = req.session.currentUser._id
+    Player.findByIdAndDelete(playersId)
+    .then((x)=>{
+        User.findById(userId)
+        .then(userInfo=>{
+            userInfo.save()
+            res.redirect('/profile/:id/')
+        })
+    })
+})
+
+// Update/Player in the dashboard
+router.post('/profile/:id/players/update', (req,res)=>{
+    let playersId = req.params.id;
+    let userId = req.session.currentUser._id
+    Player.findByIdAndDelete(playersId)
+    .then((x)=>{
+        User.findById(userId)
+        .then(userInfo=>{
+            userInfo.save()
+            res.redirect('/profile/:id/players')
+        })
+    })
+})
+
+
+
 
 
 
@@ -117,7 +148,10 @@ router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
     })
     .then( matchData =>{
         let matchInfo = matchData.data.data
+
+
         res.render('matches/match', {matchInfo, userInfo})    
+
     
     })
 
@@ -187,6 +221,7 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
                     userData.predictions[i].awayFlag= mappedMatch[0].away_flag
                     userData.predictions[i].awayTeam= mappedMatch[0].away_team_en
                     userData.predictions[i].homeTeam= mappedMatch[0].home_team_en
+                    userData.save()
             }
             res.render("profile/predictions", {userData}) 
         })
@@ -219,4 +254,14 @@ router.post('/matches/:id', async (req,res)=>{
 
 // DEVELOP !!!!!!! TEST!!!!!!
 
+router.get('/profile/:username/frequently-asked-questions', isLoggedIn, (req,res)=>{
+    let userData = req.session.currentUser
+    res.render('profile/frequently-asked-questions', {userData})
+})
+    
+
+
+
 module.exports = router;
+
+//test

@@ -15,10 +15,22 @@ const predictionSchema = new Schema(
       type: String,
       unique: true
     },
-    homeflag: String,
-    awayFlag: String,
-    homeTeam: String,
-    awayTeam: String
+    homeflag: {
+      type : String,
+      required:false
+    },
+    awayFlag: {
+      type : String,
+      required:false
+    },
+    homeTeam: {
+      type : String,
+      required:false
+    },
+    awayTeam: {
+      type : String,
+      required:false
+    }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

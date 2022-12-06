@@ -55,44 +55,149 @@ router.post('/predictions/:id',isLoggedIn, (req,res)=>{
 
 router.post('/predictions/:id/delete',isLoggedIn, (req,res)=>{
     let predictionId = req.params.id;
+    console.log(predictionId)
     let userId = req.session.currentUser._id
+    
     Prediction.findByIdAndDelete(predictionId)
-    .then(data=>{
+            .then(data=>{
         console.log("prediciton deleted")
         User.findById(userId)
         .then(userInfo=>{
-            userInfo.predictionsCount -= 1;
-            userInfo.save()
-            res.redirect(`/profile/${userId}/predictions`)
-        })
-    })
+                    userInfo.predictionsCount -= 1;
+                    userInfo.save()
+                    res.redirect(`/profile/${userId}/predictions`)
+                })
+            })
+            
 })
 
-
+let matchesArray = []
 router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
     let predictionId = req.params.id
-    let userInfo = req.session.currentUser
+    let predictionMatchId
+    let predictionInformation
+    const userId = req.session.currentUser._id
+    let userData = req.session.currentUser
+
+    Prediction.findById(predictionId)
+        .then(predictionInfo=>{
+            predictionInformation = predictionInfo
+            predictionMatchId = predictionInfo.matchId
+            return predictionMatchId, predictionInformation
+        })
+    
 
     await axios(loginUserConfig)
     .then (data=>{
         API_KEY = data.data.data.token
         return API_KEY 
 })
-    await axios(`http://api.cup2022.ir/api/v1/match/${predictionId}`,  {
+    await axios(`http://api.cup2022.ir/api/v1/match/${predictionMatchId}`,  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
     })
+
     .then( matchData =>{
-        let matchInfo = matchData.data
-        console.log(matchInfo)
-        console.log("success")
-        res.redirect(`/profile/${userInfo.username}`)    
+        let matchInfo = matchData.data.data
+
+        if (matchInfo.home_score > matchInfo.away_score){
+            let winnerScore = matchInfo.home_score
+            let loserScore = matchInfo.away_score
+            
+            if(predictionInformation.homeScore > predictionInformation.awayScore){
+                let condition1=true
+                if(predictionInformation.homeScore === winnerScore && predictionInformation.awayScore === loserScore){
+                    let condition2 = true;
+                    let pointsToAdd = 115;
+                    console.log("you have correctly predicted both winner & exact score! Congratulations!")
+                    userData.predictionsPoints += pointsToAdd
+                    userData.save()
+                } else {
+                    let condition2 = false;
+                    let pointsToAdd = 55;
+                    console.log("you have correctly predicted the winner but not the scores! Congratulations!")
+                    userData.predictionsPoints += pointsToAdd
+                    userData.save()
+                }
+            } else {
+                let condition1 = false
+                let condition2 = false
+                let pointsToAdd = 5;
+                console.log("you have not correctly predicted neither the winner nor the scores! Try Again!")
+                userData.predictionsPoints += pointsToAdd
+                userData.save()
+            }
+        } 
+        else if (matchInfo.home_score < matchInfo.away_score){
+            let winnerScore = matchInfo.away_score
+            let loserScore = matchInfo.home_score
+            
+            if(predictionInformation.homeScore < predictionInformation.awayScore){
+                let condition1=true
+                if(predictionInformation.awayScore === winnerScore && predictionInformation.homeScore === loserScore){
+                    let condition2 = true;
+                    let pointsToAdd = 115;
+                    console.log("you have correctly predicted both winner & exact score! Congratulations!")
+                    userData.predictionsPoints += pointsToAdd
+                    userData.save()
+                } else {
+                    let condition2 = false;
+                    let pointsToAdd = 55;
+                    console.log("you have correctly predicted the winner but not the scores! Congratulations!")
+                    userData.predictionsPoints += pointsToAdd
+                    userData.save()
+                }
+            } else {
+                let condition1 = false
+                let condition2 = false
+                let pointsToAdd = 5;
+                console.log("you have not correctly predicted neither the winner nor the scores! Try Again!")
+                userData.predictionsPoints += pointsToAdd
+                userData.save()
+            }
+
+
+        }
+        else if (matchInfo.home_score === matchInfo.away_score){
+            let winnerScore = matchInfo.home_score
+            let loserScore = winnerScore
+            if(predictionInformation.homeScore === predictionInformation.awayScore){
+                let condition1 = true;
+                if (predictionInformation.homeScore === winnerScore){
+                    let condition2 = true;
+                    let pointsToAdd = 115;
+                    console.log("you have correctly predicted both winner & exact score! Congratulations!")
+                    userData.predictionsPoints += pointsToAdd
+                    userData.save()
+                } else {
+                    let condition2 = false;
+                    let pointsToAdd = 55;
+                    console.log("you have correctly predicted the winner but not the scores! Congratulations!")
+                    userData.predictionsPoints += pointsToAdd
+                    userData.save()
+                }
+            } else{
+                let condition1 = false
+                let condition2 = false
+                let pointsToAdd = 5;
+                console.log("you have not correctly predicted neither the winner nor the scores! Try Again!")
+                userData.predictionsPoints += pointsToAdd
+                userData.save()
+            }
+        }
+
+        User.findById(userId)
+            .populate('players')
+            .then(userInfo=>{
+                userData = userInfo
+                res.render(`profile/profile`, {userData}) 
+            })
+           
     })
     console.log("verified")
-    console.log(matchesArray)
 })
 
-let matchesArray = []
+
 router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
     if (API_KEY === ""){
         await axios(loginUserConfig)
@@ -117,7 +222,18 @@ router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
     .populate('predictions')
     .then(userInfo=>{
         let latestPredictions = userInfo.predictions.reverse()
-        for (i=0;i<5;i++){
+        if (userInfo.predictions.length === 0){
+            userData = userInfo
+            res.render('profile/prediction-dashboard', {userData})  
+        }
+        else if (userInfo.predictions.length !== 0){
+
+            console.log("array is not empty")
+
+        for (let i=0;i<5 || i<=userInfo.predictions.length;i++){
+            if (i<userInfo.predictions.length){
+                console.log(i)
+            console.log(latestPredictions[i])
             let date = latestPredictions[i].updatedAt
             let splicedDate = date.toDateString()
             let splicedTime = date.toTimeString()
@@ -125,19 +241,36 @@ router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
 
             let data = latestPredictions[i].matchId
             let mappedMatch = matchesArray.filter(matchToFilter=>matchToFilter.id === `${data}`)
+            console.log(mappedMatch)
                 latestPredictions[i].homeFlag = mappedMatch[0].home_flag
                 latestPredictions[i].awayFlag= mappedMatch[0].away_flag
                 latestPredictions[i].awayTeam= mappedMatch[0].away_team_en
                 latestPredictions[i].homeTeam= mappedMatch[0].home_team_en
                 latestPredictions[i].date= splicedDate
                 latestPredictions[i].time= splicedTimeReadable
-
-                
+            }
+                if (i===latestPredictions.length){
+                    userData = userInfo
+                    res.render('profile/prediction-dashboard', {userData, latestPredictions})
+                    break
+                }
         }
-        userData = userInfo
-        res.render('profile/prediction-dashboard', {userData, latestPredictions})
+        
+    }
     })
     
+})
+
+
+router.get('/profile/:username/predictions-leaderboard',isLoggedIn, (req, res)=>{
+    let userInfo = req.session.currentUser
+    User.find()
+        .then(userArray=>{
+            let userData = userArray.sort((a,b)=>{
+                return b.predictionsPoints - a.predictionsPoints;
+            })
+            res.render('profile/predictions-leaderboard', {userData, userInfo})
+        })
 })
 
 

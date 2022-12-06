@@ -99,46 +99,17 @@
         </tr>
     </thead>
     <tbody>
+        {{#each latestPredictions}}
     <tr scope="row">
-        <td >{{latestPredictions.[0].date}}</td>
-        <td >{{latestPredictions.[0].time}}</td>
-        <td ><img class="minified" src="{{latestPredictions.[0].homeFlag}}">{{latestPredictions.[0].homeTeam}}</td>
-        <td >{{latestPredictions.[0].homeScore}}</td>
-        <td ><img class="minified" src="{{latestPredictions.[0].awayFlag}}">{{latestPredictions.[0].awayTeam}}</td>
-        <td>{{latestPredictions.[0].awayScore}}</td>
+        <td >{{this.date}}</td>
+        <td >{{this.time}}</td>
+        <td ><img class="minified" src="{{this.homeFlag}}">{{this.homeTeam}}</td>
+        <td >{{this.homeScore}}</td>
+        <td ><img class="minified" src="{{this.awayFlag}}">{{this.awayTeam}}</td>
+        <td>{{this.awayScore}}</td>
     </tr>
-    <tr scope="row">
-        <td >{{latestPredictions.[1].date}}</td>
-        <td >{{latestPredictions.[1].time}}</td>
-        <td ><img class="minified" src="{{latestPredictions.[1].homeFlag}}">{{latestPredictions.[1].homeTeam}}</td>
-        <td >{{latestPredictions.[1].homeScore}}</td>
-        <td ><img class="minified" src="{{latestPredictions.[1].awayFlag}}">{{latestPredictions.[1].awayTeam}}</td>
-        <td>{{latestPredictions.[1].awayScore}}</td>
-    </tr>
-    <tr scope="row">
-        <td >{{latestPredictions.[2].date}}</td>
-        <td >{{latestPredictions.[2].time}}</td>
-        <td ><img class="minified" src="{{latestPredictions.[2].homeFlag}}">{{latestPredictions.[2].homeTeam}}</td>
-        <td >{{latestPredictions.[2].homeScore}}</td>
-        <td ><img class="minified" src="{{latestPredictions.[2].awayFlag}}">{{latestPredictions.[2].awayTeam}}</td>
-        <td>{{latestPredictions.[2].awayScore}}</td>
-    </tr>
-    <tr scope="row">
-        <td >{{latestPredictions.[3].date}}</td>
-        <td >{{latestPredictions.[3].time}}</td>
-        <td ><img class="minified" src="{{latestPredictions.[3].homeFlag}}">{{latestPredictions.[3].homeTeam}}</td>
-        <td >{{latestPredictions.[3].homeScore}}</td>
-        <td ><img class="minified" src="{{latestPredictions.[3].awayFlag}}">{{latestPredictions.[3].awayTeam}}</td>
-        <td>{{latestPredictions.[3].awayScore}}</td>
-    </tr>
-    <tr scope="row">
-        <td >{{latestPredictions.[4].date}}</td>
-        <td >{{latestPredictions.[4].time}}</td>
-        <td ><img class="minified" src="{{latestPredictions.[4].homeFlag}}">{{latestPredictions.[4].homeTeam}}</td>
-        <td >{{latestPredictions.[4].homeScore}}</td>
-        <td ><img class="minified" src="{{latestPredictions.[4].awayFlag}}">{{latestPredictions.[4].awayTeam}}</td>
-        <td>{{latestPredictions.[4].awayScore}}</td>
-    </tr>
+    
+    {{/each}}
     <tr>
         <td>
 

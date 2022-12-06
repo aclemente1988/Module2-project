@@ -1,7 +1,13 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  top: 0px !important; 
+  position: static !important; 
 }
+
+.goog-te-banner-frame{
+  display:none !important
+  }
 
 a {
   color: #00b7ff;
@@ -10,6 +16,21 @@ a {
 h1 {
   color: 15px;
 }
+
+
+
+#google_translate_element{
+  border:1.5px black solid;
+  width: 252px;
+  padding: 15px 10px 15px 10px;
+  border-radius: 25px;
+  background-color: gainsboro;
+  outline: 3px orange solid;
+}
+
+
+
+
 
 .flag{
   width: 25px;
@@ -36,6 +57,15 @@ h1 {
   margin-top: 25px;
   padding: 25px 35px 25px 35px;
   border: 1px solid black;
+}
+
+.highlighted-num{
+  background-color: rgba(255, 166, 0, 0.322);
+  color: #dc3545;
+  font-weight: bold;  
+  padding: 5px 10px 5px 10px;
+  border: 1px blue solid;
+  border-radius: 5px;
 }
 
 #match-team-info{
@@ -90,6 +120,7 @@ h1 {
   border-radius: 55px;
   background-color: orange;
   font-weight: bold;
+  font-size: 20px;
 }
 
 #individual-match-card{
@@ -156,3 +187,47 @@ height: calc(100vh - 70px);
 
 }
 
+/*==================== 
+	Footer 
+====================== */
+
+/* Main Footer */
+footer .main-footer{	padding: 20px 0;	background: #ffffff;}
+footer ul{	padding-left: 0;	list-style: none;}
+
+/* Copy Right Footer */
+.footer-copyright {	background: #ffc107;	padding: 5px 0;}
+
+
+.footer-copyright nav ul li:first-child {	border: medium none;	padding-left: 0;}
+.footer-copyright p {	color: #969696;	margin: 2px 0 0;}
+
+
+
+
+/*==================== 
+	Widgets 
+====================== */
+.widget{	padding: 20px;	margin-bottom: 40px;}
+.widget.widget-last{	margin-bottom: 0px;}
+.widget.no-box{	padding: 0;	background-color: transparent;	margin-bottom: 40px;
+	box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none; -ms-box-shadow: none; -o-box-shadow: none;}
+.widget.subscribe p{	margin-bottom: 18px;}
+.widget li a{	color: #fff;}
+.widget li a:hover{	color: #aaa;text-decoration: none;}
+.widget-title {margin-bottom: 20px;}
+.widget-title span {background: #ffc107 none repeat scroll 0 0;display: block; height: 1px;margin-top: 25px;position: relative;width: 20%;}
+.widget-title span::after {background: inherit;content: "";height: inherit;    position: absolute;top: -4px;width: 50%;}
+.widget-title.text-center span,.widget-title.text-center span::after {margin-left: auto;margin-right:auto;left: 0;right: 0;}
+.widget .badge{	float: right;	background: #893838;}
+
+
+.thumb-content ::before {
+    content: "\f190";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    margin-left: 5px;
+    color: #000000;
+}
