@@ -12,9 +12,8 @@ const predictionSchema = new Schema(
         required: true
     },
     matchId: {
-      type: String,
-      unique: true
-    },
+      type: String
+        },
     homeflag: {
       type : String,
       required:false
