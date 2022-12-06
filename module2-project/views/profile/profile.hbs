@@ -4,7 +4,7 @@
             <a href="/" class="navbar-brand">
                 <span class="fw-bold text-warning">
 
-                     Welcome {{userData.username}} 🚀
+                     Welcome {{userData.username}} ⚽🚀
                 </span>
             </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,13 +54,18 @@
                     <div class="d-flex ">
                         <div class="nav flex-column ml-5 nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                           <li class="nav nav-pills">
-                            <a class="nav-link active" aria-current="page" href="/matches">New Prediction</a>
+                            <a style="" class="nav-link active" aria-current="page" href="/matches">New Prediction</a>
                           </li>
                             <li class="nav-item">
                                 <a class="nav-link text-primary" href="/profile/{{userData._id}}/predictions">My predictions</a>
                             </li>
-                          <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Results</button>
-                          <button class="nav-link " id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">FAQS</button>
+                          
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData.username}}/predictions-leaderboard">Predictions Leaderboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData.username}}/frequently-asked-questions">FAQs</a>
+                            </li>
                             <li class="nav-item">
                                
                                 <a class="nav-link text-danger" href="/logout"  >Log out</a>
@@ -76,36 +81,28 @@
       </div> 
 
 
-      <div style="display:flex;flex-direction:column;justify-content:space-between;margin-left:300px;margin-top:50px;border:1px black solid;">
+      <div  style="display:flex;flex-direction:column;justify-content:space-between;margin-left:300px;margin-top:50px;border:1px black solid;">
 
         <div style="display:flex;flex-direction:row;justify-content:space-around;align-items:center;">
           <div class="shadow p-3 mb-5 bg-body rounded" style="margin:25px 15px 25px 15px;padding:25px 15px 25px 15px;border:1px rgb(0, 0, 10) solid;display:flex;justify-content:center;align-items:center;flex-direction:column;">
-            <h3>{{userData.username}}</h3>
-            <h4>Total Predictions: {{userData.predictionsCount}}</h4>
-            <h5>Total Prediction Points Earned: {{userData.predictionsPoints}}</h5>
+            <h3 style="text-decoration:underline;">{{userData.username}}</h3>
+            <h4 style="color:orange;">Total Predictions: {{userData.predictionsCount}}</h4>
+            <h5 >Total Prediction Points Earned: <span class="highlighted-num">{{userData.predictionsPoints}}</span></h5>
           </div>
-          <div>Chart to be inserted here later on</div>
+          <div style="color:white;">            </div>
           <div>
             <a href="/profile/{{userData.username}}/dashboard/predictions"><button class="dashboard-btn" >My Prediction Dashboard</button></a>
           </div>
         </div>
 
-        <div style="padding:55px 0px 55px 0px;display:flex;justify-content:space-around;border-top:1px black solid;">
-          <div style="border:1px green solid;">
-            Flex Division 1
-          </div>
-          <div style="border:1px green solid;">
-            Flex Division 2
-          </div>
-          <div style="border:1px green solid;">
-            Flex Division 3
-          </div>
+        <div style="padding:15px 0px 15px 0px;display:flex;justify-content:space-around;border-top:1px black solid;">
+          
         </div>
 
 
           
 
-      <!-- <div class=" mt-4">
+        <!-- <div class=" mt-4">
         
         <div class="card mb-2 d-inline-flex p-2" style="width: 11rem;">
             <div class="card-body">
@@ -125,36 +122,8 @@
  
 
           <!-- Players Added to Team-->
-        <div>
-            {{#each userData.players}}
-              <div class="card mb-2 d-inline-flex p-2 shadow p-3 mb-5 ms-3 bg-body rounded" style="width: 11rem;">
-                  <div class="card-body">
-                    <h5 class="card-title">{{this.playername}}</h5>
-                      <p class="card-text">Position:{{this.position}}<br>
-                        <h6>{{this.team}}</h6>
-                      </p>
-      
-                    <form method="post" action="/profile/{{this._id}}/players/update">
-                      <button class="btn btn-warning btn-sm mb-1">Update</button>
-
-                      <form method="post" action="/profile/{{this._id}}/players/delete">
-                      <button class="btn btn-danger btn-sm">Delete</button>
-                      
-                    </form>
-
-                  </div>
-              </div>
-                
-  
-          {{/each}}
-
-        </div>
-
-
-
-        <!-- Your Team-->
-
-        <div style="padding-bottom:25px;border-bottom:0.5px lightgray solid;display:flex;flex-direction:row;justify-content:space-around">
+  <div style=";display:flex;justify-content:space-around"> 
+        <div style="margin-left:25px;margin-right:25px;padding-bottom:25px;display:flex;flex-direction:row;justify-content:space-around">
 
           <div class="shadow p-3 mb-5 bg-body rounded" style="border-radius: 20px; padding:20px 25px 20px 25px;border:1px rgb(158, 156, 156) solid;">
               <h6 class="text-start">Your Team</h6>
@@ -178,7 +147,7 @@
 
               </tr>
           </thead>
-      <tbody>
+       <tbody>
             {{#each userData.players}}
               <tr scope="row">
                   <td><p>{{@index}}</p></td>  
@@ -192,20 +161,58 @@
               </tr>
           
             {{/each}}
-
+        
 
          
           
-      </tbody>  
+        </tbody>  
+        </table>
         
-    </div>  
 
 
       
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    
-  </body>
-</html>
+      </div>
+    </div>
 
+
+
+        <div style="border-left:1px black solid;">
+          <h2 style="margin-left:25px;margin-bottom:35px;">Your Fantasy Team Players:</h2>
+          <div style="display:flex;flex-wrap:wrap;">
+            {{#each userData.players}}
+              <div class="card mb-2 d-inline-flex p-2 shadow p-3 mb-5 ms-3 bg-body rounded" style="width: 11rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">{{this.playername}}</h5>
+                      <p class="card-text">Position:{{this.position}}<br>
+                        <h6>{{this.team}}</h6>
+                      </p>
+      
+                    <form method="post" action="/profile/{{this._id}}/players/update">
+                      <button class="btn btn-warning btn-sm mb-1">Update</button>
+
+                      <form method="post" action="/profile/{{this._id}}/players/delete">
+                      <button class="btn btn-danger btn-sm">Delete</button>
+                      
+                    </form>
+
+                  </div>
+              </div>
+                
+  
+          {{/each}}
+        </div>
+        </div>
+
+
+
+        <!-- Your Team-->
+
+        
+</div>  
+
+ <div style="padding:15px 0px 15px 0px;display:flex;justify-content:space-around;">
+          
+        </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

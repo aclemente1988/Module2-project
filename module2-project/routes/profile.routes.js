@@ -20,11 +20,11 @@ router.get('/profile/:username', isLoggedIn, (req, res)=>{
             console.log(userData)            
             res.render("profile/profile", {userData}) 
         })
-})
+})  
 
 // GET /user-dashboard-All-Players
-router.get('/profile/:id/players',isLoggedIn ,  async (req,res)=>{
-    let userInfo = req.session.currentUser.username
+router.get('/profile/:username/players',isLoggedIn ,  async (req,res)=>{
+    let userInfo = req.session.currentUser
     Player.find()
     .then( allPlayersFromDb =>{
 
@@ -221,6 +221,7 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
                     userData.predictions[i].awayFlag= mappedMatch[0].away_flag
                     userData.predictions[i].awayTeam= mappedMatch[0].away_team_en
                     userData.predictions[i].homeTeam= mappedMatch[0].home_team_en
+                    userData.save()
             }
             res.render("profile/predictions", {userData}) 
         })
@@ -252,6 +253,14 @@ router.post('/matches/:id', async (req,res)=>{
 
 
 // DEVELOP !!!!!!! TEST!!!!!!
+
+router.get('/profile/:username/frequently-asked-questions', isLoggedIn, (req,res)=>{
+    let userData = req.session.currentUser
+    res.render('profile/frequently-asked-questions', {userData})
+})
+    
+
+
 
 module.exports = router;
 
