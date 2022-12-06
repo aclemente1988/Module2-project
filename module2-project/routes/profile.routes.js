@@ -82,8 +82,32 @@ router.post('/profile/:id/players/update', (req,res)=>{
     })
 })
 
+//retrive info of results from the API
+router.get("/results", async (req, res, next) => {
+   
+    await axios(loginUserConfig)
+        .then (data=>{
+            console.log(API_KEY)
+            API_KEY = data.data.data.token
+            return API_KEY 
+            //console.log(API_KEY)
+  })
 
-
+    await axios("http://api.cup2022.ir/api/v1/match",  {
+        method:'get',
+        headers: `Authorization : Bearer ${API_KEY}`
+        
+    })
+        .then( matchesData =>{
+            let matchesInfo = matchesData.data.data
+            let userInfo = req.session.currentUser
+            console.log("Test de esta info", matchesInfo)
+            //STILL TO CONSTRUCT: FOR LOOP that checks for outdated matches and remove them from being listed
+            res.render('profile/results', {matchesInfo, userInfo})    
+        
+        })
+        console.log(API_KEY)
+});
 
 
 
@@ -125,6 +149,7 @@ router.get("/matches", async (req, res, next) => {
         .then( matchesData =>{
             let matchesInfo = matchesData.data.data
             let userInfo = req.session.currentUser
+            console.log("haciendo un test", matchesInfo)
             //STILL TO CONSTRUCT: FOR LOOP that checks for outdated matches and remove them from being listed
             res.render('matches/matches', {matchesInfo, userInfo})    
         
