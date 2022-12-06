@@ -89,25 +89,27 @@
 
     <thead>
         <tr>
+          <th scope="col">Ranking (#)</th>
             <th scope="col">Username</td>
             <th scope="col">Predictions Count</td>
             <th scope="col">Right Predictions</td>
             <th scope="col">Wrong Predictions</td>
 {{!--             <th scope="col">Prediction Rate</td> --}}
             <th scope="col">Total Points</th>
-            <th scope="col">Ranking</th>
+            
         </tr>
     </thead>
     <tbody>
 {{#each userData}}
     <tr scope="row">
+      <td class="create_index">  {{@index}}</td>
         <td >{{this.username}}</td>
         <td >{{this.predictionsCount}}</td>
         <td >{{this.correctPredictions}}</td>
         <td>{{this.wrongPredictions}}</td>
         {{!-- <td>{{this.predictionRate}}</td>  --}}
         <td>{{this.predictionsPoints}}</td>
-        <td class="create_index">{{@index}}</td>
+        
     </tr>
 {{/each}}
 </tbody>

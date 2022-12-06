@@ -58,9 +58,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-primary" href="/profile/{{userData._id}}/predictions">My predictions</a>
                             </li>
-                          <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Results</button>
-                          <button class="nav-link " id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">FAQS</button>
                             <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData.username}}/predictions-leaderboard">Predictions Leaderboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData.username}}/frequently-asked-questions">FAQs</a>
+                            </li>                            <li class="nav-item">
                                 <a class="nav-link text-danger" href="/logout"  >Log out</a>
                             </li>
                         </div>
@@ -80,8 +83,8 @@
         <h2 style="text-decoration:underline;margin-bottom:45px;">{{userData.username}}, here's your Stats:</h2>
         <h3 style="margin-bottom:15px;">Prediction Points: {{userData.predictionsPoints}}</h3>
         <h3 style="margin-bottom:15px;">Number of predictions made: {{userData.predictionsCount}} </h3>
-        <h3 style="margin-bottom:15px;">Prediction Won: {{userData.correctPredictions:}}</h3>
-        <h3 style="margin-bottom:15px;">Prediction Lost: {{userData.wrongPredictions:}}</h3>
+        <h3 style="margin-bottom:15px;">Prediction Won: {{userData.correctPredictions}}</h3>
+        <h3 style="margin-bottom:15px;">Prediction Lost: {{userData.wrongPredictions}}</h3>
     </div>
     <div style="padding:20px 25px 20px 25px;border:1px black solid;">
         <h2>Latest Predictions:</h2>
