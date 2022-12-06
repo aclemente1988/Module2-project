@@ -173,8 +173,9 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
                             userInfo.predictions.push(predictionData)
                             userInfo.predictionsCount += 2;
                             userInfo.save()
+                            res.redirect(`/profile/${userId}/predictions`)
                         })      
-            res.redirect(`/profile/${userId}/predictions`)
+            
             
         })
         return
@@ -221,9 +222,12 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
                     userData.predictions[i].awayFlag= mappedMatch[0].away_flag
                     userData.predictions[i].awayTeam= mappedMatch[0].away_team_en
                     userData.predictions[i].homeTeam= mappedMatch[0].home_team_en
-                    userData.save()
-            }
+         }
             res.render("profile/predictions", {userData}) 
+        })
+        .catch(err=>{
+            console.log("error found: "+ err)
+            res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
         })
 })
     

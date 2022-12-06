@@ -99,7 +99,16 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
 
     .then(async (matchData) =>{
         let matchInfo = matchData.data.data
-        if(matchInfo.finished === "TRUE"){
+        console.log(matchInfo)
+        let parsedMatchDate = Date.parse(matchInfo[0].local_date)
+        console.log(parsedMatchDate)
+        //let parsedMatchDate = Date.parse(matchDate)
+        let todayDate = new Date()
+        let parsedTodayDate = Date.parse(todayDate)
+        console.log(parsedTodayDate)
+        console.log(todayDate)
+        if(matchInfo.finished === "TRUE" || parsedMatchDate < parsedTodayDate){
+            console.log("match finished")
         User.findById(userId)
             .then (async (userDBData)=>{
                 if (matchInfo.home_score > matchInfo.away_score){
@@ -240,12 +249,13 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                         .populate('players')
                         .then(userInfo=>{
                             userData = userInfo
+                            userData.predictionMessage = "You have won "
                             res.redirect(`/profile/${userData._id}/predictions`) 
                         })
             })
         
 
-        } else if(matchInfo.finished !== "TRUE"){
+        } else {
             await axios(loginUserConfig)
             .then (data=>{
         API_KEY = data.data.data.token
@@ -275,8 +285,8 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                     userData.predictions[i].awayFlag= mappedMatch[0].away_flag
                     userData.predictions[i].awayTeam= mappedMatch[0].away_team_en
                     userData.predictions[i].homeTeam= mappedMatch[0].home_team_en
-                    userData.save()
-            }
+/*                     userData.save()
+ */            }
             res.render("profile/predictions", {userData, errorMessage:"You can't verify an unfinished match! Wait until the game is over!"}) 
         })
         }
