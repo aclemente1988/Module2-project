@@ -20,11 +20,11 @@ router.get('/profile/:username', isLoggedIn, (req, res)=>{
             console.log(userData)            
             res.render("profile/profile", {userData}) 
         })
-})
+})  
 
 // GET /user-dashboard-All-Players
-router.get('/profile/:id/players',isLoggedIn ,  async (req,res)=>{
-    let userInfo = req.session.currentUser.username
+router.get('/profile/:username/players',isLoggedIn ,  async (req,res)=>{
+    let userInfo = req.session.currentUser
     Player.find()
     .then( allPlayersFromDb =>{
 

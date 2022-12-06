@@ -262,6 +262,18 @@ router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
 })
 
 
+router.get('/profile/:username/predictions-leaderboard',isLoggedIn, (req, res)=>{
+    let userInfo = req.session.currentUser
+    User.find()
+        .then(userArray=>{
+            let userData = userArray.sort((a,b)=>{
+                return b.predictionsPoints - a.predictionsPoints;
+            })
+            res.render('profile/predictions-leaderboard', {userData, userInfo})
+        })
+})
+
+
 module.exports = router;
 
 

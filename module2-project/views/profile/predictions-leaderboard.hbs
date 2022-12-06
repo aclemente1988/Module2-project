@@ -1,0 +1,122 @@
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="/" class="navbar-brand">
+                <span class="fw-bold text-warning">
+
+                     Welcome {{userData.username}} 🚀
+                </span>
+            </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <li class="nav nav-pills">
+                <a class="nav-link active" aria-current="page" href="/profile/{{userData.username}}/players">Create Team</a>
+            </li>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <!-- <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Predictions</a>
+              </li> -->
+              <li class="nav-item dropdown">
+ 
+                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Fantasy Team
+                </a>
+                
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                  <li><a class="dropdown-item" href="#">Update</a></li>
+                  <li><a class="dropdown-item" href="#">Delete</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">How it works?</li>
+                </ul>
+                
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Live results" aria-label="Search">
+              <button class="btn btn-outline-warning" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+
+      <!-- SideBar -->
+
+     <div class="container-fluid ">
+        <div class="row ">
+            <div class="col-md-2 mt-5 bg-light d-none d-md-block sidebar ">
+                <div class="left-sidebar">
+                    <div class="d-flex ">
+                        <div class="nav flex-column ml-5 nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                          <li class="nav nav-pills">
+                            <a style="" class="nav-link active" aria-current="page" href="/matches">New Prediction</a>
+                          </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo._id}}/predictions">My predictions</a>
+                            </li>
+                          
+                          
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/predictions-leaderboard">Global Leaderboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/frequently-asked-questions">FAQs</a>
+                            </li>
+                            <li class="nav-item">
+                               
+                                <a class="nav-link text-danger" href="/logout"  >Log out</a>
+                                
+                            </li>
+                        </div>
+
+                      </div>
+                </div>
+            </div>
+
+        </div>
+      </div> 
+
+
+
+<h2 style="text-decoration:underline;color:orange;font-weight:bold;text-align:center;margin-bottom: 65px;margin-left:300px;">Users' Predictions <span style="font-size:40px;color:black;">L</span>eaderboard</h2>
+<table style="width: 80%;margin-left:300px;" class="table table-striped">
+
+
+    <thead>
+        <tr>
+            <th scope="col">Username</td>
+            <th scope="col">Predictions Count</td>
+            <th scope="col">Right Predictions</td>
+            <th scope="col">Wrong Predictions</td>
+{{!--             <th scope="col">Prediction Rate</td> --}}
+            <th scope="col">Total Points</th>
+            <th scope="col">Ranking</th>
+        </tr>
+    </thead>
+    <tbody>
+{{#each userData}}
+    <tr scope="row">
+        <td >{{this.username}}</td>
+        <td >{{this.predictionsCount}}</td>
+        <td >{{this.correctPredictions}}</td>
+        <td>{{this.wrongPredictions}}</td>
+        {{!-- <td>{{this.predictionRate}}</td>  --}}
+        <td>{{this.predictionsPoints}}</td>
+        <td class="create_index">{{@index}}</td>
+    </tr>
+{{/each}}
+</tbody>
+
+</table>
+<script>
+    var divs = document.querySelectorAll('.create_index');
+    for (var i = 0; i < divs.length; ++i) {
+        divs[i].innerHTML = i + 1;
+    }
+</script>
+

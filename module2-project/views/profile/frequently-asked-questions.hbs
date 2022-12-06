@@ -1,10 +1,10 @@
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a href="/" class="navbar-brand">
+            <a href="/profile/{{userData.username}}" class="navbar-brand">
                 <span class="fw-bold text-warning">
 
-                     Welcome {{userData.username}} 🚀
+                     Welcome {{userData.username}} ⚽🚀
                 </span>
             </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,16 +45,47 @@
       </nav>
 
 
+<div class="container-fluid ">
+        <div class="row ">
+            <div class="col-md-2 mt-5 bg-light d-none d-md-block sidebar ">
+                <div class="left-sidebar">
+                    <div class="d-flex ">
+                        <div class="nav flex-column ml-5 nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                          <li class="nav nav-pills">
+                            <a style="" class="nav-link active" aria-current="page" href="/matches">New Prediction</a>
+                          </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData._id}}/predictions">My predictions</a>
+                            </li>
+                          <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Results</button>
+                          <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData.username}}/frequently-asked-questions">FAQs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData.username}}/predictions-leaderboard">Leaderboard</a>
+                            </li>
+                            <li class="nav-item">
+                               
+                                <a class="nav-link text-danger" href="/logout"  >Log out</a>
+                                
+                            </li>
+                        </div>
+
+                      </div>
+                </div>
+            </div>
+
+        </div>
+      </div> 
 
 
-
-<div class="accordion" id="accordionExample" style="margin-top:55px;">
+<div class="accordion" id="accordionExample" style="margin-left:300px;margin-top:55px;">
     <h1>Frequently Asked Questions</h1>
   <div style="margin-top:35px;"class="card">
     <div class="card-header" id="headingOne">
       <h2 class="mb-0">
         <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          What are the Features of this App?
+          1. What are the Features of this App?
         </button>
       </h2>
     </div>
@@ -69,7 +100,7 @@
     <div class="card-header" id="headingTwo">
       <h2 class="mb-0">
         <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          How can I earn points in Prediction Mode?
+          2. How can I earn points in Prediction Mode?
         </button>
       </h2>
     </div>
@@ -92,7 +123,7 @@
     <div class="card-header" id="headingThree">
       <h2 class="mb-0">
         <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          How can I earn points in Phantasy Football team Mode?
+          3. How can I earn points in Phantasy Football team Mode?
         </button>
       </h2>
     </div>
@@ -102,13 +133,11 @@
       </div>
     </div>
   </div>
-</div>
-
- <div class="card">
+  <div class="card">
     <div class="card-header" id="headingFour">
       <h2 class="mb-0">
         <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseTFour">
-          How can I earn points in Phantasy Football team Mode?
+          4. How can I earn points in Phantasy Football team Mode?
         </button>
       </h2>
     </div>
@@ -118,4 +147,7 @@
       </div>
     </div>
   </div>
+</div>
+
+ 
 </div>

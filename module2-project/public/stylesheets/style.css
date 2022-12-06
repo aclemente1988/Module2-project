@@ -1,7 +1,13 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  top: 0px !important; 
+  position: static !important; 
 }
+
+.goog-te-banner-frame{
+  display:none !important
+  }
 
 a {
   color: #00b7ff;
@@ -10,6 +16,21 @@ a {
 h1 {
   color: 15px;
 }
+
+
+
+#google_translate_element{
+  border:1.5px black solid;
+  width: 252px;
+  padding: 15px 10px 15px 10px;
+  border-radius: 25px;
+  background-color: gainsboro;
+  outline: 3px orange solid;
+}
+
+
+
+
 
 .flag{
   width: 25px;
@@ -36,6 +57,15 @@ h1 {
   margin-top: 25px;
   padding: 25px 35px 25px 35px;
   border: 1px solid black;
+}
+
+.highlighted-num{
+  background-color: rgba(255, 166, 0, 0.322);
+  color: #dc3545;
+  font-weight: bold;  
+  padding: 5px 10px 5px 10px;
+  border: 1px blue solid;
+  border-radius: 5px;
 }
 
 #match-team-info{
@@ -90,6 +120,7 @@ h1 {
   border-radius: 55px;
   background-color: orange;
   font-weight: bold;
+  font-size: 20px;
 }
 
 #individual-match-card{
