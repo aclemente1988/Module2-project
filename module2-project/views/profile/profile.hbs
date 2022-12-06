@@ -129,49 +129,51 @@
               <h6 class="text-start">Your Team</h6>
               
               <table class="table table-striped ">
-                {{#each userData.players}}
-                  {{#if @last}}
-                      <caption>
-                        <h6 class="text-black text-start">Total players <span class="text-danger">{{@index}}</span></h6> 
-                      </caption>
-                  {{/if}}    
-                {{/each}}
-          
-          <thead>
-              <tr>
-                <th scope="col">#</td>
-                  <th scope="col">Player</td>
-                  <th scope="col">Position</td>
-                  <th scope="col">Country</td>
-                  
+                    <!-- {{#each userData.players}}
+                      {{#if @last}}
+                          <caption>
+                            <h6 class="text-black text-start">Total players <span class="text-danger">{{@index}}</span></h6> 
+                          </caption>
+                      {{/if}}    
+                    {{/each}} -->
+              
+                  <thead>
+                      <tr>
+                        <th scope="col">#</td>
+                          <th scope="col">Player</td>
+                          <th scope="col">Position</td>
+                          <th scope="col">Country</td>
+                          
 
-              </tr>
-          </thead>
-       <tbody>
-            {{#each userData.players}}
-              <tr scope="row">
-                  <td><p>{{@index}}</p></td>  
-                  <td >{{this.playername}}</td>
-                  <td >{{this.position}}</td>
-                  <td>{{this.team}}</td>
-                  <td><form method="post" action="#">
-                    <button class="btn btn-warning btn-sm mb-1">Verify</button></td>
-                    
-                  
-              </tr>
-          
-            {{/each}}
+                      </tr>
+                  </thead>
+
+                  <tbody>
+                        {{#each userData.players}}
+                          <tr scope="row">
+                              <td class="create_index"><p>{{@index}}</p></td>  
+                              <td >{{this.playername}}</td>
+                              <td >{{this.position}}</td>
+                              <td>{{this.team}}</td>
+                              <td><form method="post" action="#">
+                              <button class="btn btn-warning btn-sm mb-1">Verify</button></td>
+                                
+                              
+                          </tr>
+                      
+                        {{/each}}
+                      
+                  </tbody>  
+
+                </table>
         
 
-         
-          
-        </tbody>  
-        </table>
-        
-
-
-      
-
+        <script>
+          var divs = document.querySelectorAll('.create_index');
+            for (var i = 0; i < divs.length; ++i) {
+                divs[i].innerHTML = i + 1;
+          }
+        </script>
 
       </div>
     </div>

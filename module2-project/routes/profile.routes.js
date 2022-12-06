@@ -63,7 +63,7 @@ router.post('/profile/:id/players/delete', (req,res)=>{
         User.findById(userId)
         .then(userInfo=>{
             userInfo.save()
-            res.redirect('/profile/:id/')
+            res.redirect('/profile/{{userInfo.username}}')
         })
     })
 })
@@ -77,7 +77,7 @@ router.post('/profile/:id/players/update', (req,res)=>{
         User.findById(userId)
         .then(userInfo=>{
             userInfo.save()
-            res.redirect('/profile/:id/players')
+            res.redirect('/profile/{{userInfo.username}}/players')
         })
     })
 })
