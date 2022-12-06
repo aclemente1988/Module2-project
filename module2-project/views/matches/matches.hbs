@@ -66,15 +66,22 @@
                     <div class="d-flex ">
                         <div class="nav flex-column ml-5 nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                           <li class="nav nav-pills">
-                            <a class="nav-link active" aria-current="page" href="/matches">New Prediction</a>
+                            <a style="" class="nav-link active" aria-current="page" href="/matches">New Prediction</a>
                           </li>
                             <li class="nav-item">
-                                <a class="nav-link text-primary" href="/profile/{{userData._id}}/predictions">My predictions</a>
+                                <a class="nav-link text-primary" href="/profile/{{userInfo._id}}/predictions">My predictions</a>
                             </li>
-                          <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Results</button>
-                          <button class="nav-link " id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">FAQS</button>
+                          
                             <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/predictions-leaderboard">Predictions Leaderboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/frequently-asked-questions">FAQs</a>
+                            </li>
+                            <li class="nav-item">
+                               
                                 <a class="nav-link text-danger" href="/logout"  >Log out</a>
+                                
                             </li>
                         </div>
 
@@ -85,7 +92,7 @@
         </div>
       </div> 
 
-      <div id="matches-container">
+      <div style="" id="matches-container">
         {{#each matchesInfo}}
         
             <div id="match-card">

@@ -108,7 +108,7 @@ let tokenAcessGETConfig = {
 
 //Display all the Information on the incoming Matches on the "MATCHES.HBS" file
 router.get("/matches", async (req, res, next) => {
-    if (API_KEY === ""){
+   
     await axios(loginUserConfig)
         .then (data=>{
             console.log(API_KEY)
@@ -116,7 +116,7 @@ router.get("/matches", async (req, res, next) => {
             return API_KEY 
             //console.log(API_KEY)
   })
-}
+
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
@@ -171,7 +171,7 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
                     User.findById(userId)
                         .then (userInfo=>{
                             userInfo.predictions.push(predictionData)
-                            userInfo.predictionsCount += 1;
+                            userInfo.predictionsCount += 2;
                             userInfo.save()
                         })      
             res.redirect(`/profile/${userId}/predictions`)
@@ -191,14 +191,14 @@ let matchesArray = []
 router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
     const userId = req.session.currentUser._id
     
-    if (API_KEY === ""){
+    
     await axios(loginUserConfig)
     .then (data=>{
         API_KEY = data.data.data.token
         return API_KEY 
         //console.log(API_KEY)
 })
-}
+
     if(matchesArray.length<=0){
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
