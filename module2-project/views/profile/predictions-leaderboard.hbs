@@ -1,17 +1,17 @@
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a href="/" class="navbar-brand">
+            <a href="/profile/{{userInfo.username}}" class="navbar-brand">
                 <span class="fw-bold text-warning">
 
-                     Welcome {{userData.username}} 🚀
+                     Welcome {{userInfo.username}} 🚀
                 </span>
             </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
             <li class="nav nav-pills">
-                <a class="nav-link active" aria-current="page" href="/profile/{{userData.username}}/players">Create Team</a>
+                <a class="nav-link active" aria-current="page" href="/profile/{{userInfo.username}}/players">Create Team</a>
             </li>
           <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
@@ -62,7 +62,7 @@
                           
                           
                             <li class="nav-item">
-                                <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/predictions-leaderboard">Global Leaderboard</a>
+                                <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/predictions-leaderboard">Predictions Leaderboard</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/frequently-asked-questions">FAQs</a>
