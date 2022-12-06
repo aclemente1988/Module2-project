@@ -188,6 +188,7 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
     
     
 })
+
 let matchesArray = []
 router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
     const userId = req.session.currentUser._id
@@ -214,7 +215,7 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
 
     User.findById(userId)
         .populate('predictions')
-        .then(userData=>{        
+        .then(userData=>{       
             for (i=0;i<userData.predictions.length;i++){
                 let data = userData.predictions[i].matchId
                 let mappedMatch = matchesArray.filter(matchToFilter=>matchToFilter.id === `${data}`)

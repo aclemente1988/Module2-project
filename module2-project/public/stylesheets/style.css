@@ -67,6 +67,10 @@ h1 {
   padding: 5px 10px 5px 10px;
   border: 1px blue solid;
   border-radius: 5px;
+  text-shadow: -1px 1px 0 #000,
+				  1px 1px 0 #000,
+				 1px -1px 0 #000,
+				-1px -1px 0 #000;
 }
 
 #match-team-info{
