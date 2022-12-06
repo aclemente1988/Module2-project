@@ -38,6 +38,13 @@ const userSchema = new Schema(
       default: 0
     },
     players: [{ type: Schema.Types.ObjectId, ref: "Player"}],
+    predictionMessage:{
+      type: String
+    },
+    predictionsRate:{
+      type: String,
+      default: 0
+    }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
