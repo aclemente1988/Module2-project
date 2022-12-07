@@ -3,12 +3,12 @@ const router = express.Router();
 const axios = require('axios')
 const Prediction = require('../models/Prediction.model');
 const Player = require('../models/Player.model')
+const User = require('../models/User.model');
 
 let API_KEY =""
 
 const isLoggedIn = require("../middleware/isLoggedIn")
 const isLoggedOut = require("../middleware/isLoggedOut");
-const User = require('../models/User.model');
 
 
 // GET /user-dashboard
@@ -17,8 +17,10 @@ router.get('/profile/:username', isLoggedIn, (req, res)=>{
     User.findById(userId)
         .populate('players')
         .then(userData=>{
-            console.log(userData)            
             res.render("profile/profile", {userData}) 
+        })
+        .catch(err=>{
+            res.render('error')
         })
 })  
 
@@ -27,17 +29,16 @@ router.get('/profile/:username/players',isLoggedIn ,  async (req,res)=>{
     let userInfo = req.session.currentUser
     Player.find()
     .then( allPlayersFromDb =>{
-
         res.render('players', {allPlayersFromDb, userInfo} )    
-    
     })
- 
+    .catch(err=>{
+        res.render('error')
+    })
 })
 
 // POST/Players to user dashboard
 router.post('/profile/:id/players/add',isLoggedIn , (req,res)=>{
     const playerId = req.params.id
-    console.log("quiero saber esta informacion", (playerId))
     const userId = req.session.currentUser._id
 
     Player.findById(playerId)
@@ -46,11 +47,12 @@ router.post('/profile/:id/players/add',isLoggedIn , (req,res)=>{
                 .then (userInfo=>{
                     userInfo.players.push(playerData)
                     userInfo.save()
-                    
+                    res.redirect(`/profile/${userId}`)
                 })
-                
-            res.redirect(`/profile/${userId}`)
-        })
+                .catch(err=>{
+                    res.render('error')
+                })           
+           })
     
 })
 
@@ -65,6 +67,9 @@ router.post('/profile/:id/players/delete', (req,res)=>{
             userInfo.save()
             res.redirect('/profile/{{userInfo.username}}')
         })
+        .catch(err=>{
+            res.render('error')
+        })
     })
 })
 
@@ -78,6 +83,9 @@ router.post('/profile/:id/players/update', (req,res)=>{
         .then(userInfo=>{
             userInfo.save()
             res.redirect('/profile/{{userInfo.username}}/players')
+        })
+        .catch(err=>{
+            res.render('error')
         })
     })
 })
@@ -135,10 +143,8 @@ router.get("/matches", async (req, res, next) => {
    
     await axios(loginUserConfig)
         .then (data=>{
-            console.log(API_KEY)
             API_KEY = data.data.data.token
             return API_KEY 
-            //console.log(API_KEY)
   })
 
     await axios("http://api.cup2022.ir/api/v1/match",  {
@@ -149,12 +155,15 @@ router.get("/matches", async (req, res, next) => {
         .then( matchesData =>{
             let matchesInfo = matchesData.data.data
             let userInfo = req.session.currentUser
-            console.log("haciendo un test", matchesInfo)
-            //STILL TO CONSTRUCT: FOR LOOP that checks for outdated matches and remove them from being listed
+
+
+
             res.render('matches/matches', {matchesInfo, userInfo})    
         
         })
-        console.log(API_KEY)
+        .catch(err=>{
+            res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+        })
 });
 
 router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
@@ -165,7 +174,6 @@ router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
     .then (data=>{
         API_KEY = data.data.data.token
         return API_KEY 
-        //console.log(API_KEY)
 })
     await axios(`http://api.cup2022.ir/api/v1/match/${id}`,  {
         method:'get',
@@ -173,11 +181,10 @@ router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
     })
     .then( matchData =>{
         let matchInfo = matchData.data.data
-
-
         res.render('matches/match', {matchInfo, userInfo})    
-
-    
+    })
+    .catch(err=>{
+        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
     })
 
 })
@@ -189,8 +196,6 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
     Prediction.findOne({matchId: matchId})
     .then(data=>{
         if (!data){
-            console.log("match never predicted before")
-
             Prediction.create({homeScore, awayScore, matchId:matchId})
                 .then (predictionData=>{
                     User.findById(userId)
@@ -205,9 +210,9 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
         })
         return
         } else if (data){
-            console.log("prediction  already predicted" + data)            
             res.redirect('/matches')
         }
+        
         
     })
     
@@ -218,12 +223,10 @@ let matchesArray = []
 router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
     const userId = req.session.currentUser._id
     
-    
     await axios(loginUserConfig)
     .then (data=>{
         API_KEY = data.data.data.token
         return API_KEY 
-        //console.log(API_KEY)
 })
 
     if(matchesArray.length<=0){
@@ -236,8 +239,6 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
             return matchesArray
         })
     }
-
-
     User.findById(userId)
         .populate('predictions')
         .then(userData=>{       
@@ -252,7 +253,6 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
             res.render("profile/predictions", {userData}) 
         })
         .catch(err=>{
-            console.log("error found: "+ err)
             res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
         })
 })
@@ -263,7 +263,6 @@ router.post('/matches/:id', async (req,res)=>{
     if (API_KEY === ""){
         await axios(loginUserConfig)
             .then (data=>{
-                console.log(API_KEY)
                 API_KEY = data.data.data.token
                 return API_KEY 
       })
@@ -273,25 +272,18 @@ router.post('/matches/:id', async (req,res)=>{
             headers: `Authorization : Bearer ${API_KEY}`
         })
             .then( matchData =>{
-                console.log(matchData.data.data)
                 let matchInfo = matchData.data.data
                 res.render('matches/match-no-predict', {matchInfo})    
-            
+            })
+            .catch(err=>{
+                res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
             })
     });
 
-
-
-// DEVELOP !!!!!!! TEST!!!!!!
 
 router.get('/profile/:username/frequently-asked-questions', isLoggedIn, (req,res)=>{
     let userData = req.session.currentUser
     res.render('profile/frequently-asked-questions', {userData})
 })
     
-
-
-
 module.exports = router;
-
-//test
