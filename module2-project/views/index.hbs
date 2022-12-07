@@ -22,9 +22,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#developers" >Developers</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#Get in Touch" >Get in Touch</a>
-                    </li>
+                    
                 </ul>
             </div>
 
@@ -146,73 +144,31 @@
         </div>
     </section>
 
-    <!-- contact form -->
+   
 
-    {{!-- <section  id="Get in Touch">
-        <div class="container-lg">
-          
-          <div class="text-center mt-5">
-            <h2>Get in Touch</h2>
-            <p class="lead">Questions to ask? Fill out the form to contact us directly...</p>
-          </div>
-          <div class="row justify-content-center my-5">
-            <div class="col-lg-6">
-              
-              <form>
-                <!-- contact Email -->
-                <label for="email" class="form-label">Email address:</label>
-                <div class="input-group mb-4">
-                  <span class="input-group-text">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-open-fill" viewBox="0 0 16 16">
-                        <path d="M8.941.435a2 2 0 0 0-1.882 0l-6 3.2A2 2 0 0 0 0 5.4v.314l6.709 3.932L8 8.928l1.291.718L16 5.714V5.4a2 2 0 0 0-1.059-1.765l-6-3.2ZM16 6.873l-5.693 3.337L16 13.372v-6.5Zm-.059 7.611L8 10.072.059 14.484A2 2 0 0 0 2 16h12a2 2 0 0 0 1.941-1.516ZM0 13.373l5.693-3.163L0 6.873v6.5Z"/>
-                      </svg>
-                  </span>
-                  <input type="text" id="email" class="form-control" placeholder="e.g. ironhack@example.com" />
+      <section style="margin:0 auto;width:80%;border-bottom:1px orange solid;padding-bottom:75px;margin-bottom:35px;"id="developers">
+        <h2 style="font-size:40px;margin-bottom:15px;text-align:center;align-items:center">Project Developers</h2>
+        <p class="lead text-muted" style="font-size:18px;margin-bottom:55px;text-align:center;align-items:center;color:gray;">Find information about the Developers behind this App</p>
+            <div style="display:flex;justify-content:space-around;">
+                <div>
+                        <p><i class="fa-solid fa-user-secret fa-3x"></i></p>
+                        <h1>Name: Paul Fresnel</h1>
+                        <h2>Level: 26</h2>
+                        <h3>Hobbies: Gaming, Sports, Coding</h3>
+                        <h4>Career: BBA, MIM, Ironhack Full-Stack Dev</h4>
+                        <h5>Contact: <a href="https://fr.linkedin.com/in/paul-fresnel-a834b4139"><i class="fa-brands fa-linkedin"></i> </a> <a href="https://github.com/Paulfresnel"><i class="fa-brands fa-github"></i></a></h5>
+                        
                 </div>
+                <div>
+                    <p><i class="fa-solid fa-user-secret fa-3x"></i></p>
+                    <h1>Name: Axel Clemente</h1>
+                    <h2>Level: 26</h2>
+                    <h3>Hobbies: </h3>
+                    <h4>Career: </h4>
+                    <h5>Contact: <a href="#"><i class="fa-brands fa-linkedin"></i> </a> <a href="#"><i class="fa-brands fa-github"></i></a></h5>
 
-                <!-- contact Name -->
-                <label for="name" class="form-label">Name:</label>
-                <div class="mb-4 input-group">
-                  <span class="input-group-text">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                      </svg>
-                  </span>
-                  <input type="text" id="name" class="form-control" placeholder="e.g. Lloyd" />
                 </div>
-
-                <!-- What is your question about -->
-                <label for="subject" class="form-label">What is your question about?</label>
-                <div class="mb-4 input-group">
-                  <span class="input-group-text">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                      </svg>
-                  </span>
-                  <select class="form-select" id="subject">
-                    <option value="pricing" selected>Developers Portfolio</option>
-                    <option value="content">Hiring</option>
-                    <option value="other">Other query</option>
-                  </select>
-                </div>
-                <div class="mb-4 mt-5 form-floating">
-                  <textarea class="form-control" id="query" style="height: 140px" placeholder="query"></textarea>
-                  <label for="query">Your query...</label>
-                </div>
-
-                <!-- button -->
-                <div class="mb-4 text-center">
-                  <button type="submit" class="btn btn-warning">Submit</button>
-                </div>
-              </form>
             </div>
-          </div>
-        </div>
-      </section> --}}
-
-      <section id="developers">
-
         
       </section>
 
@@ -224,7 +180,7 @@
         
         
       
-        <footer id="footer" class="footer-1">
+        <footer id="footer" style="margin-bottom:0"class="footer-1">
         <div class="main-footer widgets-dark typo-light">
         <div class="container">
         <div class="row">
