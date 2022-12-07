@@ -4,7 +4,7 @@
             <a href="/profile/{{userInfo.username}}" class="navbar-brand">
                 <span class="fw-bold text-warning">
 
-                     Welcome {{userInfo.username}} 🚀
+                     Welcome {{userInfo.username}} ⚽🚀
                 </span>
             </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,25 +89,31 @@
 
     <thead>
         <tr>
+          <th scope="col">Ranking (#)</th>
             <th scope="col">Username</td>
             <th scope="col">Predictions Count</td>
             <th scope="col">Right Predictions</td>
             <th scope="col">Wrong Predictions</td>
+            <th scope="col">Success Rate</td>
+
 {{!--             <th scope="col">Prediction Rate</td> --}}
             <th scope="col">Total Points</th>
-            <th scope="col">Ranking</th>
+            
         </tr>
     </thead>
     <tbody>
 {{#each userData}}
     <tr scope="row">
+      <td class="create_index">  {{@index}}</td>
         <td >{{this.username}}</td>
         <td >{{this.predictionsCount}}</td>
         <td >{{this.correctPredictions}}</td>
         <td>{{this.wrongPredictions}}</td>
+        <td>{{this.predictionsRate}}%</td>
+
         {{!-- <td>{{this.predictionRate}}</td>  --}}
         <td>{{this.predictionsPoints}}</td>
-        <td class="create_index">{{@index}}</td>
+        
     </tr>
 {{/each}}
 </tbody>

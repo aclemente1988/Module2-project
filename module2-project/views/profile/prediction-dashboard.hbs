@@ -3,7 +3,7 @@
             <a href="/profile/{{userData.username}}" class="navbar-brand">
                 <span class="fw-bold text-warning">
 
-                    {{userData.username}}'s Prediction Dashboard 🚀
+                    {{userData.username}}'s Prediction Dashboard ⚽🚀
                 </span>
             </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,9 +58,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-primary" href="/profile/{{userData._id}}/predictions">My predictions</a>
                             </li>
-                          <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Results</button>
-                          <button class="nav-link " id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">FAQS</button>
                             <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData.username}}/predictions-leaderboard">Predictions Leaderboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData.username}}/frequently-asked-questions">FAQs</a>
+                            </li>                            <li class="nav-item">
                                 <a class="nav-link text-danger" href="/logout"  >Log out</a>
                             </li>
                         </div>
@@ -77,11 +80,12 @@
 
 <div style="padding-bottom:25px;border-bottom:0.5px lightgray solid;display:flex;flex-direction:row;justify-content:space-around">
     <div class="prediction-stats" >
-        <h2 style="text-decoration:underline;margin-bottom:45px;">{{userData.username}}, here's your Stats:</h2>
-        <h3 style="margin-bottom:15px;">Prediction Points: {{userData.predictionsPoints}}</h3>
+        <h2 style="text-underline-offset: 8px;color:orange;text-decoration:underline;margin-bottom:45px;"><span style="font-weight:200" class="highlighted-num">{{userData.username}}</span>, here's your Stats:</h2>
+        <h3 style="margin-bottom:15px;">Prediction Points: <span class="highlighted-num" style="font-weight:100;font-size:30px;color:blue">{{userData.predictionsPoints}}</span></h3>
         <h3 style="margin-bottom:15px;">Number of predictions made: {{userData.predictionsCount}} </h3>
-        <h3 style="margin-bottom:15px;">Prediction Won: {{userData.correctPredictions:}}</h3>
-        <h3 style="margin-bottom:15px;">Prediction Lost: {{userData.wrongPredictions:}}</h3>
+        <h3 style="color:green;margin-bottom:15px;">Predictions Won: {{userData.correctPredictions}}</h3>
+        <h3 style="color:red;margin-bottom:15px;">Predictions Lost: {{userData.wrongPredictions}}</h3>
+        <h3 style="margin-bottom:15px;">Predictions Success Rate: <span class="highlighted-num" style="outline:2px black solid;border:2px gold solid;background-color:aquamarine; font-size:30px;color:orange">{{userData.predictionsRate}}</span> %</h3>
     </div>
     <div style="padding:20px 25px 20px 25px;border:1px black solid;">
         <h2>Latest Predictions:</h2>

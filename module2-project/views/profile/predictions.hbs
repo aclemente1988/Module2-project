@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <a style="color:orange;" href="/profile/{{userData.username}}" class="navbar-brand">
             <span class="fw-bold">
-                {{userData.username}} - Prediction List: 🚀
+                {{userData.username}} - Prediction List ⚽🚀
             </span> 
         </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,6 +50,13 @@
 </div>
     <div class="mt-5">
         <h4>Total Predictions Made: {{userData.predictionsCount}} </h4>
+        <h3>Total Predictions Points: {{userData.predictionsPoints}} </h4>
+  {{#if errorMessage}}
+  <h5 style="color:red;font-weight:bold;margin:15px 0px 15px 0px;">{{errorMessage}}</h5>
+  {{/if}}
+  {{#if userData.predictionMessage}}
+    <p>Latest Prediction Message: </br>  <span style="color:orange;text-decoration:underline;">{{userData.predictionMessage}}</span></p>
+  {{/if}} 
     </div>
 
 
@@ -85,21 +92,21 @@
                 <button>Match link</button>
             </form>
         </td> 
-        <td>
-            <form action="/predictions/{{this._id}}" method="post">
-                <input name="homeScore" value="{{this.homeScore}}">
-                <button>Edit</button>
+        <td >
+            <form  action="/predictions/{{this._id}}" method="post">
+                <input  name="homeScore" value="{{this.homeScore}}">
+                <button class="edit-prediction">Edit</button>
                 <input name="awayScore" value="{{this.awayScore}}">
             </form>
         </td>
         <td>
           <form action="/predictions/{{this._id}}/verify" method="post">
-                <button>Verify</button>
+                <button class="verify-prediction"type="submit">Verify</button>
             </form>
         </td>
         <td>
             <form action="/predictions/{{this._id}}/delete" method="post">
-                <button>Delete</button>
+                <button class="delete-prediction">Delete</button>
             </form>
         </td>
     </tr>

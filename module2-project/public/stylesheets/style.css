@@ -7,7 +7,7 @@ body {
 
 .goog-te-banner-frame{
   display:none !important
-  }
+}
 
 a {
   color: #00b7ff;
@@ -39,11 +39,12 @@ h1 {
 
 #matches-container{
   margin: 0 auto;
+  margin-left:200px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  width: 90%;
+  width: 95%;
 }
 
 #match-card{
@@ -52,11 +53,27 @@ h1 {
   flex-wrap: wrap;
   margin-left: 15px;
   margin-right: 15px;
-  width: 400px;
+  width: 500px;
   margin-bottom: 25px;
   margin-top: 25px;
   padding: 25px 35px 25px 35px;
   border: 1px solid black;
+}
+
+.verify-prediction{
+  background-color: lightgreen;
+  border-radius: 5px;
+}
+
+.edit-prediction{
+  background-color: rgb(252, 231, 173);
+  border-radius: 5px;
+
+}
+
+.delete-prediction{
+  background-color: rgb(241, 176, 176);
+  border-radius: 5px;
 }
 
 .highlighted-num{
@@ -66,6 +83,10 @@ h1 {
   padding: 5px 10px 5px 10px;
   border: 1px blue solid;
   border-radius: 5px;
+  text-shadow: -1px 1px 0 #000,
+				  1px 1px 0 #000,
+				 1px -1px 0 #000,
+				-1px -1px 0 #000;
 }
 
 #match-team-info{

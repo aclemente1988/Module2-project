@@ -108,7 +108,7 @@ let tokenAcessGETConfig = {
 
 //Display all the Information on the incoming Matches on the "MATCHES.HBS" file
 router.get("/matches", async (req, res, next) => {
-    if (API_KEY === ""){
+   
     await axios(loginUserConfig)
         .then (data=>{
             console.log(API_KEY)
@@ -116,7 +116,7 @@ router.get("/matches", async (req, res, next) => {
             return API_KEY 
             //console.log(API_KEY)
   })
-}
+
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
@@ -171,10 +171,11 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
                     User.findById(userId)
                         .then (userInfo=>{
                             userInfo.predictions.push(predictionData)
-                            userInfo.predictionsCount += 1;
+                            userInfo.predictionsCount += 2;
                             userInfo.save()
+                            res.redirect(`/profile/${userId}/predictions`)
                         })      
-            res.redirect(`/profile/${userId}/predictions`)
+            
             
         })
         return
@@ -187,18 +188,19 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
     
     
 })
+
 let matchesArray = []
 router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
     const userId = req.session.currentUser._id
     
-    if (API_KEY === ""){
+    
     await axios(loginUserConfig)
     .then (data=>{
         API_KEY = data.data.data.token
         return API_KEY 
         //console.log(API_KEY)
 })
-}
+
     if(matchesArray.length<=0){
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
@@ -213,7 +215,7 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
 
     User.findById(userId)
         .populate('predictions')
-        .then(userData=>{        
+        .then(userData=>{       
             for (i=0;i<userData.predictions.length;i++){
                 let data = userData.predictions[i].matchId
                 let mappedMatch = matchesArray.filter(matchToFilter=>matchToFilter.id === `${data}`)
@@ -221,9 +223,12 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
                     userData.predictions[i].awayFlag= mappedMatch[0].away_flag
                     userData.predictions[i].awayTeam= mappedMatch[0].away_team_en
                     userData.predictions[i].homeTeam= mappedMatch[0].home_team_en
-                    userData.save()
-            }
+         }
             res.render("profile/predictions", {userData}) 
+        })
+        .catch(err=>{
+            console.log("error found: "+ err)
+            res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
         })
 })
     
