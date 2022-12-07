@@ -60,6 +60,22 @@ h1 {
   border: 1px solid black;
 }
 
+.verify-prediction{
+  background-color: lightgreen;
+  border-radius: 5px;
+}
+
+.edit-prediction{
+  background-color: rgb(252, 231, 173);
+  border-radius: 5px;
+
+}
+
+.delete-prediction{
+  background-color: rgb(241, 176, 176);
+  border-radius: 5px;
+}
+
 .highlighted-num{
   background-color: rgba(255, 166, 0, 0.322);
   color: #dc3545;

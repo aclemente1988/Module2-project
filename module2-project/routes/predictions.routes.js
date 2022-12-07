@@ -339,9 +339,14 @@ router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
     User.findById(userData._id)
     .populate('predictions')
     .then(userInfo=>{
+        if (userInfo.predictionsCount !== 0){
         let rate = ((userInfo.correctPredictions/userInfo.predictionsCount)*100).toFixed(2)
         console.log(rate)
         userInfo.predictionsRate = rate
+    } else if (userInfo.predictionsCount === 0){
+        let rate = 0
+        userInfo.predictionsRate = rate
+    }
         let latestPredictions = userInfo.predictions.reverse()
         if (userInfo.predictions.length === 0){
             userData = userInfo
@@ -390,6 +395,11 @@ router.get('/profile/:username/predictions-leaderboard',isLoggedIn, (req, res)=>
             let userData = userArray.sort((a,b)=>{
                 return b.predictionsPoints - a.predictionsPoints;
             })
+            for (i=0;i<userData.length;i++){
+                let rate = ((userData[i].correctPredictions/userData[i].predictionsCount)*100).toFixed(2)
+                console.log(rate)
+                userData[i].predictionsRate = rate
+            }
             res.render('profile/predictions-leaderboard', {userData, userInfo})
         })
 })
