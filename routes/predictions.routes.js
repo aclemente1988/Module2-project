@@ -55,12 +55,10 @@ router.post('/predictions/:id',isLoggedIn, (req,res)=>{
 
 router.post('/predictions/:id/delete',isLoggedIn, (req,res)=>{
     let predictionId = req.params.id;
-    console.log(predictionId)
     let userId = req.session.currentUser._id
     
     Prediction.findByIdAndDelete(predictionId)
             .then(data=>{
-        console.log("prediciton deleted")
         User.findById(userId)
         .then(userInfo=>{
                     userInfo.predictionsCount -= 1;
@@ -99,32 +97,23 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
 
     .then(async (matchData) =>{
         let matchInfo = matchData.data.data
-        console.log(matchInfo)
         let parsedMatchDate = Date.parse(matchInfo[0].local_date)
-        console.log(parsedMatchDate)
-        //let parsedMatchDate = Date.parse(matchDate)
         let todayDate = new Date()
         let parsedTodayDate = Date.parse(todayDate)
-        console.log(parsedTodayDate)
-        console.log(todayDate)
+
         if(matchInfo[0].finished === "TRUE" || parsedMatchDate < parsedTodayDate){
-            console.log("match finished")
         User.findById(userId)
             .then (async (userDBData)=>{
                 if (matchInfo[0].home_score > matchInfo[0].away_score){
                     let winnerScore = matchInfo[0].home_score
                     let loserScore = matchInfo[0].away_score
-                    console.log("swinner score" + winnerScore)
-                    console.log("loser score" + loserScore)
+
                     
                     if(predictionInformation.homeScore > predictionInformation.awayScore){
                         let condition1=true
-                        console.log("condition 1 true")
                         if(predictionInformation.homeScore === winnerScore && predictionInformation.awayScore === loserScore){
                             let condition2 = true;
-                            console.log("condition 2 true")
                             let pointsToAdd = 115;
-                            console.log("you have correctly predicted both winner & exact score! Congratulations!")
                             userDBData.predictionsPoints += pointsToAdd
                             userDBData.correctPredictions += 2;
                             userDBData.predictionMessage = "You have correctly predicted the winner, and the scores! You're a Natural! You earn +155 Points"
@@ -135,9 +124,7 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                                 })
                         } else {
                             let condition2 = false;
-                            console.log("condition2 false but 1 still true")
                             let pointsToAdd = 55;
-                            console.log("you have correctly predicted the winner but not the scores! Congratulations!")
                             userDBData.predictionsPoints += pointsToAdd
                             userDBData.correctPredictions += 1;
                             userDBData.wrongPredictions += 1;
@@ -152,9 +139,7 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                     } else {
                         let condition1 = false
                         let condition2 = false
-                        console.log("both conditions false instantly")
                         let pointsToAdd = 5;
-                        console.log("you have not correctly predicted neither the winner nor the scores! Try Again!")
                         userDBData.predictionsPoints += pointsToAdd
                         userDBData.wrongPredictions += 2;
                         userDBData.predictionMessage = "You have lost your prediction, but you're still awarded 5 points for your participation"
@@ -168,15 +153,13 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                 else if (matchInfo[0].home_score < matchInfo[0].away_score){
                     let winnerScore = matchInfo[0].away_score
                     let loserScore = matchInfo[0].home_score
-                    console.log("swinner score away" + winnerScore)
-                    console.log("loser score home" + loserScore)
+
                     
                     if(predictionInformation.homeScore < predictionInformation.awayScore){
                         let condition1=true
                         if(predictionInformation.awayScore === winnerScore && predictionInformation.homeScore === loserScore){
                             let condition2 = true;
                             let pointsToAdd = 115;
-                            console.log("you have correctly predicted both winner & exact score! Congratulations!")
                             userDBData.predictionsPoints += pointsToAdd
                             userDBData.correctPredictions += 2;
                             userDBData.predictionMessage = "You have correctly predicted the winner, and the scores! You're a Natural! You earn +155 Points"
@@ -188,7 +171,6 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                         } else {
                             let condition2 = false;
                             let pointsToAdd = 55;
-                            console.log("you have correctly predicted the winner but not the scores! Congratulations!")
                             userDBData.predictionsPoints += pointsToAdd
                             userDBData.correctPredictions += 1;
                             userDBData.wrongPredictions += 1;
@@ -203,7 +185,6 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                         let condition1 = false
                         let condition2 = false
                         let pointsToAdd = 5;
-                        console.log("you have not correctly predicted neither the winner nor the scores! Try Again!")
                         userDBData.predictionsPoints += pointsToAdd
                         userDBData.wrongPredictions += 2;
                         userDBData.predictionMessage = "You have lost your prediction, but you're still awarded 5 points for your participation"
@@ -224,7 +205,6 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                         if (predictionInformation.homeScore === winnerScore){
                             let condition2 = true;
                             let pointsToAdd = 115;
-                            console.log("you have correctly predicted both winner & exact score! Congratulations!")
                             userDBData.predictionsPoints += pointsToAdd
                             userDBData.correctPredictions += 2;
                             userDBData.predictionMessage = "You have correctly predicted the winner, and the scores! You're a Natural! You earn +155 Points"
@@ -236,7 +216,6 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                         } else {
                             let condition2 = false;
                             let pointsToAdd = 55;
-                            console.log("you have correctly predicted the winner but not the scores! Congratulations!")
                             userDBData.predictionsPoints += pointsToAdd
                             userDBData.correctPredictions += 1;
                             userDBData.wrongPredictions += 1;
@@ -251,7 +230,6 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                         let condition1 = false
                         let condition2 = false
                         let pointsToAdd = 5;
-                        console.log("you have not correctly predicted neither the winner nor the scores! Try Again!")
                         userDBData.predictionsPoints += pointsToAdd
                         userDBData.wrongPredictions += 2;
                         userDBData.predictionMessage = "You have lost your prediction, but you're still awarded 5 points for your participation"
@@ -266,10 +244,7 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
             User.findById(userId)
                         .populate('players')
                         .then(userInfo=>{
-                            
-                            console.log("prediction message added")                            
                             userData = userInfo
-                            console.log(userData)
                             res.redirect(`/profile/${userData._id}/predictions`) 
                         })
             })
@@ -280,7 +255,6 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
             .then (data=>{
         API_KEY = data.data.data.token
         return API_KEY 
-        //console.log(API_KEY)
 })
 
     if(matchesArray.length<=0){
@@ -322,7 +296,6 @@ router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
         .then (data=>{
             API_KEY = data.data.data.token
             return API_KEY 
-            //console.log(API_KEY)
     })
     
         if(matchesArray.length<=0){
@@ -341,7 +314,6 @@ router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
     .then(userInfo=>{
         if (userInfo.predictionsCount !== 0){
         let rate = ((userInfo.correctPredictions/userInfo.predictionsCount)*100).toFixed(2)
-        console.log(rate)
         userInfo.predictionsRate = rate
     } else if (userInfo.predictionsCount === 0){
         let rate = 0
@@ -353,13 +325,8 @@ router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
             res.render('profile/prediction-dashboard', {userData})  
         }
         else if (userInfo.predictions.length !== 0){
-
-            console.log("array is not empty")
-
         for (let i=0;i<5 || i<=userInfo.predictions.length;i++){
             if (i<userInfo.predictions.length){
-                console.log(i)
-            console.log(latestPredictions[i])
             let date = latestPredictions[i].updatedAt
             let splicedDate = date.toDateString()
             let splicedTime = date.toTimeString()
@@ -367,7 +334,7 @@ router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
 
             let data = latestPredictions[i].matchId
             let mappedMatch = matchesArray.filter(matchToFilter=>matchToFilter.id === `${data}`)
-            console.log(mappedMatch)
+
                 latestPredictions[i].homeFlag = mappedMatch[0].home_flag
                 latestPredictions[i].awayFlag= mappedMatch[0].away_flag
                 latestPredictions[i].awayTeam= mappedMatch[0].away_team_en
@@ -397,7 +364,6 @@ router.get('/profile/:username/predictions-leaderboard',isLoggedIn, (req, res)=>
             })
             for (i=0;i<userData.length;i++){
                 let rate = ((userData[i].correctPredictions/userData[i].predictionsCount)*100).toFixed(2)
-                console.log(rate)
                 userData[i].predictionsRate = rate
             }
             res.render('profile/predictions-leaderboard', {userData, userInfo})
