@@ -166,9 +166,9 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
     const matchId = req.params.id
     const { homeScore, awayScore } = req.body
     const userId = req.session.currentUser._id
-    Prediction.findOne({matchId: matchId})
+    /* Prediction.findOne({matchId: matchId})
     .then(data=>{
-        if (!data){
+        if (!data){ */
             Prediction.create({homeScore, awayScore, matchId:matchId})
                 .then (predictionData=>{
                     User.findById(userId)
@@ -181,14 +181,10 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
             
             
         })
-        return
-        } else if (data){
+        /* return */
+        /* } else if (data){
             res.redirect('/matches')
-        }
-        
-        
-    })
-    
+        } */  
     
 })
 
