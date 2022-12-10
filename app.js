@@ -37,6 +37,10 @@ app.use('/', profileRoutes)
 
 const predictionRoutes = require("./routes/predictions.routes")
 app.use('/', predictionRoutes)
+
+
+const playerRoutes = require('./routes/players.routes')
+app.use('/', playerRoutes)
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
