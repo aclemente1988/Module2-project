@@ -101,6 +101,9 @@
         
 
           <!-- Players Added to Team-->
+          <form method="post" action="/profile/{{userData.username}}/players/verify">
+    <button type="submit">Verify Points</button>
+  </form>
   <div style=";display:flex;justify-content:space-around"> 
         <div style="margin-left:25px;margin-right:25px;padding-bottom:25px;display:flex;flex-direction:row;justify-content:space-around">
 
@@ -163,7 +166,7 @@
           <h2 style="margin-left:25px;margin-bottom:35px;">Your Fantasy Team Players:</h2>
           <div style="display:flex;flex-wrap:wrap;">
                     <!-- Your Team-->
-
+  
             {{#each userData.players}}
               <div class="card mb-2 d-inline-flex p-2 shadow p-3 mb-5 ms-3 bg-body rounded" style="width: 11rem;">
                   <div class="card-body">

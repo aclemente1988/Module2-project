@@ -24,98 +24,6 @@ router.get('/profile/:username', isLoggedIn, (req, res)=>{
         })
 })  
 
-// GET /user-dashboard-All-Players
-router.get('/profile/:username/players',isLoggedIn ,  async (req,res)=>{
-    let userInfo = req.session.currentUser
-    Player.find()
-    .then( allPlayersFromDb =>{
-        res.render('players', {allPlayersFromDb, userInfo} )    
-    })
-    .catch(err=>{
-        res.render('error')
-    })
-})
-
-// POST/Players to user dashboard
-router.post('/profile/:id/players/add',isLoggedIn , (req,res)=>{
-    const playerId = req.params.id
-    const userId = req.session.currentUser._id
-
-    Player.findById(playerId)
-        .then (playerData=>{
-            User.findById(userId)
-                .then (userInfo=>{
-                    userInfo.players.push(playerData)
-                    userInfo.save()
-                    res.redirect(`/profile/${userId}`)
-                })
-                .catch(err=>{
-                    res.render('error')
-                })           
-           })
-    
-})
-
-// DELETE/Player in the dashboard
-router.post('/profile/:id/players/delete', (req,res)=>{
-    let playersId = req.params.id;
-    let userId = req.session.currentUser._id
-    Player.findByIdAndDelete(playersId)
-    .then((x)=>{
-        User.findById(userId)
-        .then(userInfo=>{
-            userInfo.save()
-            res.redirect('/profile/{{userInfo.username}}')
-        })
-        .catch(err=>{
-            res.render('error')
-        })
-    })
-})
-
-// Update/Player in the dashboard
-router.post('/profile/:id/players/update', (req,res)=>{
-    let playersId = req.params.id;
-    let userId = req.session.currentUser._id
-    Player.findByIdAndDelete(playersId)
-    .then((x)=>{
-        User.findById(userId)
-        .then(userInfo=>{
-            userInfo.save()
-            res.redirect('/profile/{{userInfo.username}}/players')
-        })
-        .catch(err=>{
-            res.render('error')
-        })
-    })
-})
-
-//retrive info of results from the API
-router.get("/results", async (req, res, next) => {
-   
-    await axios(loginUserConfig)
-        .then (data=>{
-            console.log(API_KEY)
-            API_KEY = data.data.data.token
-            return API_KEY 
-            //console.log(API_KEY)
-  })
-
-    await axios("http://api.cup2022.ir/api/v1/match",  {
-        method:'get',
-        headers: `Authorization : Bearer ${API_KEY}`
-        
-    })
-        .then( matchesData =>{
-            let matchesInfo = matchesData.data.data
-            let userInfo = req.session.currentUser
-            console.log("Test de esta info", matchesInfo)
-            //STILL TO CONSTRUCT: FOR LOOP that checks for outdated matches and remove them from being listed
-            res.render('profile/results', {matchesInfo, userInfo})    
-        
-        })
-        console.log(API_KEY)
-});
 
 
 
@@ -193,9 +101,9 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
     const matchId = req.params.id
     const { homeScore, awayScore } = req.body
     const userId = req.session.currentUser._id
-    Prediction.findOne({matchId: matchId})
+    /* Prediction.findOne({matchId: matchId})
     .then(data=>{
-        if (!data){
+        if (!data){ */
             Prediction.create({homeScore, awayScore, matchId:matchId})
                 .then (predictionData=>{
                     User.findById(userId)
@@ -208,14 +116,10 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
             
             
         })
-        return
-        } else if (data){
+        /* return */
+        /* } else if (data){
             res.redirect('/matches')
-        }
-        
-        
-    })
-    
+        } */  
     
 })
 
