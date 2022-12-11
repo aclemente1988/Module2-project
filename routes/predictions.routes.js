@@ -51,6 +51,10 @@ router.post('/predictions/:id',isLoggedIn, (req,res)=>{
     .then (predictionInfo=>{
         res.redirect(`/profile/${userId}/predictions`)
     })
+    .catch(err=>{
+        console.log("Error occured:" + err)
+        res.render("error", {errorMessage: "The API services seem to be down at the moment, please try again in a while"})
+    })
 })
 
 router.post('/predictions/:id/delete',isLoggedIn, (req,res)=>{
@@ -61,7 +65,7 @@ router.post('/predictions/:id/delete',isLoggedIn, (req,res)=>{
             .then(data=>{
         User.findById(userId)
         .then(userInfo=>{
-                    userInfo.predictionsCount -= 1;
+                    userInfo.predictionsCount -= 2;
                     userInfo.save()
                     res.redirect(`/profile/${userId}/predictions`)
                 })
@@ -90,9 +94,17 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
         API_KEY = data.data.data.token
         return API_KEY 
 })
+.catch(err=>{
+    console.log(err)
+    res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+})
     await axios(`http://api.cup2022.ir/api/v1/match/${predictionMatchId}`,  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
+    })
+    .catch(err=>{
+        console.log(err)
+        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
     })
 
     .then(async (matchData) =>{
@@ -247,6 +259,10 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                             userData = userInfo
                             res.redirect(`/profile/${userData._id}/predictions`) 
                         })
+                        .catch(err=>{
+                            console.log(err)
+                            res.render('error', {errorMessage: err})
+                        })
             })
         
 
@@ -256,12 +272,20 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
         API_KEY = data.data.data.token
         return API_KEY 
 })
+        .catch(err=>{
+            console.log(err)
+            res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+        })
 
     if(matchesArray.length<=0){
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
     })
+        .catch(err=>{
+            console.log(err)
+            res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+        })
         .then(matchesData=> {
             matchesArray = matchesData.data.data
             return matchesArray
@@ -279,14 +303,15 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                     userData.predictions[i].awayFlag= mappedMatch[0].away_flag
                     userData.predictions[i].awayTeam= mappedMatch[0].away_team_en
                     userData.predictions[i].homeTeam= mappedMatch[0].home_team_en
-/*                     userData.save()
- */            }
+       }
             res.render("profile/predictions", {userData, errorMessage:"You can't verify an unfinished match! Wait until the game is over!"}) 
         })
+        .catch(err=>{
+            console.log(err)
+            res.render('error', {errorMessage: err})
+        })
         }
-           
     }) 
-    console.log("verified")
 })
 
 
@@ -297,11 +322,19 @@ router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
             API_KEY = data.data.data.token
             return API_KEY 
     })
+    .catch(err=>{
+        console.log(err)
+        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+    })
     
         if(matchesArray.length<=0){
         await axios("http://api.cup2022.ir/api/v1/match",  {
             method:'get',
             headers: `Authorization : Bearer ${API_KEY}`
+        })
+        .catch(err=>{
+            console.log(err)
+            res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
         })
             .then(matchesData=> {
                 matchesArray = matchesData.data.data
@@ -351,6 +384,10 @@ router.get('/profile/:id/dashboard/predictions', isLoggedIn, async (req,res)=>{
     
     }
     })
+    .catch(err=>{
+        console.log(err)
+        res.render('error', {errorMessage: err})
+    })
     
 })
 
@@ -367,6 +404,10 @@ router.get('/profile/:username/predictions-leaderboard',isLoggedIn, (req, res)=>
                 userData[i].predictionsRate = rate
             }
             res.render('profile/predictions-leaderboard', {userData, userInfo})
+        })
+        .catch(err=>{
+            console.log(err)
+            res.render('error', {errorMessage: err})
         })
 })
 
