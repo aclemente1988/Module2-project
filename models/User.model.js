@@ -40,6 +40,10 @@ const userSchema = new Schema(
     predictionMessage:{
       type: String
     },
+    fantasyPoints: {
+      type: Number,
+      default: 0
+    },
     predictionsRate:{
       type: String,
       default: 0
