@@ -55,11 +55,17 @@ router.get("/matches", async (req, res, next) => {
             API_KEY = data.data.data.token
             return API_KEY 
   })
+  .catch(err=>{
+    res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+})
 
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
         
+    })
+    .catch(err=>{
+        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
     })
         .then( matchesData =>{
             let matchesInfo = matchesData.data.data
@@ -81,15 +87,24 @@ router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
         API_KEY = data.data.data.token
         return API_KEY 
 })
+.catch(err=>{
+    console.log(err)
+    res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+})
     await axios(`http://api.cup2022.ir/api/v1/match/${id}`,  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
+    })
+    .catch(err=>{
+        console.log(err)
+        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
     })
     .then( matchData =>{
         let matchInfo = matchData.data.data
         res.render('matches/match', {matchInfo, userInfo})    
     })
     .catch(err=>{
+        console.log(err)
         res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
     })
 
@@ -130,15 +145,27 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
         API_KEY = data.data.data.token
         return API_KEY 
 })
+.catch(err=>{
+    console.log(err)
+    res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+})
 
     if(matchesArray.length<=0){
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
     })
+    .catch(err=>{
+        console.log(err)
+        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+    })
         .then(matchesData=> {
             matchesArray = matchesData.data.data
             return matchesArray
+        })
+        .catch(err=>{
+            console.log(err)
+            res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
         })
     }
     User.findById(userId)
@@ -155,6 +182,7 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
             res.render("profile/predictions", {userData}) 
         })
         .catch(err=>{
+            console.log(err)
             res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
         })
 })
@@ -168,16 +196,26 @@ router.post('/matches/:id', async (req,res)=>{
                 API_KEY = data.data.data.token
                 return API_KEY 
       })
+      .catch(err=>{
+        console.log(err)
+        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+    })
+      
     }
         await axios(`http://api.cup2022.ir/api/v1/match/${matchId}`,  {
             method:'get',
             headers: `Authorization : Bearer ${API_KEY}`
+        })
+        .catch(err=>{
+            console.log(err)
+            res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
         })
             .then( matchData =>{
                 let matchInfo = matchData.data.data
                 res.render('matches/match-no-predict', {matchInfo})    
             })
             .catch(err=>{
+                console.log(err)
                 res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
             })
     });
