@@ -113,7 +113,7 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                         let condition1=true
                         if(predictionInformation.homeScore === winnerScore && predictionInformation.awayScore === loserScore){
                             let condition2 = true;
-                            let pointsToAdd = 115;
+                            let pointsToAdd = 155;
                             userDBData.predictionsPoints += pointsToAdd
                             userDBData.correctPredictions += 2;
                             userDBData.predictionMessage = "You have correctly predicted the winner, and the scores! You're a Natural! You earn +155 Points"
@@ -159,7 +159,7 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                         let condition1=true
                         if(predictionInformation.awayScore === winnerScore && predictionInformation.homeScore === loserScore){
                             let condition2 = true;
-                            let pointsToAdd = 115;
+                            let pointsToAdd = 155;
                             userDBData.predictionsPoints += pointsToAdd
                             userDBData.correctPredictions += 2;
                             userDBData.predictionMessage = "You have correctly predicted the winner, and the scores! You're a Natural! You earn +155 Points"
@@ -204,7 +204,7 @@ router.post('/predictions/:id/verify', isLoggedIn, async (req,res)=>{
                         let condition1 = true;
                         if (predictionInformation.homeScore === winnerScore){
                             let condition2 = true;
-                            let pointsToAdd = 115;
+                            let pointsToAdd = 155;
                             userDBData.predictionsPoints += pointsToAdd
                             userDBData.correctPredictions += 2;
                             userDBData.predictionMessage = "You have correctly predicted the winner, and the scores! You're a Natural! You earn +155 Points"
