@@ -101,9 +101,14 @@
         
 
           <!-- Players Added to Team-->
+          <div style="display:flex;align-items:center;">
           <form method="post" action="/profile/{{userData.username}}/players/verify">
-    <button type="submit">Verify Points</button>
+    <button style="font-weight:bold;border-radius:35px;padding:10px;background-color:orange;margin:15px 0px 35px 25px;" type="submit">Verify Fantasy Team Points</button>
   </form>
+  <div style="font-weight:bold;margin:0px 0px 15px 25px;">
+    Fantasy Points: {{userData.fantasyPoints}}
+  </div>
+  </div>
   <div style=";display:flex;justify-content:space-around"> 
         <div style="margin-left:25px;margin-right:25px;padding-bottom:25px;display:flex;flex-direction:row;justify-content:space-around">
 
@@ -136,8 +141,11 @@
                   <td >{{this.playername}}</td>
                   <td >{{this.position}}</td>
                   <td>{{this.team}}</td>
-                  <td><form method="post" action="#">
-                    <button class="btn btn-warning btn-sm mb-1">Verify</button></td>
+                  {{!-- <td>
+                    <form method="post" action="#">
+                      <button class="btn btn-warning btn-sm mb-1">Verify</button>
+                    </form>
+                   </td> --}}
                     
                   
               </tr>
@@ -173,11 +181,11 @@
                         <h6>{{this.team}}</h6>
                       </p>
       
-                    <form method="post" action="/profile/{{this._id}}/players/update">
+                   {{!--  <form method="post" action="/profile/{{this._id}}/players/update">
                       <button class="btn btn-warning btn-sm mb-1">Update</button>
-
-                      <form method="post" action="/profile/{{this._id}}/players/delete">
-                      <button class="btn btn-danger btn-sm">Delete</button>
+                    </form> --}}
+                      <form method="post" action="/profile/{{this._id}}/delete">
+                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                       
                     </form>
 
