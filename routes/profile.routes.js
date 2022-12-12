@@ -49,24 +49,22 @@ let tokenAcessGETConfig = {
 
 //Display all the Information on the incoming Matches on the "MATCHES.HBS" file
 router.get("/matches", async (req, res, next) => {
+   try {
+
    
     await axios(loginUserConfig)
         .then (data=>{
             API_KEY = data.data.data.token
             return API_KEY 
   })
-  .catch(err=>{
-    res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
-})
+  
 
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
         
     })
-    .catch(err=>{
-        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
-    })
+    
         .then( matchesData =>{
             let matchesInfo = matchesData.data.data
             let userInfo = req.session.currentUser
@@ -76,9 +74,16 @@ router.get("/matches", async (req, res, next) => {
         .catch(err=>{
             res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
         })
+    }
+    catch (err){
+        console.log(err)
+        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+
+    }
 });
 
 router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
+    try {
     let id = req.params.id
     const userInfo = req.session.currentUser
 
@@ -87,18 +92,12 @@ router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
         API_KEY = data.data.data.token
         return API_KEY 
 })
-.catch(err=>{
-    console.log(err)
-    res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
-})
+
     await axios(`http://api.cup2022.ir/api/v1/match/${id}`,  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
     })
-    .catch(err=>{
-        console.log(err)
-        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
-    })
+    
     .then( matchData =>{
         let matchInfo = matchData.data.data
         res.render('matches/match', {matchInfo, userInfo})    
@@ -107,10 +106,18 @@ router.post('/matches/:id/predict',isLoggedIn ,  async (req,res)=>{
         console.log(err)
         res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
     })
+}
+    catch (err){
+        console.log(err)
+        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+
+    }
 
 })
 
 router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
+    try{
+
     const matchId = req.params.id
     const { homeScore, awayScore } = req.body
     const userId = req.session.currentUser._id
@@ -125,7 +132,7 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
                             userInfo.predictionsCount += 2;
                             userInfo.save()
                             res.redirect(`/profile/${userId}/predictions`)
-                        })      
+                        })   
             
             
         })
@@ -133,11 +140,17 @@ router.post('/matches/:id/predict/winner',isLoggedIn , (req,res)=>{
         /* } else if (data){
             res.redirect('/matches')
         } */  
-    
+    }
+    catch (err){
+        console.log(err)
+        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+    }
 })
 
 let matchesArray = []
 router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
+
+    try{
     const userId = req.session.currentUser._id
     
     await axios(loginUserConfig)
@@ -145,20 +158,14 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
         API_KEY = data.data.data.token
         return API_KEY 
 })
-.catch(err=>{
-    console.log(err)
-    res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
-})
+
 
     if(matchesArray.length<=0){
     await axios("http://api.cup2022.ir/api/v1/match",  {
         method:'get',
         headers: `Authorization : Bearer ${API_KEY}`
     })
-    .catch(err=>{
-        console.log(err)
-        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
-    })
+    
         .then(matchesData=> {
             matchesArray = matchesData.data.data
             return matchesArray
@@ -185,10 +192,14 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
             console.log(err)
             res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
         })
+    } catch (err){
+        console.log(err)
+        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+    }
 })
     
 router.post('/matches/:id', async (req,res)=>{
-    
+    try{
     let matchId = req.params.id
     if (API_KEY === ""){
         await axios(loginUserConfig)
@@ -196,20 +207,13 @@ router.post('/matches/:id', async (req,res)=>{
                 API_KEY = data.data.data.token
                 return API_KEY 
       })
-      .catch(err=>{
-        console.log(err)
-        res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
-    })
       
     }
         await axios(`http://api.cup2022.ir/api/v1/match/${matchId}`,  {
             method:'get',
             headers: `Authorization : Bearer ${API_KEY}`
         })
-        .catch(err=>{
-            console.log(err)
-            res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
-        })
+        
             .then( matchData =>{
                 let matchInfo = matchData.data.data
                 res.render('matches/match-no-predict', {matchInfo})    
@@ -218,6 +222,10 @@ router.post('/matches/:id', async (req,res)=>{
                 console.log(err)
                 res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
             })
+        } catch (err){
+            console.log(err)
+            res.render('error', {errorMessage: "The API serices seem to be down at the moment, please try accesing them again in a while"})
+        }
     });
 
 
