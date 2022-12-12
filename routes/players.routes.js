@@ -65,51 +65,71 @@ router.post('/profile/:id/players/add',isLoggedIn , (req,res)=>{
 
     Player.findById(playerId)
         .then (playerData=>{
+            console.log(playerData)
             User.findById(userId)
+                .populate("players")
                 .then (userInfo=>{
+                    console.log(userInfo)
+                        /*this checks if player's name is already existant in the user.players Array*/
+                    if (userInfo.players.find(player => player.playername === playerData.playername) ) {
+                        console.log("player already exists in your team")
+                        Player.find()
+                            .then(allPlayersFromDb=>{
+
+                                res.render(`players`, {allPlayersFromDb, userInfo, errorMessage: "This player already exists in your team, try picking another one" })
+                            })
+                        
+                      }
+                        /*this checks if player's team is already full*/
+                      else if (userInfo.players.length > 15){
+                        console.log("Team capacity reached! You already have 15 players")
+                        Player.find()
+                            .then(allPlayersFromDb=>{
+                                res.render(`players`, {allPlayersFromDb, userInfo, errorMessage: "Your Team already has 15 players, please delete some before adding any other" })
+                            })
+                      }
+                      else {
                     userInfo.players.push(playerData)
                     userInfo.save()
                     res.redirect(`/profile/${userId}`)
+                }
                 })
-                .catch(err=>{
-                    res.render('error')
-                })           
-           })
+                 
+            })
+            .catch(err=>{
+                res.render('error', {errorMessage: err})
+            })
     
 })
 
 // DELETE/Player in the dashboard
-router.post('/profile/:id/players/delete', (req,res)=>{
-    let playersId = req.params.id;
-    let userId = req.session.currentUser._id
-    Player.findByIdAndDelete(playersId)
-    .then((x)=>{
-        User.findById(userId)
-        .then(userInfo=>{
-            userInfo.save()
-            res.redirect('/profile/:id/')
+router.post('/profile/:playersId/delete', (req,res)=>{
+    console.log("working?")
+    let {playersId} = req.params;
+    let userData = req.session.currentUser
+    Player.findById(playersId)
+        .then(playersInformation=>{
+            console.log("players info" + playersInformation)
+            User.findById(userData._id)
+        .populate("players")
+        .then(userInformation=>{
+            console.log(userInformation)
+            for (i=0;i<userInformation.players.length;i++){
+                console.log("looping")
+                if (userInformation.players[i].playername === playersInformation.playername){
+                    userInformation.players.splice(i,1)
+                    console.log("new array is:  " + userInformation)
+                } else {
+                    continue
+                }
+            }
+            userInformation.save()
+            res.redirect(`/profile/${userInformation.username}/`)
         })
         .catch(err=>{
-            res.render('error')
+            res.render('error', {errorMessage: err})
         })
-    })
-})
-
-// Update/Player in the dashboard
-router.post('/profile/:id/players/update', (req,res)=>{
-    let playersId = req.params.id;
-    let userId = req.session.currentUser._id
-    Player.findByIdAndDelete(playersId)
-    .then((x)=>{
-        User.findById(userId)
-        .then(userInfo=>{
-            userInfo.save()
-            res.redirect('/profile/:id/players')
         })
-        .catch(err=>{
-            res.render('error')
-        })
-    })
 })
 
 
@@ -137,34 +157,27 @@ router.post('/profile/:username/players/verify', async (req,res)=>{
             .then (userInfoPupulated=>{
                 console.log(userInfoPupulated)
                 for (i=0;i<userInfoPupulated.players.length;i++){
-                    let country = userInfoPupulated.players[0].team
-                    let countryLowercase = country.charAt(0).toUpperCase() + country.slice(1);
-                    console.log(countryLowercase)
-                    let filteredAwayMatchesArray = matchesArray.filter(match => match.away_team_en === countryLowercase)
-                    console.log(filteredAwayMatchesArray)
+                    let country = userInfoPupulated.players[i].team
+                    console.log(country)
+                    let countryUppercase = country.charAt(0).toUpperCase() + country.slice(1);
+                    let filteredAwayMatchesArray = matchesArray.filter(match => match.away_team_en === countryUppercase)
 
                     for (y=0;y<filteredAwayMatchesArray.length;y++){
                         if (filteredAwayMatchesArray[y].home_score < filteredAwayMatchesArray[y].away_score){
-                            userInfoPupulated.fantasyPoints += 25;
-                            console.log(userInfoPupulated)
-                        } else {
-                            continue;
-                        }
+                            userInfoPupulated.fantasyPoints += 5
+                        } 
                     }
 
-                    let filteredHomeMatchesArray = matchesArray.filter(match => match.home_team_en === countryLowercase)
+                    let filteredHomeMatchesArray = matchesArray.filter(match => match.home_team_en === countryUppercase)
                     console.log(filteredHomeMatchesArray)
                     for (y=0;y<filteredHomeMatchesArray.length;y++){
                         if (filteredHomeMatchesArray[y].home_score > filteredHomeMatchesArray[y].away_score){
-                            userInfoPupulated.fantasyPoints += 25;
-                            console.log(userInfoPupulated)
-
-                        } else {
-                            continue;   
-                        }
+                            userInfoPupulated.fantasyPoints += 5   
+                        } 
                     }
-
+                    
                 }
+                userInfoPupulated.save()
                 res.redirect(`/profile/${userInfo.username}`)
             })
 })
