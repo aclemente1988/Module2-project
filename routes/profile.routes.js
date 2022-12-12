@@ -219,6 +219,9 @@ router.post('/matches/:id', async (req,res)=>{
                 if (matchInfo[0].home_score===0){
                     matchInfo[0].home_scorers = []
                 }
+                else if (matchInfo[0].away_score===0){
+                    matchInfo[0].home_scorers = []
+                }
                 console.log(matchInfo)
                 res.render('matches/match-no-predict', {matchInfo})    
             })
