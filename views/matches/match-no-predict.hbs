@@ -1,25 +1,118 @@
 
-<h1 style="text-align:center;margin-bottom:35px;">Match information</h1>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+</head>
 
 
-<div id="matches-container">
-{{#each matchInfo}}
+
+
+
+  <body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="/" class="navbar-brand">
+
+                <span class="fw-bold text-warning">
+                    Welcome {{userInfo.username}} ! ⚽🚀
+
+                </span>
+            </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <li class="nav nav-pills">
+                <a class="nav-link active" aria-current="page" href="/profile/{{userInfo._id}}">Dashboard</a>
+            </li>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+             
+              
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+      <div class="container-fluid ">
+        <div class="row ">
+            <div class="col-md-2 mt-5 bg-light d-none d-md-block sidebar ">
+                <div class="left-sidebar">
+                    <div class="d-flex ">
+                        <div class="nav flex-column ml-5 nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                          <li class="nav nav-pills">
+                            <a style="" class="nav-link active" aria-current="page" href="/matches">New Prediction</a>
+                          </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo._id}}/predictions">My predictions</a>
+                            </li>
+                          
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/predictions-leaderboard">Predictions Leaderboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/frequently-asked-questions">FAQs</a>
+                            </li>
+                            <li class="nav-item">
+                               
+                                <a class="nav-link text-danger" href="/logout"  >Log out</a>
+                                
+                            </li>
+                        </div>
+
+                      </div>
+                </div>
+            </div>
+
+        </div>
+      </div>
+
+
+<h1 style="margin-left:175px;text-align:center;margin-bottom:35px;">Match information - Real Score</h1>
+
+
+<div style="margin-left:175px;"id="matches-container">
+
 
     <div id="individual-match-card">
         <div id="match-team-info">
-            <div id="home-team">
-                <img class="flag" src="{{this.home_flag}}">
-                <h2>{{this.home_team_en}} </h2>
+            <div style="width:33%;" id="home-team">
+                <img class="flag" src="{{matchInfo.[0].home_flag}}">
+                <h2>{{matchInfo.[0].home_team_en}} </h2>
+                <h3>{{matchInfo.[0].home_score}}</h3>
+                {{#if matchInfo.[0].home_scorers}}
+                <h4>Scorers:</h4>
+               <ul style="list-style:none;font-size:15px;">
+               {{#each matchInfo.[0].home_scorers}}
+               <li>{{this}}</li>
+                {{/each}}
+                </ul>
+                {{/if}}
             </div>
             <p style="font-weight: bold;font-size:25px;">VS</p>
-            <div id="away-team">
-                <img class="flag" src="{{this.away_flag}}">
-                <h2>{{this.away_team_en}} </h2>
+            <div style="width:33%;" id="away-team">
+                <img class="flag" src="{{matchInfo.[0].away_flag}}">
+                <h2>{{matchInfo.[0].away_team_en}} </h2>
+                <h3>{{matchInfo.[0].away_score}}</h3>
+                {{#if matchInfo.[0].away_scorers}}
+                <h4>Scorers:</h4>
+               <ul style="list-style:none;font-size:15px;">
+               {{#each matchInfo.[0].away_scorers}}
+               <li>{{this}}</li>
+                {{/each}}
+                </ul>
+                {{/if}}
+
             </div>
         </div>
         <div id="match-details-info">
-            <div id="date-container">
-                <p>{{this.local_date}}</p>
+            <div style="margin-right:0px;" id="date-container">
+                <p>{{matchInfo.[0].local_date}}</p>
             </div>
         </div>
         
@@ -27,5 +120,4 @@
     </div>
     </div>
 
-{{/each}}
 

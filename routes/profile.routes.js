@@ -201,14 +201,14 @@ router.get('/profile/:id/predictions', isLoggedIn, async (req, res)=>{
 router.post('/matches/:id', async (req,res)=>{
     try{
     let matchId = req.params.id
-    if (API_KEY === ""){
+
         await axios(loginUserConfig)
             .then (data=>{
                 API_KEY = data.data.data.token
                 return API_KEY 
       })
       
-    }
+
         await axios(`http://api.cup2022.ir/api/v1/match/${matchId}`,  {
             method:'get',
             headers: `Authorization : Bearer ${API_KEY}`
@@ -216,6 +216,10 @@ router.post('/matches/:id', async (req,res)=>{
         
             .then( matchData =>{
                 let matchInfo = matchData.data.data
+                if (matchInfo[0].home_score===0){
+                    matchInfo[0].home_scorers = []
+                }
+                console.log(matchInfo)
                 res.render('matches/match-no-predict', {matchInfo})    
             })
             .catch(err=>{
