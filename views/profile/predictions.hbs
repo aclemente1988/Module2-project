@@ -13,26 +13,14 @@
             <span class="navbar-toggler-icon"></span>
           </button>
             <li class="nav nav-pills">
-                <a class="nav-link active" aria-current="page" href="/profile/{{userData.username}}">Dashboard</a>
+                <a class="nav-link active" aria-current="page" href="/profile/{{userData.username}}">User Dashboard</a>
             </li>
           <div style="margin-left:35px;"class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
               <!-- <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Predictions</a>
               </li> -->
-              <li class="nav-item dropdown">
- 
-                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Predictions
-                </a>
-                
-                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                  <!-- <li><a class="dropdown-item" href="#">Create</a></li> -->
-                  <li><a class="dropdown-item" href="/profile/{{userData._id}}/predictions">My Predictions' List</a></li>
-                  <li><a class="dropdown-item" href="/matches">Create New Prediction</a></li>
-                </ul>
-                
-              </li>
+              
               
             </ul>
             
@@ -40,8 +28,10 @@
         </div>
       </nav>
 
-<div style="margin-top:55px;margin-bottom:20px;">
-<a href="/profile/{{userData.username}}/dashboard/predictions">Go back to My Predictions' Dashboard</a>
+<div style="display:flex;flex-direction:column;margin-top:55px;margin-bottom:20px;">
+<a style="margin-bottom:25px;"href="/profile/{{userData.username}}/dashboard/predictions">My Predictions' Dashboard</a>
+<a href="/matches">Make another prediction</a>
+
 </div>
     <div class="mt-5">
         <h4>Total Predictions Made: {{userData.predictionsCount}} </h4>
@@ -84,7 +74,7 @@
         <td>{{this.awayScore}}</td>
         <td>
             <form action="/matches/{{this.matchId}}" method="post">
-                <button>Match link</button>
+                <button>Check Real Score</button>
             </form>
         </td> 
         <td >
