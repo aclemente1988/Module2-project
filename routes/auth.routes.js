@@ -54,7 +54,13 @@ router.post("/signup", isLoggedOut, (req, res) => {
       return User.create({ username, email, password: hashedPassword });
     })
     .then((user) => {
-      res.redirect("/login");
+      console.log("user created succesfully, redirecting to profile page")
+       // Add the user object to the session object 
+       req.session.currentUser = user.toObject();
+       // Remove the password field
+       delete req.session.currentUser.password;
+       // After signup, redirect the User towards its profile page without asking for a login
+      res.redirect(`/profile/${user.username}`);
     })
     .catch((error) => {
       if (error instanceof mongoose.Error.ValidationError) {
