@@ -1,6 +1,3 @@
-
-
-
 const express = require('express');
 const router = express.Router();
 const axios = require('axios')
@@ -130,6 +127,14 @@ router.post('/profile/:playersId/delete', (req,res)=>{
             res.render('error', {errorMessage: err})
         })
         })
+})
+
+
+// UPDATE/Player in the dashboard
+router.post('/profile/:id/update', (req,res)=>{
+    console.log("Hello world")
+
+    
 })
 
 
