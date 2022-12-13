@@ -1,0 +1,205 @@
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="/" class="navbar-brand">
+                <span class="fw-bold text-warning">
+
+                     Welcome {{userData.username}} ⚽🚀
+                </span>
+            </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <li class="nav nav-pills">
+                <a class="nav-link active" aria-current="page" href="/profile/{{userData.username}}/players">Create Team</a>
+            </li>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <!-- <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Predictions</a>
+              </li> -->
+              <li class="nav-item dropdown">
+ 
+                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Fantasy Team
+                </a>
+                
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                  <li><a class="dropdown-item" href="#">Update</a></li>
+                  <li><a class="dropdown-item" href="#">Delete</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">How it works?</li>
+                </ul>
+                
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+
+
+      <!-- SideBar -->
+
+     <div class="container-fluid ">
+        <div class="row ">
+            <div class="col-md-2 mt-5 bg-light d-none d-md-block sidebar ">
+                <div class="left-sidebar">
+                    <div class="d-flex ">
+                        <div class="nav flex-column ml-5 nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                          <li class="nav nav-pills">
+                            <a  class="nav-link active" aria-current="page" href="/matches">New Prediction</a>
+                          </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData._id}}/predictions">My predictions</a>
+                            </li>
+                          
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData.username}}/predictions-leaderboard">Predictions Leaderboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userData.username}}/frequently-asked-questions">FAQs</a>
+                            </li>
+                            <li class="nav-item">
+                               
+                                <a class="nav-link text-danger" href="/logout"  >Log out</a>
+                                
+                            </li>
+                        </div>
+
+                      </div>
+                </div>
+            </div>
+
+        </div>
+      </div> 
+
+
+      <div  style="display:flex;flex-direction:column;justify-content:space-between;margin-left:300px;margin-top:50px">
+        <div style="margin-bottom:15px;border:1px solid orange;border-radius:55px;display:flex;flex-direction:row;justify-content:space-around;align-items:center;">
+          <div class="shadow p-3 mb-5 bg-body rounded" style="margin:25px 15px 25px 15px;padding:25px 15px 25px 15px;border:1px rgb(0, 0, 10) solid;display:flex;justify-content:center;align-items:center;flex-direction:column;">
+            <h3 style="margin-bottom:20px;text-decoration:underline;">{{userData.username}}</h3>
+            <h4 style="margin-bottom:20px;color:orange;">Total Predictions: {{userData.predictionsCount}}</h4>
+            <h5 >Total Prediction Points Earned: <span style="font-size:35px;font-weight:500;" class="highlighted-num">{{userData.predictionsPoints}}</span></h5>
+          </div>
+          <div style="color:white;">            </div>
+          <div>
+            <a href="/profile/{{userData.username}}/dashboard/predictions"><button class="dashboard-btn" >My Prediction Dashboard</button></a>
+          </div>
+        </div>
+
+        <div style="padding:15px 0px 15px 0px;display:flex;justify-content:space-around;border-top:1px black solid;">
+          
+        </div>
+
+
+          
+
+        
+
+          <!-- Players Added to Team-->
+          <div style="display:flex;align-items:center;">
+          <form method="post" action="/profile/{{userData.username}}/players/verify">
+    <button style="font-weight:bold;border-radius:35px;padding:10px;background-color:orange;margin:15px 0px 35px 25px;" type="submit">Verify Fantasy Team Points</button>
+  </form>
+  <div style="font-weight:bold;margin:0px 0px 15px 25px;">
+    Fantasy Points: {{userData.fantasyPoints}}
+  </div>
+  </div>
+  <div style="display:flex;justify-content:space-around"> 
+        <div style="margin-left:25px;margin-right:25px;padding-bottom:25px;display:flex;flex-direction:row;justify-content:space-around">
+
+          <div class="shadow p-3 mb-5 bg-body rounded" style="border-radius: 20px; padding:20px 25px 20px 25px;border:1px rgb(158, 156, 156) solid;">
+              <h6 class="text-start">Your Team</h6>
+              
+              <table class="table table-striped ">
+                    <!-- {{#each userData.players}}
+                      {{#if @last}}
+                          <caption>
+                            <h6 class="text-black text-start">Total players <span class="text-danger">{{@index}}</span></h6> 
+                          </caption>
+                      {{/if}}    
+                    {{/each}} -->
+              
+                  <thead>
+                      <tr>
+                        <th scope="col">#</td>
+                          <th scope="col">Player</td>
+                          <th scope="col">Position</td>
+                          <th scope="col">Country</td>
+                          
+
+
+              </tr>
+          </thead>
+       <tbody>
+        <div>
+          
+        </div>
+            {{#each userData.players}}
+              <tr scope="row">
+                  <td><p class="create_index">{{@index}}</p></td>  
+                  <td >{{this.playername}}</td>
+                  <td >{{this.position}}</td>
+                  <td>{{this.team}}</td>
+
+                    
+                  
+              </tr>
+          
+            {{/each}}
+
+        
+
+        <script>
+          var divs = document.querySelectorAll('.create_index');
+            for (var i = 0; i < divs.length; ++i) {
+                divs[i].innerHTML = i + 1;
+          }
+        </script>
+
+
+      </div>
+    </div>
+
+
+
+        <div style="border-left:1px black solid;">
+          <h2 style="margin-left:25px;margin-bottom:35px;">Your Fantasy Team Players:</h2>
+          <div style="display:flex;flex-wrap:wrap;">
+                    <!-- Your Team-->
+  
+            {{#each userData.players}}
+              <div class="card mb-2 d-inline-flex p-2 shadow p-3 mb-5 ms-3 bg-body rounded" style="width: 11rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">{{this.playername}}</h5>
+                      <p class="card-text">Position:{{this.position}}<br>
+                        <h6>{{this.team}}</h6>
+                      </p>
+      
+                    <form method="post" action="/profile/{{this._id}}/update">
+                      <button type="submit" class="btn btn-warning btn-sm mb-1">Update</button>
+                    </form> 
+                      <form method="post" action="/profile/{{this._id}}/delete">
+                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                      
+                    </form>
+
+                  </div>
+              </div>
+                
+  
+          {{/each}}
+        </div>
+        </div>
+
+
+
+
+        
+</div>  
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
