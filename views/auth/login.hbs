@@ -1,24 +1,73 @@
-<div id="login-form">
-  <h2>Log In</h2>
-  <form action="/auth/login" method="POST">
-
-    <label> Username
-      <input type="text" name="username" placeholder="Your username" />
-    </label>
-
-    <label> Email
-      <input type="email" name="email" placeholder="Your email" />
-    </label>
-
-    <label> Password
-      <input type="password" name="password" placeholder="Your password" />
-    </label>
-
-    <button type="submit">Log In</button>
 
 
-    {{#if errorMessage}}
-      <p class="error">{{errorMessage}}</p>
-    {{/if}}
-  </form>
-</div>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>signup/login form</title>
+  <style>
+    section{
+        padding: 60px 0px;
+    }
+</style>
+</head>
+<body>
+  <div class="text-center">
+
+    <form action="/login" method="POST" style="max-width: 300px; margin:auto">
+      <a href='/' class="navbar-brand">
+        <span class="fw-bold text-warning">
+            Football World Cup APP ⚽🚀
+        </span>
+      </a>
+      <h1 class="h3 mb-3 mt-3
+       font-weight-normal">Log In</h1>
+
+       <!-- username label -->
+      <label for="username" class="sr-only"></label>
+      <input type="text" name="username" id="username"
+       class="form-control mb-3" placeholder="Username" 
+       required autofocus>
+
+      <!-- email label -->
+       <label for="emailAddress" class="sr-only"></label>
+      <input type="email" name="email" id="emailAddress"
+       class="form-control mb-3" placeholder="Email Address" 
+       required autofocus>
+
+       <!-- password label -->
+       <label for="password"
+        class="sr-only"></label>
+        <input type="password" name="password" id="password"
+        placeholder="Password" class="form-control">
+
+        <!-- remember me -->
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+
+        <!-- button -->
+        <div class="mt-3">
+          <button class="btn btn-lg btn-warning btn-block">Log In</button>
+        </div>
+
+        <div>
+          <a class="nav-link text-info mt-3" href="/">Back</a>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+          <path class="text-info" fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+          </svg>
+        </div>
+
+        {{#if errorMessage}}
+          <p class="error">{{errorMessage}}</p>
+        {{/if}}
+        
+    </form>
+  </div>
+
+</body>
+
+
+

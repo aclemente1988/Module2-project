@@ -1,0 +1,104 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="/" class="navbar-brand">
+
+
+                <span class="fw-bold text-warning">
+
+                    Welcome {{userData.username}}! 🚀
+
+                </span>
+            </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <li class="nav nav-pills">
+                <a class="nav-link active" aria-current="page" href="/profile/{{userData.username}}">User Dashboard</a>
+            </li>
+          <div style="margin-left:35px;"class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <!-- <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Predictions</a>
+              </li> -->
+              
+              
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+
+<div style="display:flex;flex-direction:column;margin-top:55px;margin-bottom:20px;">
+<a style="margin-bottom:25px;"href="/profile/{{userData.username}}/dashboard/predictions">My Predictions' Dashboard</a>
+<a href="/matches">Make another prediction</a>
+
+</div>
+    <div class="mt-5">
+        <h4>Total Predictions Made: {{userData.predictionsCount}} </h4>
+        <h3>Total Predictions Points: {{userData.predictionsPoints}} </h4>
+  {{#if errorMessage}}
+  <h5 style="color:red;font-weight:bold;margin:15px 0px 15px 0px;">{{errorMessage}}</h5>
+  {{/if}}
+  {{#if userData.predictionMessage}}
+    <p>Latest Prediction Message: </br>  <span style="color:orange;text-decoration:underline;">{{userData.predictionMessage}}</span></p>
+  {{/if}} 
+    </div>
+
+
+
+
+
+
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th scope="col">Home Team</td>
+            <th scope="col">Home Score predicted</td>
+            <th scope="col">Away Team</td>
+            <th scope="col">Away Score predicted</td>
+            <th scope="col">Match link</td>
+            <th scope="col">Edit Prediction</th>
+            <th scope="col">Verify Prediction</th>
+            <th scope="col">Delete Prediction</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+{{#each userData.predictions}}
+    <tr scope="row">
+        <td ><img class="minified" src="{{this.homeFlag}}">{{this.homeTeam}}</td>
+        <td >{{this.homeScore}}</td>
+        <td ><img class="minified" src="{{this.awayFlag}}">{{this.awayTeam}}</td>
+        <td>{{this.awayScore}}</td>
+        <td>
+            <form action="/matches/{{this.matchId}}" method="post">
+                <button>Check Real Score</button>
+            </form>
+        </td> 
+        <td >
+            <form  action="/predictions/{{this._id}}" method="post">
+                <input  name="homeScore" value="{{this.homeScore}}">
+                <button class="edit-prediction">Edit</button>
+                <input name="awayScore" value="{{this.awayScore}}">
+            </form>
+        </td>
+        <td>
+          <form action="/predictions/{{this._id}}/verify" method="post">
+                <button class="verify-prediction"type="submit">Verify</button>
+            </form>
+        </td>
+        <td>
+            <form action="/predictions/{{this._id}}/delete" method="post">
+                <button class="delete-prediction">Delete</button>
+            </form>
+        </td>
+    </tr>
+
+
+
+{{/each}}
+</tbody>
+
+</table>

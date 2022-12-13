@@ -1,85 +1,32 @@
-<!--<h1>{{appTitle}} 🚀</h1>
-<p>World Cup Bets!</p>-->
 
-<!-- Utility clases -->
-
-<!-- text colours -->
-<!--<p class="text-primary">the primary color</p>
-<p class="text-secondary">the primary color</p>
-<p class="text-info">the primary color</p>
-<p class="text-warning">the primary color</p>
-<p class="text-success">the primary color</p>
-<p class="text-danger">the primary color</p>
-<p class="text-muted">the primary color</p>-->
-
-<!-- bg colours -->
-<!--<p class="text-white bg-primary">white text on primary bg</p>
-<p class="text-white bg-secondary">black text on primary bg</p>
-<p class="text-white bg-danger">white text on primary bg</p>-->
-
-<!-- buttons -->
-<!--<button class="btn btn-secondary">primary button</button>
-<button class="btn btn-lg btn-info">primary button</button>
-<button class="btn btn-sm btn-success">primary button</button>
-<button class="btn btn-outline-success">primary button</button>-->
-
-<!-- margin and padding -->
-
-<!--<div class="bg-primary m-5 p-5">small margin and padding</div>-->
-
-<!-- 🚀borders -->
-<!--<d class="m-3 p-3 border-top border-end">individual borders</d>
-<d class="m-3 p-3 border-start border-success">individual borders</d>
-<d class="border">individual borders</d>
-<d class="border border-5">individual borders</d>-->
-
-<!-- box-shadow -->
-<!--<d class="m-3 p-3 shadow-sm">element with shadow</d>
-<d class="m-3 p-3 shadow">element with shadow</d>-->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        section{
-            padding: 60px 0px;
-        }
-    </style>
-</head>
-
-<body>
     <!-- navbar -->
     <nav class="navbar navbar-expand-md navbar-ligth">
         <div class="container-xxl">
             <a href="#intro" class="navbar-brand">
                 <span class="fw-bold text-warning">
-                    Qatar ODDS APP🚀
+
+                     Football World Cup App ⚽
                 </span>
             </a>
-            <!-- toggle button for mobile nav -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-            data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false"
-            aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+
+
 
             <!-- nav bar links -->
             <div class="collapse navbar-collapse justify-content-end align-center"
             id="main-nav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
+
+                        <a class="nav-link text-danger" href="/login"  >Log In</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#app-info" >About the App</a>
                     </li>
-                    <li class="nav-item">
+                    {{!-- <li class="nav-item">
                         <a class="nav-link" href="#developers" >Developers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#Get in Touch" >Get in Touch</a>
-                    </li>
+                    </li> --}}
+                    
+
                 </ul>
             </div>
 
@@ -90,11 +37,18 @@
             <div class="row justify-content-center align-items-center">
                 <div class="col-md-5 text-center text-md-start"><!--12 columnas en dispositivos pequeños / cuando llegue a dispositivos medianos seran 5 columnas de width / texto alineado al centro para dispositivos pequeños / texto alineado al centro dispositivos grandes-->
                     <h1>
-                        <div class="display-2">Qatar 2022</div>
-                        <div class="display-5 text-muted">Your Prediction Skills</div>      
+
+                        <div class="display-2">FIFA WC 22</div>
+                        <div class="display-5 text-muted">Test Your Prediction Skills</div>      
                     </h1>
                     <p class="lead my-4 text-muted">Can you guess who will win?</p>
-                    <a href="/signup" class="btn btn-warning btn-large">Singup and Earn €</a>
+                    <a href="/signup" class="btn btn-warning btn-large">Sign-Up</a>
+                    {{#if userInfo}}
+                    <a href="/profile/{{userInfo.username}}" class="btn btn-secondary btn-Info">Dashboard</a>
+                    {{else}}
+                    <a href="/login" class="btn btn-secondary btn-Info blue">Log-In</a>
+                    {{/if}}
+
                 </div> 
                 <div class="col md-5 text-center d-none d-md-block">
                     <img class="img-fluid " src="/images/World-cup-odds-picks-and-predictions-for-Qatar-2022.jpg" alt="worldCup cover">
@@ -106,51 +60,95 @@
 
     <!-- Topics -->
     <section id="app-info">
-        <div class="container-md">
+
+        <div class="container-md mt-5">
             <div class="text-center">
-                <h2>About the App</h2>
-                <p class="lead text-muted">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <h2>The Ultimate Football APP</h2>
+                <p class="lead text-muted">Challenge your friends and climb the leaderboard for a chance to win a prize!</p>
             </div>
 
             <div class="row my-5 y-5 justify-content-around align-items-center">
-                <div class="col-6 col-lg-4">
-                    <img src="/images/World-Cup.jpg" class="img-fluid" alt="worldCupDraw">
+                <div class="col-6  col-lg-4 ">
+                    <img  src="/images/World-Cup.jpg" class="img-fluid" alt="worldCupDraw">
                 </div>
 
                 <div class="col-lg-6">
+
+
+
                 <!-- accordion 1 -->
+
+
+                <div class="accordion" id="chapters">
+                    <div class="accordion-item" >
+                        <h2 class="accordion-header" id="heading-test">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" 
+                                aria-controls="collapseOne">
+                                Fantasy Team
+                            </button>
+                        </h2>
+
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="heading-1" data-bs-parent="#heading-test">
+                            <div class="accordion-body">
+                                <p>To play Fantasy Football you will need to pick a team of 15 world cup real-life players</p>
+                                <p>Earn points based on their team country real-life performances in the Qatar world cup 2022 </p>
+                                <p>In your dashboard update or delete your team players at any Time</p>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+    
+                
+                
+                <!-- accordion 3 -->
+
                 <div class="accordion" id="chapters">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="heading-1">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#chapter-1" aria-expanded="true" 
                                 aria-controls="chapter-1">
-                                How it works?
+
+                                Match Predictions
+
                             </button>
                         </h2>
                         <div id="chapter-1" class="accordion-collapse collapse show"
                             aria-labelledby="heading-1" data-bs-parent="#chapters">
                             <div class="accordion-body">
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta corrupti suscipit ipsum officia cum odit eum ipsa nihil expedita itaque!</p>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta corrupti suscipit ipsum officia cum odit eum ipsa nihil expedita itaque!</p>
+
+                                <p>Make a prediction on the different matches to determine the score and winner</p>
+                                <p>Access your prediction Dashboard and manage your predictions at any time</p>
+                                <p>Update and Delete your predictions before verifying if you've won</p>
+                                <p>Earn points and compete in the Leaderboard across all Users for the ultimate prize!</p>
+                                <p>Remember to always take it calmly and mostly have fun while using the App </p>
+
                             </div>
                         </div>  
                     </div>
                 </div>
                 <!-- accordion 2 -->
-                <div class="accordion" id="chapters">
+
+                <div class="accordion mb-5" id="chapters">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="heading-2">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#chapter-1" aria-expanded="true" aria-controls="chapter-1">
-                                Real Time Data -API
+                            <button  class="accordion-button" type="button" data-bs-toggle="collapse" 
+                                data-bs-target="#chapter-2" aria-expanded="false" aria-controls="chapter-2">
+                                World Cup API: Football Matches & Teams' Standings Data
                             </button>
                         </h2>
-                        <div id="chapter-1" class="accordion-collapse collapse "
+                        <div id="chapter-2" class="accordion-collapse hide"
                             aria-labelledby="heading-2" data-bs-parent="#chapters">
                             <div class="accordion-body">
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta corrupti suscipit ipsum officia cum odit eum ipsa nihil expedita itaque!</p>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta corrupti suscipit ipsum officia cum odit eum ipsa nihil expedita itaque!</p>
+                                <p>We use an unofficial external API services, publicly built, maintained and shared by
+                                     github User <a href="https://github.com/raminmr">Mr RaminMr</a>, to access 
+                                     the different world cup matches' information aswell as the teams' standings
+                                     </p>
+                                <p>However, this API service may be down from time to time, causing some disruptions when accessing 
+                                    the different web features (err502/504)</p>
+                                <p>If the service is not responding, please try again after a while</p>
+
                             </div>
                         </div>  
                     </div>
@@ -160,76 +158,127 @@
         </div>
     </section>
 
-    <!-- contact form -->
 
-    <section id="Get in Touch">
-        <div class="container-lg">
-          
-          <div class="text-center">
-            <h2>Get in Touch</h2>
-            <p class="lead">Questions to ask? Fill out the form to contact us directly...</p>
-          </div>
-          <div class="row justify-content-center my-5">
-            <div class="col-lg-6">
-              
-              <form>
-                <!-- contact Email -->
-                <label for="email" class="form-label">Email address:</label>
-                <div class="input-group mb-4">
-                  <span class="input-group-text">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-open-fill" viewBox="0 0 16 16">
-                        <path d="M8.941.435a2 2 0 0 0-1.882 0l-6 3.2A2 2 0 0 0 0 5.4v.314l6.709 3.932L8 8.928l1.291.718L16 5.714V5.4a2 2 0 0 0-1.059-1.765l-6-3.2ZM16 6.873l-5.693 3.337L16 13.372v-6.5Zm-.059 7.611L8 10.072.059 14.484A2 2 0 0 0 2 16h12a2 2 0 0 0 1.941-1.516ZM0 13.373l5.693-3.163L0 6.873v6.5Z"/>
-                      </svg>
-                  </span>
-                  <input type="text" id="email" class="form-control" placeholder="e.g. ironhack@example.com" />
-                </div>
+   
 
-                <!-- contact Name -->
-                <label for="name" class="form-label">Name:</label>
-                <div class="mb-4 input-group">
-                  <span class="input-group-text">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                      </svg>
-                  </span>
-                  <input type="text" id="name" class="form-control" placeholder="e.g. Lloyd" />
+      {{!-- <section style="margin:0 auto;width:80%;border-bottom:1px orange solid;padding-bottom:75px;margin-bottom:35px;"id="developers">
+        <h2 style="font-size:40px;margin-bottom:15px;text-align:center;align-items:center">Project Developers</h2>
+        <p class="lead text-muted" style="font-size:18px;margin-bottom:55px;text-align:center;align-items:center;color:gray;">Find information about the Developers behind this App</p>
+            <div style="display:flex;justify-content:space-around;">
+                <div>
+                        <p><i class="fa-solid fa-user-secret fa-3x"></i></p>
+                        <h1>Name: Paul Fresnel</h1>
+                        <h2>Level: 26</h2>
+                        <h3>Hobbies: Gaming, Sports, Coding</h3>
+                        <h4>Career: BBA, MIM, Ironhack Full-Stack Dev</h4>
+                        <h5>Contact: <a href="https://fr.linkedin.com/in/paul-fresnel-a834b4139"><i class="fa-brands fa-linkedin"></i> </a> <a href="https://github.com/Paulfresnel"><i class="fa-brands fa-github"></i></a></h5>
+                        
                 </div>
+                <div>
+                    <p><i class="fa-solid fa-user-secret fa-3x"></i></p>
+                    <h1>Name: Axel Clemente</h1>
+                    <h2>Level: 26</h2>
+                    <h3>Hobbies: </h3>
+                    <h4>Career: </h4>
+                    <h5>Contact: <a href="#"><i class="fa-brands fa-linkedin"></i> </a> <a href="#"><i class="fa-brands fa-github"></i></a></h5>
 
-                <!-- What is your question about -->
-                <label for="subject" class="form-label">What is your question about?</label>
-                <div class="mb-4 input-group">
-                  <span class="input-group-text">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                      </svg>
-                  </span>
-                  <select class="form-select" id="subject">
-                    <option value="pricing" selected>Developers Portfolio</option>
-                    <option value="content">Hiring</option>
-                    <option value="other">Other query</option>
-                  </select>
                 </div>
-                <div class="mb-4 mt-5 form-floating">
-                  <textarea class="form-control" id="query" style="height: 140px" placeholder="query"></textarea>
-                  <label for="query">Your query...</label>
-                </div>
-
-                <!-- button -->
-                <div class="mb-4 text-center">
-                  <button type="submit" class="btn btn-warning">Submit</button>
-                </div>
-              </form>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="developers">
-        <h1>Test Developers</h1>
         
-      </section>
+      </section> --}}
 
-</body>
 
-</html>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css'>
+              <link href='//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' rel='stylesheet'/>
+        
+        
+        
+      
+        <footer id="footer" style="margin-bottom:0"class="footer-1">
+        <div class="main-footer widgets-dark typo-light">
+        <div class="container">
+        <div class="row">
+        
+          <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="widget subscribe no-box">
+                    <h5 class="widget-title">Full Stack Developers<span></span></h5>
+                    <p>Axel Clemente</p>
+                    <p><a href="https://github.com/Paulfresnel"> Paul Fresnel</a></p>
+                
+                </div>
+        </div>
+        
+          
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="widget no-box">
+                <h5 class="widget-title">Project<span></span></h5>
+                <ul class="thumbnail-widget">
+                    <li>
+                        <div class="text-black">Full CRUD App:</div>	
+                    </li>
+                    <li>
+                        <div class="text-black mt-3">"Football ODDS App"</div>	
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+          
+        
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="widget no-box">
+                <h5 class="widget-title">Portfolio<span></span></h5>
+                <div class="mt-3">
+                    Axel -
+                      <a style="text-decoration:none"href="https://github.com/aclemente1988?tab=repositories"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                      </svg></a>
+                  </div>
+
+            
+                
+                    
+                     
+                <div class="mt-3">
+                  Paul -
+                    <a style="text-decoration:none"href="https://paulfresnel.github.io"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg></a>
+                </div>
+                
+                </div>
+                
+                </div>
+
+                
+                
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="widget no-box">
+                        <h5 class="widget-title">Technologies<span></span></h5>
+                            <p>HTML, CSS, JS</p>
+                            <p>MongoDB, Express & Node JS</p>
+                            <p><a style="font:10px;text-decoration:none;" href="https://github.com/raminmr/free-api-worldcup2022"> API Data</a> </p>
+                            
+
+                     </div>
+                
+                </div>
+            </div>
+        </div>
+          
+        <div class="footer-copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                     <p class="text-black"> Football ODDS APP © 2022🚀 </p>
+                     <p>Special Credit to github user <a href="https://github.com/raminmr">RaminMr</a> for his contribution to the API</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </footer>
+   
+
+

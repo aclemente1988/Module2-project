@@ -1,0 +1,156 @@
+
+
+
+
+  <body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="/" class="navbar-brand">
+
+
+                <span class="fw-bold text-warning">
+
+                    Welcome {{userInfo.username}}! 🚀
+
+                </span>
+            </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <li class="nav nav-pills">
+                <a class="nav-link active" aria-current="page" href="/profile/{{userInfo.username}}">Dashboard</a>
+            </li>
+          <div style="margin-left:35px;"class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <!-- <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Predictions</a>
+              </li> -->
+              <li class="nav-item dropdown">
+ 
+                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Predictions
+                </a>
+                
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                  <!-- <li><a class="dropdown-item" href="#">Create</a></li> -->
+                  <li><a class="dropdown-item" href="/profile/{{userInfo._id}}/predictions">My Predictions' List</a></li>
+                  <li><a class="dropdown-item" href="/matches">Create New Prediction</a></li>
+                </ul>
+                
+              </li>
+              
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+
+
+      <div class="container-fluid ">
+        <div class="row ">
+            <div class="col-md-2 mt-5 bg-light d-none d-md-block sidebar ">
+                <div class="left-sidebar">
+                    <div class="d-flex ">
+                        <div class="nav flex-column ml-5 nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                          <li class="nav nav-pills">
+                            <a style="" class="nav-link active" aria-current="page" href="/matches">New Prediction</a>
+                          </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo._id}}/predictions">My predictions</a>
+                            </li>
+                          
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/predictions-leaderboard">Predictions Leaderboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/frequently-asked-questions">FAQs</a>
+                            </li>
+                            <li class="nav-item">
+                               
+                                <a class="nav-link text-danger" href="/logout"  >Log out</a>
+                                
+                            </li>
+                        </div>
+
+                      </div>
+                </div>
+            </div>
+
+        </div>
+      </div> 
+
+      <div style="margin:0px 0px 0px 300px;display:flex;flex-direction:column;width:30%;">
+              <label>Filter by Country Name:</label>
+              <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for country name..">
+          </div>
+
+      <div style="" id="matches-container">
+        {{#each matchesInfo}}
+        {{#if this.home_flag}}
+            <div id="match-card" class="match-card-loop">
+                <div id="match-team-info">
+                    <div id="home-team">
+                        <img class="flag" src="{{this.home_flag}}">
+                        <h2 class="home-team-name">{{this.home_team_en}} </h2>
+                    </div>
+                    <p style="font-weight: bold;font-size:17px;">VS</p>
+                    <div id="away-team">
+                        <img class="flag" src="{{this.away_flag}}">
+                        <h2 class="away-team-name">{{this.away_team_en}} </h2>
+                    </div>
+                </div>
+                <div id="match-details-info">
+                    <div id="date-container">
+                        <p>{{this.local_date}}</p>
+                        <!--  <button src="/matches/{{this.id}}">More Information</button> -->
+                    </div>
+                    <form method="post" action='/matches/{{this.id}}/predict'>
+                    <button>Predict the Winner</button>
+                    </form>
+                </div>
+            </div>
+            {{/if}}
+        {{/each}}
+        </div>
+
+  
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script>
+
+    function myFunction() {
+  // Declare variables
+  var input, filter, card, homeTeam, i, awayTeam,playerPosition, playerCountry, txtValue2, txtValue3, input2, input3;
+  input = document.getElementById('myInput');
+
+
+  filter = input.value.toUpperCase();
+
+
+  card = document.getElementsByClassName('match-card-loop');
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < card.length; i++) {
+    homeTeam = card[i].getElementsByClassName("home-team-name")[0]
+    awayTeam = card[i].getElementsByClassName("away-team-name")[0]
+    
+    txtValue = homeTeam.textContent || homeTeam.innerText;
+    txtValue2 = awayTeam.textContent || awayTeam.innerText;
+
+
+    if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1) {
+      card[i].style.display = "block"
+      card[i].style.position = "static"
+
+    }     
+    else {
+      card[i].style.display = "none"
+      card[i].style.position = "absolute"
+      card[i].style.left = "-9997px"
+
+    }
+  }
+}
+
+</script>

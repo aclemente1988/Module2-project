@@ -22,6 +22,7 @@ router.get("/signup", isLoggedOut, (req, res) => {
 
 // POST /auth/signup
 router.post("/signup", isLoggedOut, (req, res) => {
+
   const { username, email, password } = req.body;
 
   // Check that username, email, and password are provided
@@ -42,6 +43,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
     return;
   }
 
+
   //   ! This regular expression checks password for special characters and minimum length
   /*
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
@@ -55,6 +57,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
   }
   */
 
+
   // Create a new user - start by hashing the password
   bcrypt
     .genSalt(saltRounds)
@@ -64,7 +67,15 @@ router.post("/signup", isLoggedOut, (req, res) => {
       return User.create({ username, email, password: hashedPassword });
     })
     .then((user) => {
-      res.redirect("/auth/login");
+
+      console.log("user created succesfully, redirecting to profile page")
+       // Add the user object to the session object 
+       req.session.currentUser = user.toObject();
+       // Remove the password field
+       delete req.session.currentUser.password;
+       // After signup, redirect the User towards its profile page without asking for a login
+      res.redirect(`/profile/${user.username}`);
+
     })
     .catch((error) => {
       if (error instanceof mongoose.Error.ValidationError) {

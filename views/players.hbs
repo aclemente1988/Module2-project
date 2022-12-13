@@ -1,0 +1,258 @@
+
+
+
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+</head>
+
+
+
+
+  <body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mb-3">
+        <div class="container-fluid">
+            <a href="/profile/{{{userInfo.username}}}" class="navbar-brand">
+                <span style="color:orange" class="fw-bold">
+                     Welcome {{userInfo.username}} ⚽🚀
+
+                </span>
+            </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <li class="nav nav-pills">
+                <a class="nav-link active" aria-current="page" href="/profile/{{{userInfo.username}}}">Dashboard</a>
+            </li>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+
+              <li class="nav-item dropdown">
+ 
+                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Fantasy Team
+                </a>
+                
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                  <li><a class="dropdown-item" href="#">Update</a></li>
+                  <li><a class="dropdown-item" href="#">Delete</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">How it works?</li>
+                </ul>
+                
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
+              </li>
+            </ul>
+
+            
+
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Live results" aria-label="Search">
+              <button class="btn btn-outline-warning" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+        
+
+      
+<div class="container-fluid ">
+        <div class="row ">
+            <div class="col-md-2 mt-5 bg-light d-none d-md-block sidebar ">
+                <div class="left-sidebar">
+                    <div class="d-flex ">
+                        <div class="nav flex-column ml-5 nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                          <li class="nav nav-pills">
+                            <a style="" class="nav-link active" aria-current="page" href="/matches">New Prediction</a>
+                          </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo._id}}/predictions">My predictions</a>
+                            </li>
+                          
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/predictions-leaderboard">Predictions Leaderboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="/profile/{{userInfo.username}}/frequently-asked-questions">FAQs</a>
+                            </li>
+                            <li class="nav-item">
+                               
+                                <a class="nav-link text-danger" href="/logout"  >Log out</a>
+                                
+                            </li>
+                        </div>
+
+                      </div>
+                </div>
+            </div>
+
+        </div>
+      </div> 
+      <!--All Players-->
+      <div style="margin-left:300px;">
+        <div style="display:flex;justify-content:space-around;">
+
+          <div style="display:flex;flex-direction:column;">
+              <label>Filter by player Name:</label>
+              <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+          </div>
+
+          <div style="display:flex;flex-direction:column;">
+            <label>Filter by player Position:</label>
+            <input type="text" id="myInput2" onkeyup="myFunctionTwo()" placeholder="Search for a position..">
+          </div>
+
+          <div style="display:flex;flex-direction:column;">
+            <label>Filter by player Country:</label>
+            <input type="text" id="myInput3" onkeyup="myFunctionThree()" placeholder="Search for a country..">
+          </div>
+
+      </div>
+    </div>
+    {{#if errorMessage}}
+    <div style="font-size:24px;margin-top:50px;margin-left:300px;color:red">{{errorMessage}}</div>
+    {{/if}}
+    <div style="margin-left:300px;" class=" mt-4">
+      <h2 style="margin:35px 0px 35px 0px;">Select Players to add to your Fantasy team:</h2>
+      
+
+        {{#each allPlayersFromDb}}
+        <div class="card-test card mb-2 d-inline-flex p-2" style="height:14rem;width: 11rem;">
+            <div  class="card-body">
+              <h5 class="card-title">{{this.playername}}</h5>
+                <p class="card-text">Position:{{this.position}}<br>
+                    <h6>{{this.team}}</h6>
+                </p>
+
+              
+              <form method="post" action="/profile/{{this._id}}/players/add">
+                <button class="btn btn-warning btn-sm">Add Player</button>
+                
+
+              </form>
+            </div>
+          </div>
+          
+
+        {{/each}}
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  
+  
+  <script>
+
+    function myFunction() {
+  // Declare variables
+  var input, filter, card, playerName, i, txtValue,playerPosition, playerCountry, txtValue2, txtValue3, input2, input3;
+  input = document.getElementById('myInput');
+  input2 = document.getElementById('myInput2');
+  input3 = document.getElementById('myInput3');
+
+
+  filter = input.value.toUpperCase();
+  filter2 = input2.value.toUpperCase();
+  filter3 = input3.value.toUpperCase();
+
+  card = document.getElementsByClassName('card-test');
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < card.length; i++) {
+    playerName = card[i].getElementsByClassName("card-title")[0]
+    playerPosition = card[i].getElementsByClassName("card-text")[0]
+    playerCountry = card[i].getElementsByTagName("h6")[0]
+    txtValue = playerName.textContent || playerName.innerText;
+    txtValue2 = playerPosition.textContent || playerPosition.innerText;
+    txtValue3 = playerCountry.textContent || playerCountry.innerText;
+
+    if (txtValue.toUpperCase().indexOf(filter) > -1 && txtValue2.toUpperCase().indexOf(filter2) > -1 && txtValue3.toUpperCase().indexOf(filter3) > -1) {
+      card[i].style.display = "block"
+      card[i].style.position = "static"
+
+    }     
+    else {
+      card[i].style.display = "none"
+      card[i].style.position = "absolute"
+      card[i].style.left = "-9997px"
+
+    }
+  }
+}
+function myFunctionTwo() {
+  // Declare variables
+  var input, filter, card, playerPosition, i, txtValue,playerPosition, playerCountry, txtValue2, txtValue3, input2, input3;
+  input = document.getElementById('myInput2');
+  input1 = document.getElementById('myInput');
+  input3 = document.getElementById('myInput3');
+
+  filter = input.value.toUpperCase();
+  filter1 = input1.value.toUpperCase();
+  filter3 = input3.value.toUpperCase();
+
+  card = document.getElementsByClassName('card-test');
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < card.length; i++) {
+
+    playerPosition = card[i].getElementsByClassName("card-text")[0]
+    playerName = card[i].getElementsByClassName("card-title")[0]
+    playerCountry = card[i].getElementsByTagName("h6")[0]
+
+    txtValue = playerPosition.textContent || playerPosition.innerText;
+    txtValue1 = playerName.textContent || playerName.innerText;
+    txtValue3 = playerCountry.textContent || playerCountry.innerText;
+
+    if (txtValue.toUpperCase().indexOf(filter) > -1 && txtValue1.toUpperCase().indexOf(filter1) > -1 && txtValue3.toUpperCase().indexOf(filter3) > -1) {
+      card[i].style.display = "block"
+      card[i].style.position = "static"
+
+    } else {
+      card[i].style.display = "none"
+      card[i].style.position = "absolute"
+      card[i].style.left = "-9997px"
+
+    }
+  }
+}
+function myFunctionThree() {
+  // Declare variables
+  var input, filter, card, playerCountry, i, txtValue,playerPosition, playerCountry, txtValue2, txtValue3, input2, input3;
+  input = document.getElementById('myInput3');
+  input1 = document.getElementById('myInput');
+  input2 = document.getElementById('myInput2');
+
+  filter = input.value.toUpperCase();
+  filter1 = input1.value.toUpperCase();
+  filter2 = input2.value.toUpperCase();
+
+  card = document.getElementsByClassName('card-test');
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < card.length; i++) {
+    playerCountry = card[i].getElementsByTagName("h6")[0]
+    playerPosition = card[i].getElementsByClassName("card-text")[0]
+    playerName = card[i].getElementsByClassName("card-title")[0]
+
+
+    txtValue = playerCountry.textContent || playerCountry.innerText;
+    txtValue1 = playerName.textContent || playerName.innerText;
+    txtValue2 = playerPosition.textContent || playerPosition.innerText;
+
+    if (txtValue.toUpperCase().indexOf(filter) > -1 && txtValue1.toUpperCase().indexOf(filter1) > -1 && txtValue2.toUpperCase().indexOf(filter2) > -1) {
+      card[i].style.display = "block"
+      card[i].style.position = "static"
+
+    } else {
+      card[i].style.display = "none"
+      card[i].style.position = "absolute"
+      card[i].style.left = "-9997px"
+
+    }
+  }
+}
+</script>
+    
