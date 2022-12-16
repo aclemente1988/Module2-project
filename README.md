@@ -1,8 +1,6 @@
 <h1>Football World Cup App⚽</h1>
 
-<div class="col md-5 text-center d-none d-md-block">
-    <img src="/images/World-cup-odds-picks-and-predictions-for-Qatar-2022.jpg" alt="worldCup cover">
-</div> 
+<img src="./public/images/Captura de pantalla 2022-11-28 003317.png" alt="">
 
 
 <h2>Description:</h2>
